@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<title>Démo du lecteur MFP AccessPlayer</title>
+		
+		<script src="//code.jquery.com/jquery-3.1.1.js"></script>
+		<script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" type="text/css">
+		<link rel="stylesheet" href="http://mfpaccessibilite.fr/client/styles/styles.css" type="text/css" />
+		<style>
+		.cont{
+			position: relative;
+		}
+		.cont::after{
+			content:'';
+			display: block;
+			clear: both;
+		}
+		.container{
+			width: 65%;
+			max-width: 900px;
+			float: left;
+		}
+		#text-target, #text-target1{
+			padding: 5px;
+			width: 34%;
+			columns: 200px 2;
+			box-sizing: border-box;
+			float: right;
+		}
+		code{
+			border: 1px solid #333;
+			padding: 10px;
+			margin: 5px;
+			display: block;
+			background-color: #CCC;
+			max-width: 1000px;
+			overflow: auto;
+
+		}
+		#desc table{
+			max-width: 1000px;
+		}
+		#desc table tr td, #desc table tr th{
+			padding: 4px;
+			border: 1px solid #000;
+		}
+		#desc table tr th{
+			background-color: #EEE;
+		}
+		@media screen and (max-width: 640px) {
+			.container{
+				width: 100%;
+			}
+			#text-target, #text-target1{
+				width: 100%;
+			}
+		}
+		</style>
+	</head>
+	<body>
+	<header role="banner">
+		<h1>Démonstration du lecteur MFP AccessPlayer</h1>
+	</header>
+	<main role="main">
+		<article>
+			<h2>À propos de cette démonstration</h2>
+			<p>Exemple d'une vidéo utilisant toutes les fonctionnalités du lecteur.</p>
+
+				<h3>Fonctionnalités pour l'accessibilité</h3>
+					<ul>
+						<li>Sous-titrage&nbsp;:
+							<ul>
+								<li>en version brut, personnalisable via le panneau de configuration (format srt)</li>
+								<li>en version colorée et positionnée selon les recommandations de la <a href="http://www.csa.fr/Juridical-area/Chartes/Charte-relative-a-la-qualite-du-sous-titrage-a-destination-des-personnes-sourdes-ou-malentendantes-Decembre-2011" target="_blank" title="Charte CSA relative à la qualité du sous-titrage pour les personnes sourdes ou malentendantes de décembre 2011 (nouvelle fenêtre)">charte <abbr title="Conseil supérieur de l'audiovisuel">CSA</abbr></a> (format stl/vtt)</li>
+							</ul>
+						</li>
+						<li>Audiodescription</li>
+						<li>Langue des signes française (LSF)</li>
+						<li>Version texte de la vidéo (transcription)</li>
+					</ul>
+				<h3>Autres fonctionnalités</h3>
+					<ul>
+						<li>Transcription en direct (<i lang="en">live transcript</i>)</li>
+						<li>Chapitrage&nbsp;: possibilité de se rendre directement à certains moments prédéfinis dans la vidéo</li>
+						<li>Vitesse de lecture</li>
+						<li>Poids de la vidéo&nbsp;:
+							<ul>
+								<li>une version haute définition</li>
+								<li>une version basse définition</li>
+							</ul>
+					</ul>
+		</article>
+		<article>
+			<h2>Démo vidéo</h2>
+			<div class="cont">
+				<div class="container">
+					<video data-mfp data-options="{
+						videos:{
+							lowdef:'//demovideo.mfpst.com/MEDIAS/JAMY_VOLCANS_FULL-LowRes.m4v',
+							audiodesc:'//demovideo.mfpst.com/MEDIAS/JAMY_VOLCANS_AD_480.m4v',
+							signed:'//demovideo.mfpst.com/MEDIAS/JAMY_VOLCANS_LDS_480.m4v'
+						},
+						transcripts:{
+							html:'transcripts/JamyPlayer.htm',
+							txt:'transcripts/JamyPlayer.txt'
+						},
+						live: '#text-target1'
+					}">
+						<source src="//demovideo.mfpst.com/MEDIAS/JAMY_VOLCANS_FULL2.m4v" type="video/mp4" />
+						<track src="tracks/JamyPlayer.stl" kind="subtitles" label="Français (coloration CSA)" srclang="fr" />
+						<track src="tracks/JamyPlayer.srt" kind="subtitles" label="Français (personnalisable)" srclang="fr" />
+						<track src="tracks/chapters.vtt" kind="chapters" label="Chapitres" srclang="fr" />
+					</video>
+				</div>
+				<div id="text-target1">
+				</div>
+			 </div>
+		 </article>
+	</main>
+	<footer role="contentinfo">
+		<p>Pour télécharger le code et contribuer, rendez-vous sur le <a href="">compte Github du lecteur vidéo MFP AccessPlayer</a>&nbsp;!</p>
+	</footer>
+		<script src="../MFP/mfp.js"></script>
+	</body>
+</html>
