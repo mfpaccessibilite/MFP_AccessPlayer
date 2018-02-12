@@ -1340,7 +1340,6 @@ MFP.prototype={
                          if(document.mozFullScreen){
                             $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
                             $(this.container).addClass('fullscreen');
-                            $(this.container).removeClass('fullscreen');
                             this.fontSize();
                         }
                         else{
