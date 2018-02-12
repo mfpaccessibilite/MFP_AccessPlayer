@@ -294,7 +294,7 @@ ul.mfp_list{
                 margin: 0;
                 text-align: right;
                 line-height: 30px;
-                background-color: transparent;
+                background-color: #333;
                 border: 0;
                 -webkit-appearance: none;
                 color: #FFF;
@@ -305,6 +305,7 @@ ul.mfp_list{
                   text-align: right;
                   direction: ltr;
                 }
+               
             }
             button{
                 display: inline-block;
