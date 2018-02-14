@@ -433,6 +433,8 @@ MFP.prototype={
         var fsize = ($(this.element).height()/20);
         subwrapper.css('font-size',fsize+'px');
         subwrapper.css('line-height','1.6');
+        // setting subtiltes-wrapper height to video height:
+        subwrapper.css('height',$(this.element).height()+'px');
     },
     loadInterface: function(){
     	// load the interface of the player
@@ -446,7 +448,7 @@ MFP.prototype={
         subwrapper.css('font-size',fsize+'px');
         // add event tracking on window resize to update fontsize to make it proportional
         $( window ).resize(function() {
-            this.fontSize();
+            this.fontsize();
         }.bind(this));
         
         this.controlBar = $("<div class='control-bar'></div>");
