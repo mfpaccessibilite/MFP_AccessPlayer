@@ -448,7 +448,7 @@ MFP.prototype={
         subwrapper.css('font-size',fsize+'px');
         // add event tracking on window resize to update fontsize to make it proportional
         $( window ).resize(function() {
-            this.fontsize();
+            this.fontSize();
         }.bind(this));
         
         this.controlBar = $("<div class='control-bar'></div>");
