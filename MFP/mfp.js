@@ -520,6 +520,7 @@ MFP.prototype={
         this.loadTracks();
         this.initEvents();
         this.fontSize();
+        // desactivate Jquery UI Tooltip as they are not ARIA compliant
         //this.container.tooltip({classes:{
   //"ui-tooltip": "ui-corner-all ui-widget-shadow mfp-tooltip"
 //}});
