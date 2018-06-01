@@ -721,14 +721,20 @@ MFP.prototype={
             $(menu[0]).append(men);
             //console.log('this.subtiltes.length : ');
             //console.log(this.subtitles.length);
+            var men = $('<li class="preferences" style="display: none;">'+this.lang.preferences+' <span class="mfp-icon-pref"></span></li>');
+            men.uniqueId();
+            var pref_id = men.attr('id');
             for(var i = 0;i<this.subtitles.length;i++){
                 var track = this.subtitles[i].track;
                 //console.log(track);
                 //console.log('track');
                 var t = $('<li data-id="'+i+'">'+track.label+'</li>');
+                if(track.ext=='srt'){
+                	t.attr('aria-owns',pref_id);
+                }
                 $(menu[0]).append(t);
             }
-            var men = $('<li class="preferences" style="display: none;">'+this.lang.preferences+' <span class="mfp-icon-pref"></span></li>');
+            
             $(menu[0]).append(men);
             var m = new MFP_menu($(menu[0]),{
                 select:function(elmt){
