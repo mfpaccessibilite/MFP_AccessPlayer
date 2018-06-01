@@ -341,8 +341,9 @@ ul.mfp_list{
               margin-left: 0px;
               margin-right: 0px;
               margin-top: -10px;
-              overflow-x: visible;
-              overflow-y: visible;
+              //overflow-x: visible;
+              //overflow-y: visible;
+              overflow: hidden;
               padding-bottom: 1px;
               padding-left: 1px;
               padding-right: 1px;
