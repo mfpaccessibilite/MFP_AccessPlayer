@@ -4,7 +4,7 @@ var lang = {
     soundOff    : "Couper le son",
     soundOn : "Activer le son",
     volume : "Volume",
-    expand : "Plein écran",
+    expand : "Activer le Plein écran",
     compress : "Quitter le plein écran",
     searchBar : "Barre de progression (durée)",
     on : 'de',
@@ -47,5 +47,7 @@ var lang = {
     transcript: '(nouvelle fenêtre) Version texte de la vidéo',
     activateLiveTranscript: 'Activer le transcript temps réel',
     desactivateLiveTranscript: 'Désactiver le transcript temps réel',
-    informations:'Informations'
+    informations:'Informations',
+    activate:'Activer',
+    desactivate:'Désactiver'
 };

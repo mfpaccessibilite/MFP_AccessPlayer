@@ -497,12 +497,12 @@ MFP.prototype={
         $(rightPart).append('<select class="speed" aria-label="'+this.lang.playBackrate+'" title="'+this.lang.playBackrate+'"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>');
     	// if having video alternatives, showing the videos buttons
         if((this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined) || (this.options.videos.audiodesc!='' && this.options.videos.audiodesc!=undefined) || (this.options.videos.signed!='' && this.options.videos.signed!=undefined)){
-            $(rightPart).append('<button class="mfp-icon-hd video_hd" title="'+this.lang.highdef+'"><span class="mfp-hidden">'+this.lang.highdef+'</span></button>')
+            $(rightPart).append('<button class="mfp-icon-hd video_hd" title="'+this.lang.desactivate+' '+this.lang.highdef+'"><span class="mfp-hidden">'+this.lang.desactivate+' '+this.lang.highdef+'</span></button>')
             if((this.options.videos.audiodesc!='' && this.options.videos.audiodesc!=undefined)){
-                $(rightPart).append('<button class="mfp-icon-audio-description video_audiodesc off" title="'+this.lang.audiodesc+'"><span class="mfp-hidden">'+this.lang.audiodesc+'</span></button>')
+                $(rightPart).append('<button class="mfp-icon-audio-description video_audiodesc off" title="'+this.lang.activate+' '+this.lang.audiodesc+'"><span class="mfp-hidden">'+this.lang.activate+' '+this.lang.audiodesc+'</span></button>')
             }
             if((this.options.videos.signed!='' && this.options.videos.signed!=undefined)){
-                $(rightPart).append('<button class="mfp-icon-sign-language video_signed off" title="'+this.lang.signed+'"><span class="mfp-hidden">'+this.lang.signed+'</span></button>')
+                $(rightPart).append('<button class="mfp-icon-sign-language video_signed off" title="'+this.lang.activate+' '+this.lang.signed+'"><span class="mfp-hidden">'+this.lang.activate+' '+this.lang.signed+'</span></button>')
             }
             //$(rightPart).append('<div class="videos-block"><button class="mfp-icon-videos videos" title="'+this.lang.videos+'"><span class="svp-hidden">'+this.lang.videos+'</span></button><ul class="menu" title="'+this.lang.videos+'" /></ul>');
             this.initVideosAlt();
@@ -743,6 +743,8 @@ MFP.prototype={
                     }
                     else{
                         $(this.container).find('.subtitles-block  button.subtitles').addClass('off');
+                        $(this.container).find('.subtitles-block  button.subtitles').attr('title',this.lang.activate+' '+this.lang.subtitles);
+                        $(this.container).find('.subtitles-block  button.subtitles .mfp-hidden').html(this.lang.activate+' '+this.lang.subtitles);
                         $(elmt).parent().children('li').removeClass('selected');
                         $(elmt).addClass('selected');
                         $(this.container).removeClass (function (index, css) {
@@ -763,6 +765,8 @@ MFP.prototype={
                                 $(elmt).parent().children('li.preferences').css('display','none');   
                             }
                             $(this.container).find('.subtitles-block  button.subtitles').removeClass('off');
+                            $(this.container).find('.subtitles-block  button.subtitles').attr('title',this.lang.subtitles);
+                        $(this.container).find('.subtitles-block  button.subtitles .mfp-hidden').html(this.lang.subtitles);
                             $(this.container).addClass('track-'+this.subtitles[$(elmt).data('id')].track.ext)
                         }
                         else{
@@ -846,7 +850,13 @@ MFP.prototype={
         var btn = $(this.container).find('.video_hd');
         btn.click(function(){
             $(this.container).find('.video_audiodesc').addClass('off');
+            $(this.container).find('.video_audiodesc').attr('title',this.lang.activate+' '+this.lang.audiodesc);
+            $(this.container).find('.video_audiodesc .mfp-hidden').html(this.lang.activate+' '+this.lang.audiodesc);
+            
             $(this.container).find('.video_signed').addClass('off');
+            $(this.container).find('.video_signed').attr('title',this.lang.activate+' '+this.lang.signed);
+            $(this.container).find('.video_signed .mfp-hidden').html(this.lang.activate+' '+this.lang.signed);
+            
             var btn = $(this.container).find('.video_hd');
             var time = this.element[0].currentTime;
             var paused = this.element[0].paused;
@@ -858,28 +868,28 @@ MFP.prototype={
                     if(btn.hasClass('mfp-icon-hd')){
                         this.element[0].src=this.options.videos.highdef;
                         if((this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
-                            btn.attr('title',this.lang.lowdef);
-                            btn.find('span').html(this.lang.lowdef);
+                            btn.attr('title',this.lang.activate+' '+this.lang.lowdef);
+                            btn.find('span').html(this.lang.activate+' '+this.lang.lowdef);
                         }
                     }
                     else{
                         this.element[0].src=this.options.videos.lowdef;
-                        btn.attr('title',this.lang.highdef);
-                        btn.find('span').html(this.lang.highdef);
+                        btn.attr('title',this.lang.activate+' '+this.lang.highdef);
+                        btn.find('span').html(this.lang.activate+' '+this.lang.highdef);
                     }
                 }
                 else{
                     if(btn.hasClass('mfp-icon-hd')){
                         this.element[0].src=this.options.videos.lowdef;
-                        btn.attr('title',this.lang.highdef);
-                        btn.find('span').html(this.lang.highdef);
+                        btn.attr('title',this.lang.activate+' '+this.lang.highdef);
+                        btn.find('span').html(this.lang.activate+' '+this.lang.highdef);
                         btn.removeClass('mfp-icon-hd');
                         btn.addClass('mfp-icon-ld');
                     }
                     else{
                         this.element[0].src=this.options.videos.highdef;
-                        btn.attr('title',this.lang.lowdef);
-                        btn.find('span').html(this.lang.lowdef);
+                        btn.attr('title',this.lang.activate+' '+this.lang.lowdef);
+                        btn.find('span').html(this.lang.activate+' '+this.lang.lowdef);
                         btn.removeClass('mfp-icon-ld');
                         btn.addClass('mfp-icon-hd');
                     }
@@ -895,23 +905,25 @@ MFP.prototype={
         }.bind(this));
         $(this.container).find('.video_audiodesc').click(function(){
             var btn = $(this.container).find('.video_audiodesc');
+            btn.attr('title',this.lang.desactivate+' '+this.lang.audiodesc);
+            btn.find('span').html(this.lang.desactivate+' '+this.lang.audiodesc);
             if(btn.hasClass('off')){
                 if(!$(this.container).find('.video_hd').hasClass('off')){
+                	if($(this.container).find('.video_hd').hasClass('mfp-icon-hd')){
+	                	$(this.container).find('.video_hd').attr('title',this.lang.activate+' '+this.lang.highdef);
+    	            	$(this.container).find('.video_hd span').html(this.lang.activate+' '+this.lang.highdef);
+    	            }
+    	            else{
+    	            	$(this.container).find('.video_hd').attr('title',this.lang.activate+' '+this.lang.lowdef);
+    	            	$(this.container).find('.video_hd span').html(this.lang.activate+' '+this.lang.lowdef);
+    	            }
                     this.options.last_video='.video_hd';
                 }
                 $(this.container).find('.video_hd').addClass('off');
-                if((this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
-                    if($(this.container).find('.video_hd').hasClass('mfp-icon-hd')){
-                        $(this.container).find('.video_hd').attr('title',this.lang.highdef);
-                        $(this.container).find('.video_hd').find('span').html(this.lang.highdef);
-                    }
-                    else{
-                        $(this.container).find('.video_hd').attr('title',this.lang.lowdef);
-                        $(this.container).find('.video_hd').find('span').html(this.lang.lowdef);   
-                    }
-                }
                 if(!$(this.container).find('.video_signed').hasClass('off')){
                     this.options.last_video='.video_signed';
+                    $(this.container).find('.video_signed').attr('title',this.lang.activate+' '+this.lang.signed);
+                    $(this.container).find('.video_signed span').html(this.lang.activate+' '+this.lang.signed);
                 }
                 $(this.container).find('.video_signed').addClass('off');
                 btn.removeClass('off');
@@ -934,13 +946,25 @@ MFP.prototype={
         }.bind(this));
         $(this.container).find('.video_signed').click(function(){
             var btn = $(this.container).find('.video_signed');
+            btn.attr('title',this.lang.desactivate+' '+this.lang.signed);
+            btn.find('span').html(this.lang.desactivate+' '+this.lang.signed);
             if(btn.hasClass('off')){
                 if(!$(this.container).find('.video_hd').hasClass('off')){
+                	if($(this.container).find('.video_hd').hasClass('mfp-icon-hd')){
+	                	$(this.container).find('.video_hd').attr('title',this.lang.activate+' '+this.lang.highdef);
+    	            	$(this.container).find('.video_hd span').html(this.lang.activate+' '+this.lang.highdef);
+    	            }
+    	            else{
+    	            	$(this.container).find('.video_hd').attr('title',this.lang.activate+' '+this.lang.lowdef);
+    	            	$(this.container).find('.video_hd span').html(this.lang.activate+' '+this.lang.lowdef);
+    	            }
                     this.options.last_video='.video_hd';
                 }
                 $(this.container).find('.video_hd').addClass('off');
                 if(!$(this.container).find('.video_audiodesc').hasClass('off')){
                     this.options.last_video='.video_audiodesc';
+                    $(this.container).find('.video_audiodesc').attr('title',this.lang.activate+' '+this.lang.audiodesc);
+                    $(this.container).find('.video_audiodesc span').html(this.lang.activate+' '+this.lang.audiodesc);
                 }
                 $(this.container).find('.video_audiodesc').addClass('off');
                 btn.removeClass('off');
