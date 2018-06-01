@@ -42,7 +42,7 @@ var lang = {
     highdef: 'Haute définition',
     lowdef: 'Basse définition',
     audiodesc: 'Audio-description',
-    signed: 'Langue des signes active',
+    signed: 'Langue des signes',
     transcripts: 'Versions textes de la vidéo',
     transcript: 'Version texte de la vidéo',
     activateLiveTranscript: 'Activer le transcript temps réel',
