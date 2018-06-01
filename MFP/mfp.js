@@ -520,9 +520,9 @@ MFP.prototype={
         this.loadTracks();
         this.initEvents();
         this.fontSize();
-        this.container.tooltip({classes:{
-  "ui-tooltip": "ui-corner-all ui-widget-shadow mfp-tooltip"
-}});
+        //this.container.tooltip({classes:{
+  //"ui-tooltip": "ui-corner-all ui-widget-shadow mfp-tooltip"
+//}});
     },
     initEvents:function(){
         this.initFullScreenEvents();
