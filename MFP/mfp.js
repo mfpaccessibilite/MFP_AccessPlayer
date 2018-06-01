@@ -301,7 +301,7 @@ MFP.prototype={
                             $(this.container).find('.mfp-subtitles-wrapper .sub-'+event.target.track.subid+'-'+event.target.id).remove();
                             if(this.options.live!=''){
                                 $(this.options.live).find('.live-'+event.target.track.subid+'-'+event.target.id).removeClass('selected');
-                                $(this.options.live).find('.live-'+event.target.track.subid+'-'+event.target.id)unwrap('mark');
+                                $(this.options.live).find('.live-'+event.target.track.subid+'-'+event.target.id).unwrap('mark');
                             }
                         }
                     }.bind(this);
