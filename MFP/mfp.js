@@ -519,6 +519,7 @@ MFP.prototype={
         $(rightPart).append('<button class="mfp-icon-expand expand" title="'+this.lang.expand+'"><span class="mfp-hidden">'+this.lang.expand+'</span></button>');
         this.loadTracks();
         this.initEvents();
+        this.fontSize();
         this.container.tooltip({classes:{
   "ui-tooltip": "ui-corner-all ui-widget-shadow mfp-tooltip"
 }});
