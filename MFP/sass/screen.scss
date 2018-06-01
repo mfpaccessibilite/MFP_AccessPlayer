@@ -211,10 +211,10 @@ ul.mfp_list{
             min-height: 30px;
             button{
                 margin: 0;
-                padding: 0;
-                width: 30px;
-                height: 32px;
-                overflow: hidden;
+                padding: 0 .13em;
+                //width: 30px;
+                //height: 32px;
+                //overflow: hidden;
                 display: inline-block;
                 text-align: center;
                 border: 1px solid transparent;
@@ -242,9 +242,9 @@ ul.mfp_list{
                 button.sound{
                     position: relative;
                     margin: 0 5px;
-                    padding: 0 5px;
+                    padding: 0 .13em;
                     line-height: 30px;
-                    width: 38px;
+                    //width: 38px;
                     text-align: left;
                     font-size: 28px;
                     &:hover{
@@ -317,13 +317,13 @@ ul.mfp_list{
                 display: inline-block;
                 position: relative;
                 margin: 0;
-                padding: 0;
+                padding: 0 .13em;
                 border: 1px solid transparent;
                 background-color: transparent;
                 color: #FFF;
                 cursor: pointer;
-                width: 38px;
-                height: 32px;
+                //width: 38px;
+                //height: 32px;
                 overflow: hidden;
                 font-size: 28px;
                 line-height: 30px;
@@ -372,7 +372,7 @@ ul.mfp_list{
             button.expand{
                 position: relative;
                 margin: 0 5px;
-                padding: 0 5px;
+                padding: 0 .13em;
                 line-height: 30px;
                 font-size: 28px;
                 &:hover{
