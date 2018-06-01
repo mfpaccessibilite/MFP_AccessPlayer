@@ -6,7 +6,7 @@ var lang = {
     volume : "Volume",
     expand : "Plein écran",
     compress : "Quitter le plein écran",
-    searchBar : "Bar de recherche",
+    searchBar : "Barre de progression (durée)",
     on : 'de',
     playBackrate : 'Vitesse de lecture',
     close : 'Fermer',
