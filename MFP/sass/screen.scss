@@ -424,6 +424,9 @@ ul.mfp_list{
               background: #CCC;
             }
         }
+        &.menu-infos {
+        	max-height: 70vh !important;
+        }
     }
     
     /*Chrome*/
