@@ -44,7 +44,7 @@ var lang = {
     audiodesc: 'Audio-description',
     signed: 'Langue des signes',
     transcripts: 'Versions textes de la vidéo',
-    transcript: 'Version texte de la vidéo',
+    transcript: '(nouvelle fenêtre) Version texte de la vidéo',
     activateLiveTranscript: 'Activer le transcript temps réel',
     desactivateLiveTranscript: 'Désactiver le transcript temps réel',
     informations:'Informations'
