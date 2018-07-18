@@ -39,6 +39,7 @@ var lang = {
     backgroundColor: 'Couleur de fond',
     backgroundOpacity: 'Opacité du fond',
     chapters: 'Chapitres',
+    videos: 'Vidéos alternatives',
     highdef: 'Haute définition',
     lowdef: 'Basse définition',
     audiodesc: 'Audio-description',

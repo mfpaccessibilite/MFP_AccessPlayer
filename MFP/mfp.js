@@ -491,7 +491,7 @@ MFP.prototype={
         h.attr('aria-label',this.lang.volume);
 
         $(soundPart).append(this.soundBar);
-        $(leftPart).append("<span class='timer'><span class='timer-current'>00:00</span> / <span class='timer-duration'>00:00</span></span>");
+        $(leftPart).append("<span class='timer'><span class='timer-current'>0:00</span> / <span class='timer-duration'>00:00</span></span>");
 
         var rightPart = $("<div class='right-part' />");
         $(this.controlBar).append($(rightPart));
@@ -1225,20 +1225,26 @@ MFP.prototype={
             var min = 0;
             var minute = 0;
             var sec = 0;
+            var dura = '';
             sec = tmp%60;
             min = ((tmp - sec) / 60)%60;
             minute = ((tmp - sec) / 60);
             hr = (tmp - sec - 60 * min) / 3600;
-            if(sec < 10){
+            if(hr > 0){
+                dura=hr+':';
+            }
+            if(sec < 10 ){
                 sec = '0' + sec;
             }
-            if(min < 10){
+            if(min < 10 && hr > 0){
                 min = '0' + min;
             }
-            $(this.container).find('.timer-current').html(minute+':'+sec);
+            dura=dura+min+':'+sec;
+
+            $(this.container).find('.timer-current').html(dura);
             var h = this.progressBar.find('.ui-slider-handle');
             //$(this.controlBar).find('.progress-bar').attr('aria-valuetext',min+':'+sec+' '+this.lang.on+' '+this.duration);
-            h.attr('aria-valuetext',hr+':'+min+':'+sec+' '+this.lang.on+' '+this.duration);
+            h.attr('aria-valuetext',dura+' '+this.lang.on+' '+this.duration);
             h.attr('aria-valuenow',(time/duration)*100);
         }.bind(this));
         video.on('durationchange',function(e){
@@ -1272,20 +1278,25 @@ MFP.prototype={
             var min = 0;
             var minute = 0;
             var sec = 0;
+            var dura = '';
             sec = tmp%60;
             min = ((tmp - sec) / 60)%60;
             minute = ((tmp - sec) / 60);
             hr = (tmp - sec - 60 * min) / 3600;
+            if(hr > 0){
+                dura=hr+':';
+            }
             if(sec < 10){
                 sec = '0' + sec;
             }
-            if(min < 10){
+            if(min < 10 && hr > 0){
                 min = '0' + min;
             }
+            dura=dura+min+':'+sec;
 
         
-        $(this.container).find('.timer-duration').html(minute+':'+sec);
-        this.duration = hr+':'+min+':'+sec;
+        $(this.container).find('.timer-duration').html(dura);
+        this.duration = dura;
         }
     },
     initFullScreenEvents:function(){
