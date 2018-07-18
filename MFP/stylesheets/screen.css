@@ -281,6 +281,7 @@ ul.mfp_list li.focus, ul.mfp_list li:hover {
 .mfp-wrapper .control-bar .left-part button {
   margin: 0;
   padding: 0 .13em;
+  min-width: 30px;
   display: inline-block;
   text-align: center;
   border: 1px solid transparent;
@@ -288,42 +289,40 @@ ul.mfp_list li.focus, ul.mfp_list li:hover {
   color: #FFF;
   cursor: pointer;
 }
-/* line 225, ../sass/screen.scss */
+/* line 226, ../sass/screen.scss */
 .mfp-wrapper .control-bar .left-part button:focus {
   outline-color: yellow;
   outline-style: solid;
   outline-width: 1px;
 }
-/* line 230, ../sass/screen.scss */
+/* line 231, ../sass/screen.scss */
 .mfp-wrapper .control-bar .left-part button.play, .mfp-wrapper .control-bar .left-part button.pause, .mfp-wrapper .control-bar .left-part button.chapters {
-  position: relative;
   margin: 0 5px;
   padding: 0 5px;
   line-height: 30px;
   font-size: 28px;
 }
-/* line 236, ../sass/screen.scss */
+/* line 237, ../sass/screen.scss */
 .mfp-wrapper .control-bar .left-part button.play:hover, .mfp-wrapper .control-bar .left-part button.pause:hover, .mfp-wrapper .control-bar .left-part button.chapters:hover {
   color: #CCC;
 }
-/* line 240, ../sass/screen.scss */
+/* line 241, ../sass/screen.scss */
 .mfp-wrapper .control-bar .left-part .soundPart {
   position: relative;
 }
-/* line 242, ../sass/screen.scss */
+/* line 243, ../sass/screen.scss */
 .mfp-wrapper .control-bar .left-part .soundPart button.sound {
-  position: relative;
   margin: 0 5px;
   padding: 0 .13em;
   line-height: 30px;
   text-align: left;
   font-size: 28px;
 }
-/* line 250, ../sass/screen.scss */
+/* line 251, ../sass/screen.scss */
 .mfp-wrapper .control-bar .left-part .soundPart button.sound:hover {
   color: #CCC;
 }
-/* line 254, ../sass/screen.scss */
+/* line 255, ../sass/screen.scss */
 .mfp-wrapper .control-bar .left-part .soundPart .sound-range {
   display: inline-block;
   width: 100px;
@@ -332,21 +331,21 @@ ul.mfp_list li.focus, ul.mfp_list li:hover {
   margin-left: 10px;
   height: 10px;
 }
-/* line 261, ../sass/screen.scss */
+/* line 262, ../sass/screen.scss */
 .mfp-wrapper .control-bar .left-part .soundPart .sound-range .ui-widget-header {
   background: #43e5f7;
 }
-/* line 264, ../sass/screen.scss */
+/* line 265, ../sass/screen.scss */
 .mfp-wrapper .control-bar .left-part .soundPart .sound-range .ui-slider-handle {
   height: 16px;
 }
-/* line 269, ../sass/screen.scss */
+/* line 270, ../sass/screen.scss */
 .mfp-wrapper .control-bar .left-part .soundPart input[type='range']:focus {
   outline-color: yellow;
   outline-style: solid;
   outline-width: 1px;
 }
-/* line 276, ../sass/screen.scss */
+/* line 277, ../sass/screen.scss */
 .mfp-wrapper .control-bar .left-part .timer {
   position: relative;
   display: inline-block;
@@ -356,13 +355,13 @@ ul.mfp_list li.focus, ul.mfp_list li:hover {
   color: #CCC;
   line-height: 50px;
 }
-/* line 286, ../sass/screen.scss */
+/* line 287, ../sass/screen.scss */
 .mfp-wrapper .control-bar select:focus {
   outline-color: yellow;
   outline-style: solid;
   outline-width: 1px;
 }
-/* line 291, ../sass/screen.scss */
+/* line 292, ../sass/screen.scss */
 .mfp-wrapper .control-bar .right-part {
   position: relative;
   float: right;
@@ -371,7 +370,7 @@ ul.mfp_list li.focus, ul.mfp_list li:hover {
   min-height: 30px;
   z-index: 3;
 }
-/* line 299, ../sass/screen.scss */
+/* line 300, ../sass/screen.scss */
 .mfp-wrapper .control-bar .right-part select.speed {
   margin: 0;
   text-align: right;
@@ -384,15 +383,14 @@ ul.mfp_list li.focus, ul.mfp_list li:hover {
   width: 73px;
   direction: rtl;
 }
-/* line 310, ../sass/screen.scss */
+/* line 311, ../sass/screen.scss */
 .mfp-wrapper .control-bar .right-part select.speed option {
   text-align: right;
   direction: ltr;
 }
-/* line 316, ../sass/screen.scss */
+/* line 317, ../sass/screen.scss */
 .mfp-wrapper .control-bar .right-part button {
   display: inline-block;
-  position: relative;
   margin: 0;
   padding: 0 .13em;
   border: 1px solid transparent;
@@ -403,11 +401,11 @@ ul.mfp_list li.focus, ul.mfp_list li:hover {
   font-size: 28px;
   line-height: 30px;
 }
-/* line 330, ../sass/screen.scss */
+/* line 331, ../sass/screen.scss */
 .mfp-wrapper .control-bar .right-part button.off {
   color: #888;
 }
-/* line 334, ../sass/screen.scss */
+/* line 335, ../sass/screen.scss */
 .mfp-wrapper .control-bar .right-part .ui-dialog-titlebar button.ui-button {
   background-attachment: scroll;
   background-clip: border-box;
@@ -438,98 +436,97 @@ ul.mfp_list li.focus, ul.mfp_list li:hover {
   white-space: nowrap;
   width: 20px;
 }
-/* line 367, ../sass/screen.scss */
+/* line 368, ../sass/screen.scss */
 .mfp-wrapper .control-bar .right-part button:focus {
   outline-color: yellow;
   outline-style: solid;
   outline-width: 1px;
 }
-/* line 372, ../sass/screen.scss */
+/* line 373, ../sass/screen.scss */
 .mfp-wrapper .control-bar .right-part button.expand {
-  position: relative;
   margin: 0 5px;
   padding: 0 .13em;
   line-height: 30px;
   font-size: 28px;
 }
-/* line 378, ../sass/screen.scss */
+/* line 379, ../sass/screen.scss */
 .mfp-wrapper .control-bar .right-part button.expand:hover {
   color: #CCC;
 }
-/* line 382, ../sass/screen.scss */
+/* line 383, ../sass/screen.scss */
 .mfp-wrapper .control-bar .right-part .subtitles-block, .mfp-wrapper .control-bar .right-part .pref-block, .mfp-wrapper .control-bar .right-part .videos-block, .mfp-wrapper .control-bar .right-part .transcripts-block, .mfp-wrapper .control-bar .right-part .chapters-block {
   display: inline-block;
   position: relative;
   height: 100%;
 }
-/* line 386, ../sass/screen.scss */
+/* line 387, ../sass/screen.scss */
 .mfp-wrapper .control-bar .right-part .subtitles-block li.preferences, .mfp-wrapper .control-bar .right-part .pref-block li.preferences, .mfp-wrapper .control-bar .right-part .videos-block li.preferences, .mfp-wrapper .control-bar .right-part .transcripts-block li.preferences, .mfp-wrapper .control-bar .right-part .chapters-block li.preferences {
   text-align: right;
   font-size: 80%;
 }
-/* line 389, ../sass/screen.scss */
+/* line 390, ../sass/screen.scss */
 .mfp-wrapper .control-bar .right-part .subtitles-block li.preferences span, .mfp-wrapper .control-bar .right-part .pref-block li.preferences span, .mfp-wrapper .control-bar .right-part .videos-block li.preferences span, .mfp-wrapper .control-bar .right-part .transcripts-block li.preferences span, .mfp-wrapper .control-bar .right-part .chapters-block li.preferences span {
   font-size: 100%;
 }
-/* line 397, ../sass/screen.scss */
+/* line 398, ../sass/screen.scss */
 .mfp-wrapper .menu {
   list-style: none;
   padding-left: 0;
 }
-/* line 400, ../sass/screen.scss */
+/* line 401, ../sass/screen.scss */
 .mfp-wrapper .menu label {
   font-size: 24px;
   line-height: 1.5;
 }
-/* line 403, ../sass/screen.scss */
+/* line 404, ../sass/screen.scss */
 .mfp-wrapper .menu label span.mfp-label-name {
   display: inline-block;
   text-align: right;
   width: 270px;
 }
-/* line 407, ../sass/screen.scss */
+/* line 408, ../sass/screen.scss */
 .mfp-wrapper .menu label span.mfp-label-name:after {
   content: ' : ';
 }
-/* line 412, ../sass/screen.scss */
+/* line 413, ../sass/screen.scss */
 .mfp-wrapper .menu li {
   line-height: 1.5;
   margin-left: 0;
   font-size: 24px;
   padding: 0 5px;
 }
-/* line 417, ../sass/screen.scss */
+/* line 418, ../sass/screen.scss */
 .mfp-wrapper .menu li [class^="icon-"] {
   font-size: 24px;
 }
-/* line 420, ../sass/screen.scss */
+/* line 421, ../sass/screen.scss */
 .mfp-wrapper .menu li.selected {
   background: #999;
 }
-/* line 423, ../sass/screen.scss */
+/* line 424, ../sass/screen.scss */
 .mfp-wrapper .menu li div.ui-state-active {
   background: #CCC;
 }
-/* line 427, ../sass/screen.scss */
+/* line 428, ../sass/screen.scss */
 .mfp-wrapper .menu.menu-infos {
   max-height: 70vh !important;
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  /* line 434, ../sass/screen.scss */
+  /* line 435, ../sass/screen.scss */
   .mfp-wrapper input[type='range'] {
     overflow: hidden;
     width: 80px;
     -webkit-appearance: none;
     background-color: #111;
   }
-  /* line 441, ../sass/screen.scss */
+  /* line 442, ../sass/screen.scss */
   .mfp-wrapper input[type='range']::-webkit-slider-runnable-track {
     height: 10px;
     -webkit-appearance: none;
     color: #13bba4;
     margin-top: -1px;
   }
-  /* line 448, ../sass/screen.scss */
+  /* line 449, ../sass/screen.scss */
   .mfp-wrapper input[type='range']::-webkit-slider-thumb {
     width: 10px;
     -webkit-appearance: none;
@@ -539,44 +536,44 @@ ul.mfp_list li.focus, ul.mfp_list li:hover {
     box-shadow: -8000px 0 0 8000px #43e5f7;
   }
 }
-/* line 459, ../sass/screen.scss */
+/* line 460, ../sass/screen.scss */
 .mfp-wrapper input[type="range"]::-moz-range-progress {
   background-color: #43e5f7;
 }
-/* line 462, ../sass/screen.scss */
+/* line 463, ../sass/screen.scss */
 .mfp-wrapper input[type="range"]::-moz-range-track {
   background-color: #111;
 }
-/* line 466, ../sass/screen.scss */
+/* line 467, ../sass/screen.scss */
 .mfp-wrapper input[type="range"]::-ms-fill-lower {
   background-color: #43e5f7;
 }
-/* line 469, ../sass/screen.scss */
+/* line 470, ../sass/screen.scss */
 .mfp-wrapper input[type="range"]::-ms-fill-upper {
   background-color: #111;
 }
 
-/* line 473, ../sass/screen.scss */
+/* line 474, ../sass/screen.scss */
 .ui-dialog .ui-dialog-content.ui-menu {
   padding: 0;
 }
 
-/* line 477, ../sass/screen.scss */
+/* line 478, ../sass/screen.scss */
 [class^="live-"].selected {
   color: red;
 }
 
-/* line 481, ../sass/screen.scss */
+/* line 482, ../sass/screen.scss */
 .mfp-live {
   cursor: pointer;
 }
 
-/* line 485, ../sass/screen.scss */
+/* line 486, ../sass/screen.scss */
 .mfp-wrapper [class^="sub-"] {
   box-sizing: border-box;
   position: absolute;
 }
-/* line 490, ../sass/screen.scss */
+/* line 491, ../sass/screen.scss */
 .mfp-wrapper .mfp-subtitles-wrapper {
   position: absolute;
   z-index: 2;
@@ -585,13 +582,13 @@ ul.mfp_list li.focus, ul.mfp_list li:hover {
   width: 80%;
   height: calc(100% - 93px);
 }
-/* line 498, ../sass/screen.scss */
+/* line 499, ../sass/screen.scss */
 .mfp-wrapper video::cue {
   font-family: Roboto, 'Arial Unicode Ms', Arial, Helvetica, Verdana, 'PT Sans Caption', sans-serif;
   color: white;
   background-color: rgba(0, 0, 0, 0.5) !important;
 }
-/* line 503, ../sass/screen.scss */
+/* line 504, ../sass/screen.scss */
 .mfp-wrapper .mfp-subtitles {
   padding: 0.35%;
   border-radius: 5px;
@@ -599,739 +596,739 @@ ul.mfp_list li.focus, ul.mfp_list li:hover {
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
 }
-/* line 512, ../sass/screen.scss */
+/* line 513, ../sass/screen.scss */
 .mfp-wrapper.font-family-s-mono .mfp-subtitles {
   font-family: 'Courier New', Courier, 'Nimbus Mono L', 'Cutive Mono', monospace;
 }
-/* line 515, ../sass/screen.scss */
+/* line 516, ../sass/screen.scss */
 .mfp-wrapper.font-family-s-mono video::cue {
   font-family: 'Courier New', Courier, 'Nimbus Mono L', 'Cutive Mono', monospace;
 }
-/* line 520, ../sass/screen.scss */
+/* line 521, ../sass/screen.scss */
 .mfp-wrapper.font-family-s-prop .mfp-subtitles {
   font-family: 'Times New Roman', Times, Georgia, Cambria, 'PT Serif Caption', serif;
 }
-/* line 523, ../sass/screen.scss */
+/* line 524, ../sass/screen.scss */
 .mfp-wrapper.font-family-s-prop video::cue {
   font-family: 'Times New Roman', Times, Georgia, Cambria, 'PT Serif Caption', serif;
 }
-/* line 528, ../sass/screen.scss */
+/* line 529, ../sass/screen.scss */
 .mfp-wrapper.font-family-ss-mono .mfp-subtitles {
   font-family: 'Deja Vu Sans Mono', 'Lucida Console', Monaco, Consolas, 'PT Mono', monospace;
 }
-/* line 531, ../sass/screen.scss */
+/* line 532, ../sass/screen.scss */
 .mfp-wrapper.font-family-ss-mono video::cue {
   font-family: 'Deja Vu Sans Mono', 'Lucida Console', Monaco, Consolas, 'PT Mono', monospace;
 }
-/* line 536, ../sass/screen.scss */
+/* line 537, ../sass/screen.scss */
 .mfp-wrapper.font-family-ss-prop .mfp-subtitles {
   font-family: Roboto, 'Arial Unicode Ms', Arial, Helvetica, Verdana, 'PT Sans Caption', sans-serif;
 }
-/* line 539, ../sass/screen.scss */
+/* line 540, ../sass/screen.scss */
 .mfp-wrapper.font-family-ss-prop video::cue {
   font-family: Roboto, 'Arial Unicode Ms', Arial, Helvetica, Verdana, 'PT Sans Caption', sans-serif;
 }
-/* line 544, ../sass/screen.scss */
+/* line 545, ../sass/screen.scss */
 .mfp-wrapper.font-family-c .mfp-subtitles {
   font-family: 'Monotype Corsiva', 'URW Chancery L', 'Apple Chancery', 'Dancing Script', cursive;
 }
-/* line 547, ../sass/screen.scss */
+/* line 548, ../sass/screen.scss */
 .mfp-wrapper.font-family-c video::cue {
   font-family: 'Monotype Corsiva', 'URW Chancery L', 'Apple Chancery', 'Dancing Script', cursive;
 }
-/* line 552, ../sass/screen.scss */
+/* line 553, ../sass/screen.scss */
 .mfp-wrapper.font-family-sc .mfp-subtitles {
   font-family: 'Alegreya Sans SC', sans-serif;
 }
-/* line 555, ../sass/screen.scss */
+/* line 556, ../sass/screen.scss */
 .mfp-wrapper.font-family-sc video::cue {
   font-family: 'Alegreya Sans SC', sans-serif;
 }
-/* line 560, ../sass/screen.scss */
+/* line 561, ../sass/screen.scss */
 .mfp-wrapper.font-color-white .mfp-subtitles {
   color: white;
 }
-/* line 563, ../sass/screen.scss */
+/* line 564, ../sass/screen.scss */
 .mfp-wrapper.font-color-white video::cue {
   color: white;
 }
-/* line 568, ../sass/screen.scss */
+/* line 569, ../sass/screen.scss */
 .mfp-wrapper.font-color-yellow .mfp-subtitles {
   color: yellow;
 }
-/* line 571, ../sass/screen.scss */
+/* line 572, ../sass/screen.scss */
 .mfp-wrapper.font-color-yellow video::cue {
   color: yellow;
 }
-/* line 576, ../sass/screen.scss */
+/* line 577, ../sass/screen.scss */
 .mfp-wrapper.font-color-green .mfp-subtitles {
   color: green;
 }
-/* line 579, ../sass/screen.scss */
+/* line 580, ../sass/screen.scss */
 .mfp-wrapper.font-color-green video::cue {
   color: green;
 }
-/* line 584, ../sass/screen.scss */
+/* line 585, ../sass/screen.scss */
 .mfp-wrapper.font-color-cyan .mfp-subtitles {
   color: cyan;
 }
-/* line 587, ../sass/screen.scss */
+/* line 588, ../sass/screen.scss */
 .mfp-wrapper.font-color-cyan video::cue {
   color: cyan;
 }
-/* line 592, ../sass/screen.scss */
+/* line 593, ../sass/screen.scss */
 .mfp-wrapper.font-color-blue .mfp-subtitles {
   color: blue;
 }
-/* line 595, ../sass/screen.scss */
+/* line 596, ../sass/screen.scss */
 .mfp-wrapper.font-color-blue video::cue {
   color: blue;
 }
-/* line 600, ../sass/screen.scss */
+/* line 601, ../sass/screen.scss */
 .mfp-wrapper.font-color-magenta .mfp-subtitles {
   color: magenta;
 }
-/* line 603, ../sass/screen.scss */
+/* line 604, ../sass/screen.scss */
 .mfp-wrapper.font-color-magenta video::cue {
   color: magenta;
 }
-/* line 608, ../sass/screen.scss */
+/* line 609, ../sass/screen.scss */
 .mfp-wrapper.font-color-red .mfp-subtitles {
   color: red;
 }
-/* line 611, ../sass/screen.scss */
+/* line 612, ../sass/screen.scss */
 .mfp-wrapper.font-color-red video::cue {
   color: red;
 }
-/* line 616, ../sass/screen.scss */
+/* line 617, ../sass/screen.scss */
 .mfp-wrapper.font-color-black .mfp-subtitles {
   color: black;
 }
-/* line 619, ../sass/screen.scss */
+/* line 620, ../sass/screen.scss */
 .mfp-wrapper.font-color-black video::cue {
   color: black;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFFFF-0 .mfp-subtitles {
   text-shadow: -0px -0px 0 #FFFFFF, 0px -0px 0 #FFFFFF, -0px 0px 0 #FFFFFF, 0px 0px 0 #FFFFFF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFFFF-0 video::cue {
   text-shadow: -0px -0px 0 #FFFFFF, 0px -0px 0 #FFFFFF, -0px 0px 0 #FFFFFF, 0px 0px 0 #FFFFFF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFFFF-1 .mfp-subtitles {
   text-shadow: -1px -1px 0 #FFFFFF, 1px -1px 0 #FFFFFF, -1px 1px 0 #FFFFFF, 1px 1px 0 #FFFFFF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFFFF-1 video::cue {
   text-shadow: -1px -1px 0 #FFFFFF, 1px -1px 0 #FFFFFF, -1px 1px 0 #FFFFFF, 1px 1px 0 #FFFFFF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFFFF-3 .mfp-subtitles {
   text-shadow: -3px -3px 0 #FFFFFF, 3px -3px 0 #FFFFFF, -3px 3px 0 #FFFFFF, 3px 3px 0 #FFFFFF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFFFF-3 video::cue {
   text-shadow: -3px -3px 0 #FFFFFF, 3px -3px 0 #FFFFFF, -3px 3px 0 #FFFFFF, 3px 3px 0 #FFFFFF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFFFF-5 .mfp-subtitles {
   text-shadow: -5px -5px 0 #FFFFFF, 5px -5px 0 #FFFFFF, -5px 5px 0 #FFFFFF, 5px 5px 0 #FFFFFF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFFFF-5 video::cue {
   text-shadow: -5px -5px 0 #FFFFFF, 5px -5px 0 #FFFFFF, -5px 5px 0 #FFFFFF, 5px 5px 0 #FFFFFF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFF00-0 .mfp-subtitles {
   text-shadow: -0px -0px 0 #FFFF00, 0px -0px 0 #FFFF00, -0px 0px 0 #FFFF00, 0px 0px 0 #FFFF00;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFF00-0 video::cue {
   text-shadow: -0px -0px 0 #FFFF00, 0px -0px 0 #FFFF00, -0px 0px 0 #FFFF00, 0px 0px 0 #FFFF00;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFF00-1 .mfp-subtitles {
   text-shadow: -1px -1px 0 #FFFF00, 1px -1px 0 #FFFF00, -1px 1px 0 #FFFF00, 1px 1px 0 #FFFF00;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFF00-1 video::cue {
   text-shadow: -1px -1px 0 #FFFF00, 1px -1px 0 #FFFF00, -1px 1px 0 #FFFF00, 1px 1px 0 #FFFF00;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFF00-3 .mfp-subtitles {
   text-shadow: -3px -3px 0 #FFFF00, 3px -3px 0 #FFFF00, -3px 3px 0 #FFFF00, 3px 3px 0 #FFFF00;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFF00-3 video::cue {
   text-shadow: -3px -3px 0 #FFFF00, 3px -3px 0 #FFFF00, -3px 3px 0 #FFFF00, 3px 3px 0 #FFFF00;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFF00-5 .mfp-subtitles {
   text-shadow: -5px -5px 0 #FFFF00, 5px -5px 0 #FFFF00, -5px 5px 0 #FFFF00, 5px 5px 0 #FFFF00;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FFFF00-5 video::cue {
   text-shadow: -5px -5px 0 #FFFF00, 5px -5px 0 #FFFF00, -5px 5px 0 #FFFF00, 5px 5px 0 #FFFF00;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-008000-0 .mfp-subtitles {
   text-shadow: -0px -0px 0 #008000, 0px -0px 0 #008000, -0px 0px 0 #008000, 0px 0px 0 #008000;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-008000-0 video::cue {
   text-shadow: -0px -0px 0 #008000, 0px -0px 0 #008000, -0px 0px 0 #008000, 0px 0px 0 #008000;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-008000-1 .mfp-subtitles {
   text-shadow: -1px -1px 0 #008000, 1px -1px 0 #008000, -1px 1px 0 #008000, 1px 1px 0 #008000;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-008000-1 video::cue {
   text-shadow: -1px -1px 0 #008000, 1px -1px 0 #008000, -1px 1px 0 #008000, 1px 1px 0 #008000;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-008000-3 .mfp-subtitles {
   text-shadow: -3px -3px 0 #008000, 3px -3px 0 #008000, -3px 3px 0 #008000, 3px 3px 0 #008000;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-008000-3 video::cue {
   text-shadow: -3px -3px 0 #008000, 3px -3px 0 #008000, -3px 3px 0 #008000, 3px 3px 0 #008000;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-008000-5 .mfp-subtitles {
   text-shadow: -5px -5px 0 #008000, 5px -5px 0 #008000, -5px 5px 0 #008000, 5px 5px 0 #008000;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-008000-5 video::cue {
   text-shadow: -5px -5px 0 #008000, 5px -5px 0 #008000, -5px 5px 0 #008000, 5px 5px 0 #008000;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-00FFFF-0 .mfp-subtitles {
   text-shadow: -0px -0px 0 #00FFFF, 0px -0px 0 #00FFFF, -0px 0px 0 #00FFFF, 0px 0px 0 #00FFFF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-00FFFF-0 video::cue {
   text-shadow: -0px -0px 0 #00FFFF, 0px -0px 0 #00FFFF, -0px 0px 0 #00FFFF, 0px 0px 0 #00FFFF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-00FFFF-1 .mfp-subtitles {
   text-shadow: -1px -1px 0 #00FFFF, 1px -1px 0 #00FFFF, -1px 1px 0 #00FFFF, 1px 1px 0 #00FFFF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-00FFFF-1 video::cue {
   text-shadow: -1px -1px 0 #00FFFF, 1px -1px 0 #00FFFF, -1px 1px 0 #00FFFF, 1px 1px 0 #00FFFF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-00FFFF-3 .mfp-subtitles {
   text-shadow: -3px -3px 0 #00FFFF, 3px -3px 0 #00FFFF, -3px 3px 0 #00FFFF, 3px 3px 0 #00FFFF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-00FFFF-3 video::cue {
   text-shadow: -3px -3px 0 #00FFFF, 3px -3px 0 #00FFFF, -3px 3px 0 #00FFFF, 3px 3px 0 #00FFFF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-00FFFF-5 .mfp-subtitles {
   text-shadow: -5px -5px 0 #00FFFF, 5px -5px 0 #00FFFF, -5px 5px 0 #00FFFF, 5px 5px 0 #00FFFF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-00FFFF-5 video::cue {
   text-shadow: -5px -5px 0 #00FFFF, 5px -5px 0 #00FFFF, -5px 5px 0 #00FFFF, 5px 5px 0 #00FFFF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-0000FF-0 .mfp-subtitles {
   text-shadow: -0px -0px 0 #0000FF, 0px -0px 0 #0000FF, -0px 0px 0 #0000FF, 0px 0px 0 #0000FF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-0000FF-0 video::cue {
   text-shadow: -0px -0px 0 #0000FF, 0px -0px 0 #0000FF, -0px 0px 0 #0000FF, 0px 0px 0 #0000FF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-0000FF-1 .mfp-subtitles {
   text-shadow: -1px -1px 0 #0000FF, 1px -1px 0 #0000FF, -1px 1px 0 #0000FF, 1px 1px 0 #0000FF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-0000FF-1 video::cue {
   text-shadow: -1px -1px 0 #0000FF, 1px -1px 0 #0000FF, -1px 1px 0 #0000FF, 1px 1px 0 #0000FF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-0000FF-3 .mfp-subtitles {
   text-shadow: -3px -3px 0 #0000FF, 3px -3px 0 #0000FF, -3px 3px 0 #0000FF, 3px 3px 0 #0000FF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-0000FF-3 video::cue {
   text-shadow: -3px -3px 0 #0000FF, 3px -3px 0 #0000FF, -3px 3px 0 #0000FF, 3px 3px 0 #0000FF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-0000FF-5 .mfp-subtitles {
   text-shadow: -5px -5px 0 #0000FF, 5px -5px 0 #0000FF, -5px 5px 0 #0000FF, 5px 5px 0 #0000FF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-0000FF-5 video::cue {
   text-shadow: -5px -5px 0 #0000FF, 5px -5px 0 #0000FF, -5px 5px 0 #0000FF, 5px 5px 0 #0000FF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF00FF-0 .mfp-subtitles {
   text-shadow: -0px -0px 0 #FF00FF, 0px -0px 0 #FF00FF, -0px 0px 0 #FF00FF, 0px 0px 0 #FF00FF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF00FF-0 video::cue {
   text-shadow: -0px -0px 0 #FF00FF, 0px -0px 0 #FF00FF, -0px 0px 0 #FF00FF, 0px 0px 0 #FF00FF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF00FF-1 .mfp-subtitles {
   text-shadow: -1px -1px 0 #FF00FF, 1px -1px 0 #FF00FF, -1px 1px 0 #FF00FF, 1px 1px 0 #FF00FF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF00FF-1 video::cue {
   text-shadow: -1px -1px 0 #FF00FF, 1px -1px 0 #FF00FF, -1px 1px 0 #FF00FF, 1px 1px 0 #FF00FF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF00FF-3 .mfp-subtitles {
   text-shadow: -3px -3px 0 #FF00FF, 3px -3px 0 #FF00FF, -3px 3px 0 #FF00FF, 3px 3px 0 #FF00FF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF00FF-3 video::cue {
   text-shadow: -3px -3px 0 #FF00FF, 3px -3px 0 #FF00FF, -3px 3px 0 #FF00FF, 3px 3px 0 #FF00FF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF00FF-5 .mfp-subtitles {
   text-shadow: -5px -5px 0 #FF00FF, 5px -5px 0 #FF00FF, -5px 5px 0 #FF00FF, 5px 5px 0 #FF00FF;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF00FF-5 video::cue {
   text-shadow: -5px -5px 0 #FF00FF, 5px -5px 0 #FF00FF, -5px 5px 0 #FF00FF, 5px 5px 0 #FF00FF;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF0000-0 .mfp-subtitles {
   text-shadow: -0px -0px 0 #FF0000, 0px -0px 0 #FF0000, -0px 0px 0 #FF0000, 0px 0px 0 #FF0000;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF0000-0 video::cue {
   text-shadow: -0px -0px 0 #FF0000, 0px -0px 0 #FF0000, -0px 0px 0 #FF0000, 0px 0px 0 #FF0000;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF0000-1 .mfp-subtitles {
   text-shadow: -1px -1px 0 #FF0000, 1px -1px 0 #FF0000, -1px 1px 0 #FF0000, 1px 1px 0 #FF0000;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF0000-1 video::cue {
   text-shadow: -1px -1px 0 #FF0000, 1px -1px 0 #FF0000, -1px 1px 0 #FF0000, 1px 1px 0 #FF0000;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF0000-3 .mfp-subtitles {
   text-shadow: -3px -3px 0 #FF0000, 3px -3px 0 #FF0000, -3px 3px 0 #FF0000, 3px 3px 0 #FF0000;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF0000-3 video::cue {
   text-shadow: -3px -3px 0 #FF0000, 3px -3px 0 #FF0000, -3px 3px 0 #FF0000, 3px 3px 0 #FF0000;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF0000-5 .mfp-subtitles {
   text-shadow: -5px -5px 0 #FF0000, 5px -5px 0 #FF0000, -5px 5px 0 #FF0000, 5px 5px 0 #FF0000;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-FF0000-5 video::cue {
   text-shadow: -5px -5px 0 #FF0000, 5px -5px 0 #FF0000, -5px 5px 0 #FF0000, 5px 5px 0 #FF0000;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-000000-0 .mfp-subtitles {
   text-shadow: -0px -0px 0 #000000, 0px -0px 0 #000000, -0px 0px 0 #000000, 0px 0px 0 #000000;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-000000-0 video::cue {
   text-shadow: -0px -0px 0 #000000, 0px -0px 0 #000000, -0px 0px 0 #000000, 0px 0px 0 #000000;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-000000-1 .mfp-subtitles {
   text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-000000-1 video::cue {
   text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-000000-3 .mfp-subtitles {
   text-shadow: -3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-000000-3 video::cue {
   text-shadow: -3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000;
 }
-/* line 631, ../sass/screen.scss */
+/* line 632, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-000000-5 .mfp-subtitles {
   text-shadow: -5px -5px 0 #000000, 5px -5px 0 #000000, -5px 5px 0 #000000, 5px 5px 0 #000000;
 }
-/* line 634, ../sass/screen.scss */
+/* line 635, ../sass/screen.scss */
 .mfp-wrapper.font-shadow-000000-5 video::cue {
   text-shadow: -5px -5px 0 #000000, 5px -5px 0 #000000, -5px 5px 0 #000000, 5px 5px 0 #000000;
 }
-/* line 644, ../sass/screen.scss */
+/* line 645, ../sass/screen.scss */
 .mfp-wrapper.background-white-0 .mfp-subtitles {
   background-color: rgba(255, 255, 255, 0) !important;
 }
-/* line 651, ../sass/screen.scss */
+/* line 652, ../sass/screen.scss */
 .mfp-wrapper.background-white-0 video::cue {
   background-color: rgba(255, 255, 255, 0) !important;
 }
-/* line 660, ../sass/screen.scss */
+/* line 661, ../sass/screen.scss */
 .mfp-wrapper.background-yellow-0 .mfp-subtitles {
   background-color: rgba(255, 255, 0, 0) !important;
 }
-/* line 667, ../sass/screen.scss */
+/* line 668, ../sass/screen.scss */
 .mfp-wrapper.background-yellow-0 video::cue {
   background-color: rgba(255, 255, 0, 0) !important;
 }
-/* line 676, ../sass/screen.scss */
+/* line 677, ../sass/screen.scss */
 .mfp-wrapper.background-green-0 .mfp-subtitles {
   background-color: rgba(0, 128, 0, 0) !important;
 }
-/* line 683, ../sass/screen.scss */
+/* line 684, ../sass/screen.scss */
 .mfp-wrapper.background-green-0 video::cue {
   background-color: rgba(0, 128, 0, 0) !important;
 }
-/* line 692, ../sass/screen.scss */
+/* line 693, ../sass/screen.scss */
 .mfp-wrapper.background-cyan-0 .mfp-subtitles {
   background-color: rgba(0, 255, 255, 0) !important;
 }
-/* line 699, ../sass/screen.scss */
+/* line 700, ../sass/screen.scss */
 .mfp-wrapper.background-cyan-0 video::cue {
   background-color: rgba(0, 255, 255, 0) !important;
 }
-/* line 708, ../sass/screen.scss */
+/* line 709, ../sass/screen.scss */
 .mfp-wrapper.background-blue-0 .mfp-subtitles {
   background-color: rgba(0, 0, 255, 0) !important;
 }
-/* line 715, ../sass/screen.scss */
+/* line 716, ../sass/screen.scss */
 .mfp-wrapper.background-blue-0 video::cue {
   background-color: rgba(0, 0, 255, 0) !important;
 }
-/* line 724, ../sass/screen.scss */
+/* line 725, ../sass/screen.scss */
 .mfp-wrapper.background-magenta-0 .mfp-subtitles {
   background-color: rgba(255, 0, 255, 0) !important;
 }
-/* line 731, ../sass/screen.scss */
+/* line 732, ../sass/screen.scss */
 .mfp-wrapper.background-magenta-0 video::cue {
   background-color: rgba(255, 0, 255, 0) !important;
 }
-/* line 740, ../sass/screen.scss */
+/* line 741, ../sass/screen.scss */
 .mfp-wrapper.background-red-0 .mfp-subtitles {
   background-color: rgba(255, 0, 0, 0) !important;
 }
-/* line 747, ../sass/screen.scss */
+/* line 748, ../sass/screen.scss */
 .mfp-wrapper.background-red-0 video::cue {
   background-color: rgba(255, 0, 0, 0) !important;
 }
-/* line 756, ../sass/screen.scss */
+/* line 757, ../sass/screen.scss */
 .mfp-wrapper.background-black-0 .mfp-subtitles {
   background-color: transparent !important;
 }
-/* line 763, ../sass/screen.scss */
+/* line 764, ../sass/screen.scss */
 .mfp-wrapper.background-black-0 video::cue {
   background-color: transparent !important;
 }
-/* line 644, ../sass/screen.scss */
+/* line 645, ../sass/screen.scss */
 .mfp-wrapper.background-white-25 .mfp-subtitles {
   background-color: rgba(255, 255, 255, 0.25) !important;
 }
-/* line 651, ../sass/screen.scss */
+/* line 652, ../sass/screen.scss */
 .mfp-wrapper.background-white-25 video::cue {
   background-color: rgba(255, 255, 255, 0.25) !important;
 }
-/* line 660, ../sass/screen.scss */
+/* line 661, ../sass/screen.scss */
 .mfp-wrapper.background-yellow-25 .mfp-subtitles {
   background-color: rgba(255, 255, 0, 0.25) !important;
 }
-/* line 667, ../sass/screen.scss */
+/* line 668, ../sass/screen.scss */
 .mfp-wrapper.background-yellow-25 video::cue {
   background-color: rgba(255, 255, 0, 0.25) !important;
 }
-/* line 676, ../sass/screen.scss */
+/* line 677, ../sass/screen.scss */
 .mfp-wrapper.background-green-25 .mfp-subtitles {
   background-color: rgba(0, 128, 0, 0.25) !important;
 }
-/* line 683, ../sass/screen.scss */
+/* line 684, ../sass/screen.scss */
 .mfp-wrapper.background-green-25 video::cue {
   background-color: rgba(0, 128, 0, 0.25) !important;
 }
-/* line 692, ../sass/screen.scss */
+/* line 693, ../sass/screen.scss */
 .mfp-wrapper.background-cyan-25 .mfp-subtitles {
   background-color: rgba(0, 255, 255, 0.25) !important;
 }
-/* line 699, ../sass/screen.scss */
+/* line 700, ../sass/screen.scss */
 .mfp-wrapper.background-cyan-25 video::cue {
   background-color: rgba(0, 255, 255, 0.25) !important;
 }
-/* line 708, ../sass/screen.scss */
+/* line 709, ../sass/screen.scss */
 .mfp-wrapper.background-blue-25 .mfp-subtitles {
   background-color: rgba(0, 0, 255, 0.25) !important;
 }
-/* line 715, ../sass/screen.scss */
+/* line 716, ../sass/screen.scss */
 .mfp-wrapper.background-blue-25 video::cue {
   background-color: rgba(0, 0, 255, 0.25) !important;
 }
-/* line 724, ../sass/screen.scss */
+/* line 725, ../sass/screen.scss */
 .mfp-wrapper.background-magenta-25 .mfp-subtitles {
   background-color: rgba(255, 0, 255, 0.25) !important;
 }
-/* line 731, ../sass/screen.scss */
+/* line 732, ../sass/screen.scss */
 .mfp-wrapper.background-magenta-25 video::cue {
   background-color: rgba(255, 0, 255, 0.25) !important;
 }
-/* line 740, ../sass/screen.scss */
+/* line 741, ../sass/screen.scss */
 .mfp-wrapper.background-red-25 .mfp-subtitles {
   background-color: rgba(255, 0, 0, 0.25) !important;
 }
-/* line 747, ../sass/screen.scss */
+/* line 748, ../sass/screen.scss */
 .mfp-wrapper.background-red-25 video::cue {
   background-color: rgba(255, 0, 0, 0.25) !important;
 }
-/* line 756, ../sass/screen.scss */
+/* line 757, ../sass/screen.scss */
 .mfp-wrapper.background-black-25 .mfp-subtitles {
   background-color: rgba(0, 0, 0, 0.25) !important;
 }
-/* line 763, ../sass/screen.scss */
+/* line 764, ../sass/screen.scss */
 .mfp-wrapper.background-black-25 video::cue {
   background-color: rgba(0, 0, 0, 0.25) !important;
 }
-/* line 644, ../sass/screen.scss */
+/* line 645, ../sass/screen.scss */
 .mfp-wrapper.background-white-50 .mfp-subtitles {
   background-color: rgba(255, 255, 255, 0.5) !important;
 }
-/* line 651, ../sass/screen.scss */
+/* line 652, ../sass/screen.scss */
 .mfp-wrapper.background-white-50 video::cue {
   background-color: rgba(255, 255, 255, 0.5) !important;
 }
-/* line 660, ../sass/screen.scss */
+/* line 661, ../sass/screen.scss */
 .mfp-wrapper.background-yellow-50 .mfp-subtitles {
   background-color: rgba(255, 255, 0, 0.5) !important;
 }
-/* line 667, ../sass/screen.scss */
+/* line 668, ../sass/screen.scss */
 .mfp-wrapper.background-yellow-50 video::cue {
   background-color: rgba(255, 255, 0, 0.5) !important;
 }
-/* line 676, ../sass/screen.scss */
+/* line 677, ../sass/screen.scss */
 .mfp-wrapper.background-green-50 .mfp-subtitles {
   background-color: rgba(0, 128, 0, 0.5) !important;
 }
-/* line 683, ../sass/screen.scss */
+/* line 684, ../sass/screen.scss */
 .mfp-wrapper.background-green-50 video::cue {
   background-color: rgba(0, 128, 0, 0.5) !important;
 }
-/* line 692, ../sass/screen.scss */
+/* line 693, ../sass/screen.scss */
 .mfp-wrapper.background-cyan-50 .mfp-subtitles {
   background-color: rgba(0, 255, 255, 0.5) !important;
 }
-/* line 699, ../sass/screen.scss */
+/* line 700, ../sass/screen.scss */
 .mfp-wrapper.background-cyan-50 video::cue {
   background-color: rgba(0, 255, 255, 0.5) !important;
 }
-/* line 708, ../sass/screen.scss */
+/* line 709, ../sass/screen.scss */
 .mfp-wrapper.background-blue-50 .mfp-subtitles {
   background-color: rgba(0, 0, 255, 0.5) !important;
 }
-/* line 715, ../sass/screen.scss */
+/* line 716, ../sass/screen.scss */
 .mfp-wrapper.background-blue-50 video::cue {
   background-color: rgba(0, 0, 255, 0.5) !important;
 }
-/* line 724, ../sass/screen.scss */
+/* line 725, ../sass/screen.scss */
 .mfp-wrapper.background-magenta-50 .mfp-subtitles {
   background-color: rgba(255, 0, 255, 0.5) !important;
 }
-/* line 731, ../sass/screen.scss */
+/* line 732, ../sass/screen.scss */
 .mfp-wrapper.background-magenta-50 video::cue {
   background-color: rgba(255, 0, 255, 0.5) !important;
 }
-/* line 740, ../sass/screen.scss */
+/* line 741, ../sass/screen.scss */
 .mfp-wrapper.background-red-50 .mfp-subtitles {
   background-color: rgba(255, 0, 0, 0.5) !important;
 }
-/* line 747, ../sass/screen.scss */
+/* line 748, ../sass/screen.scss */
 .mfp-wrapper.background-red-50 video::cue {
   background-color: rgba(255, 0, 0, 0.5) !important;
 }
-/* line 756, ../sass/screen.scss */
+/* line 757, ../sass/screen.scss */
 .mfp-wrapper.background-black-50 .mfp-subtitles {
   background-color: rgba(0, 0, 0, 0.5) !important;
 }
-/* line 763, ../sass/screen.scss */
+/* line 764, ../sass/screen.scss */
 .mfp-wrapper.background-black-50 video::cue {
   background-color: rgba(0, 0, 0, 0.5) !important;
 }
-/* line 644, ../sass/screen.scss */
+/* line 645, ../sass/screen.scss */
 .mfp-wrapper.background-white-75 .mfp-subtitles {
   background-color: rgba(255, 255, 255, 0.75) !important;
 }
-/* line 651, ../sass/screen.scss */
+/* line 652, ../sass/screen.scss */
 .mfp-wrapper.background-white-75 video::cue {
   background-color: rgba(255, 255, 255, 0.75) !important;
 }
-/* line 660, ../sass/screen.scss */
+/* line 661, ../sass/screen.scss */
 .mfp-wrapper.background-yellow-75 .mfp-subtitles {
   background-color: rgba(255, 255, 0, 0.75) !important;
 }
-/* line 667, ../sass/screen.scss */
+/* line 668, ../sass/screen.scss */
 .mfp-wrapper.background-yellow-75 video::cue {
   background-color: rgba(255, 255, 0, 0.75) !important;
 }
-/* line 676, ../sass/screen.scss */
+/* line 677, ../sass/screen.scss */
 .mfp-wrapper.background-green-75 .mfp-subtitles {
   background-color: rgba(0, 128, 0, 0.75) !important;
 }
-/* line 683, ../sass/screen.scss */
+/* line 684, ../sass/screen.scss */
 .mfp-wrapper.background-green-75 video::cue {
   background-color: rgba(0, 128, 0, 0.75) !important;
 }
-/* line 692, ../sass/screen.scss */
+/* line 693, ../sass/screen.scss */
 .mfp-wrapper.background-cyan-75 .mfp-subtitles {
   background-color: rgba(0, 255, 255, 0.75) !important;
 }
-/* line 699, ../sass/screen.scss */
+/* line 700, ../sass/screen.scss */
 .mfp-wrapper.background-cyan-75 video::cue {
   background-color: rgba(0, 255, 255, 0.75) !important;
 }
-/* line 708, ../sass/screen.scss */
+/* line 709, ../sass/screen.scss */
 .mfp-wrapper.background-blue-75 .mfp-subtitles {
   background-color: rgba(0, 0, 255, 0.75) !important;
 }
-/* line 715, ../sass/screen.scss */
+/* line 716, ../sass/screen.scss */
 .mfp-wrapper.background-blue-75 video::cue {
   background-color: rgba(0, 0, 255, 0.75) !important;
 }
-/* line 724, ../sass/screen.scss */
+/* line 725, ../sass/screen.scss */
 .mfp-wrapper.background-magenta-75 .mfp-subtitles {
   background-color: rgba(255, 0, 255, 0.75) !important;
 }
-/* line 731, ../sass/screen.scss */
+/* line 732, ../sass/screen.scss */
 .mfp-wrapper.background-magenta-75 video::cue {
   background-color: rgba(255, 0, 255, 0.75) !important;
 }
-/* line 740, ../sass/screen.scss */
+/* line 741, ../sass/screen.scss */
 .mfp-wrapper.background-red-75 .mfp-subtitles {
   background-color: rgba(255, 0, 0, 0.75) !important;
 }
-/* line 747, ../sass/screen.scss */
+/* line 748, ../sass/screen.scss */
 .mfp-wrapper.background-red-75 video::cue {
   background-color: rgba(255, 0, 0, 0.75) !important;
 }
-/* line 756, ../sass/screen.scss */
+/* line 757, ../sass/screen.scss */
 .mfp-wrapper.background-black-75 .mfp-subtitles {
   background-color: rgba(0, 0, 0, 0.75) !important;
 }
-/* line 763, ../sass/screen.scss */
+/* line 764, ../sass/screen.scss */
 .mfp-wrapper.background-black-75 video::cue {
   background-color: rgba(0, 0, 0, 0.75) !important;
 }
-/* line 644, ../sass/screen.scss */
+/* line 645, ../sass/screen.scss */
 .mfp-wrapper.background-white-100 .mfp-subtitles {
   background-color: white !important;
 }
-/* line 651, ../sass/screen.scss */
+/* line 652, ../sass/screen.scss */
 .mfp-wrapper.background-white-100 video::cue {
   background-color: white !important;
 }
-/* line 660, ../sass/screen.scss */
+/* line 661, ../sass/screen.scss */
 .mfp-wrapper.background-yellow-100 .mfp-subtitles {
   background-color: yellow !important;
 }
-/* line 667, ../sass/screen.scss */
+/* line 668, ../sass/screen.scss */
 .mfp-wrapper.background-yellow-100 video::cue {
   background-color: yellow !important;
 }
-/* line 676, ../sass/screen.scss */
+/* line 677, ../sass/screen.scss */
 .mfp-wrapper.background-green-100 .mfp-subtitles {
   background-color: green !important;
 }
-/* line 683, ../sass/screen.scss */
+/* line 684, ../sass/screen.scss */
 .mfp-wrapper.background-green-100 video::cue {
   background-color: green !important;
 }
-/* line 692, ../sass/screen.scss */
+/* line 693, ../sass/screen.scss */
 .mfp-wrapper.background-cyan-100 .mfp-subtitles {
   background-color: cyan !important;
 }
-/* line 699, ../sass/screen.scss */
+/* line 700, ../sass/screen.scss */
 .mfp-wrapper.background-cyan-100 video::cue {
   background-color: cyan !important;
 }
-/* line 708, ../sass/screen.scss */
+/* line 709, ../sass/screen.scss */
 .mfp-wrapper.background-blue-100 .mfp-subtitles {
   background-color: blue !important;
 }
-/* line 715, ../sass/screen.scss */
+/* line 716, ../sass/screen.scss */
 .mfp-wrapper.background-blue-100 video::cue {
   background-color: blue !important;
 }
-/* line 724, ../sass/screen.scss */
+/* line 725, ../sass/screen.scss */
 .mfp-wrapper.background-magenta-100 .mfp-subtitles {
   background-color: magenta !important;
 }
-/* line 731, ../sass/screen.scss */
+/* line 732, ../sass/screen.scss */
 .mfp-wrapper.background-magenta-100 video::cue {
   background-color: magenta !important;
 }
-/* line 740, ../sass/screen.scss */
+/* line 741, ../sass/screen.scss */
 .mfp-wrapper.background-red-100 .mfp-subtitles {
   background-color: red !important;
 }
-/* line 747, ../sass/screen.scss */
+/* line 748, ../sass/screen.scss */
 .mfp-wrapper.background-red-100 video::cue {
   background-color: red !important;
 }
-/* line 756, ../sass/screen.scss */
+/* line 757, ../sass/screen.scss */
 .mfp-wrapper.background-black-100 .mfp-subtitles {
   background-color: black !important;
 }
-/* line 763, ../sass/screen.scss */
+/* line 764, ../sass/screen.scss */
 .mfp-wrapper.background-black-100 video::cue {
   background-color: black !important;
 }
-/* line 773, ../sass/screen.scss */
+/* line 774, ../sass/screen.scss */
 .mfp-wrapper.font-size-100 .mfp-subtitles {
   font-size: 100%;
 }
-/* line 776, ../sass/screen.scss */
+/* line 777, ../sass/screen.scss */
 .mfp-wrapper.font-size-100 video::cue {
   font-size: 100%;
 }
-/* line 781, ../sass/screen.scss */
+/* line 782, ../sass/screen.scss */
 .mfp-wrapper.font-size-50 .mfp-subtitles {
   font-size: 50%;
 }
-/* line 784, ../sass/screen.scss */
+/* line 785, ../sass/screen.scss */
 .mfp-wrapper.font-size-50 video::cue {
   font-size: 50%;
 }
-/* line 789, ../sass/screen.scss */
+/* line 790, ../sass/screen.scss */
 .mfp-wrapper.font-size-150 .mfp-subtitles {
   font-size: 150%;
 }
-/* line 792, ../sass/screen.scss */
+/* line 793, ../sass/screen.scss */
 .mfp-wrapper.font-size-150 video::cue {
   font-size: 150%;
 }
-/* line 797, ../sass/screen.scss */
+/* line 798, ../sass/screen.scss */
 .mfp-wrapper.font-size-200 .mfp-subtitles {
   font-size: 200%;
 }
-/* line 800, ../sass/screen.scss */
+/* line 801, ../sass/screen.scss */
 .mfp-wrapper.font-size-200 video::cue {
   font-size: 200%;
 }
-/* line 805, ../sass/screen.scss */
+/* line 806, ../sass/screen.scss */
 .mfp-wrapper.font-size-300 .mfp-subtitles {
   font-size: 300%;
 }
-/* line 808, ../sass/screen.scss */
+/* line 809, ../sass/screen.scss */
 .mfp-wrapper.font-size-300 video::cue {
   font-size: 300%;
 }
-/* line 813, ../sass/screen.scss */
+/* line 814, ../sass/screen.scss */
 .mfp-wrapper.font-size-400 .mfp-subtitles {
   font-size: 400%;
 }
-/* line 816, ../sass/screen.scss */
+/* line 817, ../sass/screen.scss */
 .mfp-wrapper.font-size-400 video::cue {
   font-size: 400%;
 }

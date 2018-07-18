@@ -215,6 +215,7 @@ ul.mfp_list{
                 //width: 30px;
                 //height: 32px;
                 //overflow: hidden;
+                min-width: 30px;
                 display: inline-block;
                 text-align: center;
                 border: 1px solid transparent;
@@ -228,7 +229,7 @@ ul.mfp_list{
                         outline-width: 1px;
             }
             button.play, button.pause, button.chapters{
-                position: relative;
+                //position: relative;
                 margin: 0 5px;
                 padding: 0 5px;
                 line-height: 30px;
@@ -240,7 +241,7 @@ ul.mfp_list{
             .soundPart{
                 position: relative;
                 button.sound{
-                    position: relative;
+                    //position: relative;
                     margin: 0 5px;
                     padding: 0 .13em;
                     line-height: 30px;
@@ -315,7 +316,7 @@ ul.mfp_list{
             }
             button{
                 display: inline-block;
-                position: relative;
+                //position: relative;
                 margin: 0;
                 padding: 0 .13em;
                 border: 1px solid transparent;
@@ -370,7 +371,7 @@ ul.mfp_list{
                 outline-width: 1px;
             }
             button.expand{
-                position: relative;
+                //position: relative;
                 margin: 0 5px;
                 padding: 0 .13em;
                 line-height: 30px;
