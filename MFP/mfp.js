@@ -35,7 +35,14 @@ $(document).ready(function(){
         
     }
 });
-var MFP_menu = function(element, options={}){
+var MFP_menu = function(){
+    var element = arguments[0];
+    if(arguments.length > 1){
+        var options = arguments[1];
+    }
+    else{
+        var options = {};
+    }
     this.element = $(element);
     this.options = options;
 };
@@ -111,7 +118,14 @@ MFP_menu.prototype={
         this.options = $.extend( {}, this.default_options, this.options );
     }
 };
-var MFP = function(element,options={}){
+var MFP = function(){
+    var element = arguments[0];
+    if(arguments.length > 1){
+        var options = arguments[1];
+    }
+    else{
+        var options = {};
+    }
     this.element = $(element);
     this.options = options;
     this.subtitles=[];
