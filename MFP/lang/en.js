@@ -48,5 +48,7 @@ var lang = {
     transcript: 'Transcript',
     activateLiveTranscript: 'Active live transcript',
     desactivateLiveTranscript: 'Desactive live transcript',
-    informations:'Informations'
+    informations:'Informations',
+    activate:'Activate',
+    desactivate:'Desactivate'
 };
