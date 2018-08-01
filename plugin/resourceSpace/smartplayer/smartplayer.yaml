@@ -1,0 +1,6 @@
+name: smartplayer
+author: Simon DE CHABANEIX
+version: 1.1
+desc: Integrates MFP AccessPlayer HTML5 Video player
+config_url: /plugins/smartplayer/pages/setup.php
+category: user interface
