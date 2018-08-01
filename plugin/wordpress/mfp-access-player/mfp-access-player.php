@@ -73,12 +73,12 @@
 		jQuery = null;
 	</script>
 	<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
-    <script src="http://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <script>
     	var mfpsp_jquery_new = jQuery.noConflict();
     	jQuery = mfpsp_jquery_old;
     </script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" type="text/css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" type="text/css">
 	    <?php
 	}
 	function player_js(){

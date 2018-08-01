@@ -27,7 +27,7 @@ $(document).ready(function(){
         }
         else{
             
-            if(console.log(typeof opt !== 'object')){
+            if(typeof opt !== 'object'){
             	opt = 'opt = '+opt;
     
                 eval(opt);
