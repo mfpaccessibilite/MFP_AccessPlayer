@@ -19,13 +19,15 @@ $(document).ready(function(){
     // including css
     $('head').append('<link rel="stylesheet" href="'+mfpPath+'stylesheets/screen.css" type="text/css" />');
     var videos = $('video[data-mfp]');
+    console.log('found number video mfp : '+videos.length);
     for(var i=0; i<videos.length; i++){
         var opt = $(videos[i]).data('options');
         if(typeof opt === "undefined"){
             var vid = new MFP($(videos[i]),{});
         }
         else{
-        	if(typeof opt !== 'object'){
+            
+            if(typeof opt !== 'object'){
             	opt = 'opt = '+opt;
     
                 eval(opt);

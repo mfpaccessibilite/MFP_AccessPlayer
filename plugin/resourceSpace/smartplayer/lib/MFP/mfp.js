@@ -25,7 +25,7 @@ $(document).ready(function(){
             var vid = new MFP($(videos[i]),{});
         }
         else{
-        	if(typeof opt !== 'object'){
+        	if(console.log(typeof opt !== 'object')){
             	opt = 'opt = '+opt;
     
                 eval(opt);
