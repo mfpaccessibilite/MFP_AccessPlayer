@@ -176,7 +176,7 @@ new MFP(player,options);
 
 ### Demo page
 
-[Demo page hosted by France TV Access](https://demovideo.ftvaccess.fr)
+[Demo page hosted by France TV Access](https://demovideo.francetvaccess.fr)
 
 
 ## About MFP AccessPlayer
@@ -371,7 +371,7 @@ new MFP(player,options);
 
 ### Page de démonstration
 
-[Page de démo hébergée par France TV Access](https://demovideo.ftvaccess.fr)
+[Page de démo hébergée par France TV Access](https://demovideo.francetvaccess.fr)
 
 
 ## À propos du lecteur MFP AccessPlayer
