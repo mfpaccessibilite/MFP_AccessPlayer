@@ -176,7 +176,7 @@ new MFP(player,options);
 
 ### Demo page
 
-[Demo page hosted by MFP Multimédia France Productions](http://smartplayer.mfpst.com)
+[Demo page hosted by France TV Access](https://demovideo.ftvaccess.fr)
 
 
 ## About MFP AccessPlayer
@@ -371,7 +371,7 @@ new MFP(player,options);
 
 ### Page de démonstration
 
-[Page de démo hébergée par MFP Multimédia France Productions](http://smartplayer.mfpst.com)
+[Page de démo hébergée par France TV Access](https://demovideo.ftvaccess.fr)
 
 
 ## À propos du lecteur MFP AccessPlayer
