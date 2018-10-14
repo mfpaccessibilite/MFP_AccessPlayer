@@ -58,7 +58,7 @@ MFP_menu.prototype={
         this.prepareContent();
     },
     prepareContent:function(){
-        this.element.attr('role','listbox').addClass('mfp_list').attr('tabindex','0');
+        this.element.attr('role','menu').addClass('mfp_list').attr('tabindex','0');
         this.element.on('focus',function(){
             if($(this).find('li.selected').length>0){
                 $(this).find('li.selected').focus();
@@ -67,7 +67,7 @@ MFP_menu.prototype={
                 $(this).find('li:first-child').focus();   
             }
         });
-        this.element.find('li').attr('role','option').attr('tabindex','-1');
+        this.element.find('li').attr('role','menuitem').attr('tabindex','-1');
         this.element.find('li').on('focus',function(e){
             $(this).addClass('focus');
         });
