@@ -793,6 +793,7 @@ MFP.prototype={
                         }
                         this.redrawCues();
                         this.updateLive();
+                        this.fontSize();
                     }
                     //this.element[0].currentTime=$(elmt).data('start');
                     //$(this.container).find('.right-part .chapters-block .menu').dialog('close');
