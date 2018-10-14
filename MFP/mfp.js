@@ -153,6 +153,7 @@ MFP.prototype={
     init:function(){
         // loading options :
         this.element[0].controls=false;
+        $(this.element[0]).attr('tabindex',"-1");
         this.loadOptions();
         this.loadLang();
         //this.loadTracks();
