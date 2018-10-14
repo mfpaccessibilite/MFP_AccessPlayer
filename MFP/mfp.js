@@ -493,7 +493,7 @@ MFP.prototype={
         $(this.controlBar).append(this.progressBar);
         var leftPart = $("<div class='left-part' />");
         $(this.controlBar).append($(leftPart));
-        $(leftPart).append('<button class="mfp-icon-play play" title="'+this.lang.play+'"><span class="mfp-hidden">'+this.lang.play+'</span></button>');
+        $(leftPart).append('<button class="mfp-icon-play play" title="'+this.lang.play+'" aria-label="'+this.lang.play+'"><span class="mfp-hidden">'+this.lang.play+'</span></button>');
         var soundPart = $("<span class='soundPart'></span>");
         $(leftPart).append($(soundPart));
         $(soundPart).append('<button class="mfp-icon-volume-up sound" title="'+this.lang.soundOff+'"><span class="mfp-hidden">'+this.lang.soundOff+'</span></button>');
@@ -1227,11 +1227,13 @@ MFP.prototype={
             $(this.container).find('.play').removeClass('mfp-icon-play').addClass('mfp-icon-pause');
             $(this.container).find('.play span').html(this.lang.pause);
             $(this.container).find('.play').attr('title',this.lang.pause);
+            $(this.container).find('.play').attr('aria-label',this.lang.pause);
         }.bind(this));
         video.on('pause',function(e){
             $(this.container).find('.play').removeClass('mfp-icon-pause').addClass('mfp-icon-play');
             $(this.container).find('.play span').html(this.lang.play);
             $(this.container).find('.play').attr('title',this.lang.play);
+            $(this.container).find('.play').attr('aria-label',this.lang.play);
         }.bind(this));
         video.on('timeupdate',function(e){
             var time = video[0].currentTime;
