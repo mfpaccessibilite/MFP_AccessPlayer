@@ -471,7 +471,7 @@ MFP.prototype={
             this.fontSize();
         }.bind(this));
         
-        this.controlBar = $("<div class='control-bar'></div>");
+        this.controlBar = $("<div class='control-bar' role='region' aria-label='"+this.lang.video_player+"''></div>");
         $(window).resize(function(){
             $(this.container).find('.mfp-subtitles-wrapper').css('height','calc(100% - '+(this.controlBar.height()+8)+'px)');
         }.bind(this));
