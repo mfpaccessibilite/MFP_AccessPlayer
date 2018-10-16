@@ -1,4 +1,5 @@
 var lang = {
+    video_player : 'lecteur vidéo',
     play    : 'play',
     pause   : "pause",
     soundOff    : "Desactivate the sound",

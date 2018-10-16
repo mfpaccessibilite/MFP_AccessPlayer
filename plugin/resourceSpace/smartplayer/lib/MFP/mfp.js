@@ -1,11 +1,11 @@
 /**
- * MFP AccessPlayer v.1.0
+ * MFP AccessPlayer v.1.0.1
  * http://smartplayer.mfpst.com
  *
  * Copyright MFP Multimedia France Productions
  * Released under GPL 3 licence
  * backgroundImage: "key"
- * Date : 2017-10-19T06:48Z
+ * Date : 2018-10-16T14:58Z
  */
 
 // getting current javascript path to include class
@@ -25,7 +25,7 @@ $(document).ready(function(){
             var vid = new MFP($(videos[i]),{});
         }
         else{
-        	if(console.log(typeof opt !== 'object')){
+        	if(typeof opt !== 'object'){
             	opt = 'opt = '+opt;
     
                 eval(opt);
@@ -58,7 +58,7 @@ MFP_menu.prototype={
         this.prepareContent();
     },
     prepareContent:function(){
-        this.element.attr('role','listbox').addClass('mfp_list').attr('tabindex','0');
+        this.element.attr('role','menu').addClass('mfp_list').attr('tabindex','0');
         this.element.on('focus',function(){
             if($(this).find('li.selected').length>0){
                 $(this).find('li.selected').focus();
@@ -67,7 +67,7 @@ MFP_menu.prototype={
                 $(this).find('li:first-child').focus();   
             }
         });
-        this.element.find('li').attr('role','option').attr('tabindex','-1');
+        this.element.find('li').attr('role','menuitem').attr('tabindex','-1');
         this.element.find('li').on('focus',function(e){
             $(this).addClass('focus');
         });
@@ -153,6 +153,7 @@ MFP.prototype={
     init:function(){
         // loading options :
         this.element[0].controls=false;
+        $(this.element[0]).attr('tabindex',"-1");
         this.loadOptions();
         this.loadLang();
         //this.loadTracks();
@@ -470,7 +471,7 @@ MFP.prototype={
             this.fontSize();
         }.bind(this));
         
-        this.controlBar = $("<div class='control-bar'></div>");
+        this.controlBar = $("<div class='control-bar' role='region' aria-label='"+this.lang.video_player+"''></div>");
         $(window).resize(function(){
             $(this.container).find('.mfp-subtitles-wrapper').css('height','calc(100% - '+(this.controlBar.height()+8)+'px)');
         }.bind(this));
@@ -492,7 +493,7 @@ MFP.prototype={
         $(this.controlBar).append(this.progressBar);
         var leftPart = $("<div class='left-part' />");
         $(this.controlBar).append($(leftPart));
-        $(leftPart).append('<button class="mfp-icon-play play" title="'+this.lang.play+'"><span class="mfp-hidden">'+this.lang.play+'</span></button>');
+        $(leftPart).append('<button class="mfp-icon-play play" title="'+this.lang.play+'" aria-label="'+this.lang.play+'"><span class="mfp-hidden">'+this.lang.play+'</span></button>');
         var soundPart = $("<span class='soundPart'></span>");
         $(leftPart).append($(soundPart));
         $(soundPart).append('<button class="mfp-icon-volume-up sound" title="'+this.lang.soundOff+'"><span class="mfp-hidden">'+this.lang.soundOff+'</span></button>');
@@ -793,6 +794,7 @@ MFP.prototype={
                         }
                         this.redrawCues();
                         this.updateLive();
+                        this.fontSize();
                     }
                     //this.element[0].currentTime=$(elmt).data('start');
                     //$(this.container).find('.right-part .chapters-block .menu').dialog('close');
@@ -1225,11 +1227,13 @@ MFP.prototype={
             $(this.container).find('.play').removeClass('mfp-icon-play').addClass('mfp-icon-pause');
             $(this.container).find('.play span').html(this.lang.pause);
             $(this.container).find('.play').attr('title',this.lang.pause);
+            $(this.container).find('.play').attr('aria-label',this.lang.pause);
         }.bind(this));
         video.on('pause',function(e){
             $(this.container).find('.play').removeClass('mfp-icon-pause').addClass('mfp-icon-play');
             $(this.container).find('.play span').html(this.lang.play);
             $(this.container).find('.play').attr('title',this.lang.play);
+            $(this.container).find('.play').attr('aria-label',this.lang.play);
         }.bind(this));
         video.on('timeupdate',function(e){
             var time = video[0].currentTime;

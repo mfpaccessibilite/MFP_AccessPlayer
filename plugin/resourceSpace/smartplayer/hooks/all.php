@@ -11,7 +11,7 @@ function HookSmartplayerAllAdditionalheaderjs(){
     <?php
     if($smartplayer_cdn) {
     ?>
-    <script src="https://cdn.rawgit.com/mfpaccessibilite/MFP_AccessPlayer/master/MFP/mfp.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@1119e9b36ed0e84fcd10475a51af315747c74d2a/MFP/mfp.js"></script>
     <?php
     } else{
     ?>

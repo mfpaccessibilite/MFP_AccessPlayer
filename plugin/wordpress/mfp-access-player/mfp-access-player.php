@@ -2,7 +2,7 @@
 /**
  * Plugin Name: MFP Access Player
  * Plugin URI: https://github.com/mfpaccessibilite/MFP_AccessPlayer
- * Version: 1.1
+ * Version: 1.2
  * Author: Simon DE CHABANEIX
  * Author URI: http://www.chabaneix.com
  * Description: Add MFP Access Player support to WP and add button in the Visual Editor + oconfig to choose loading from CDN or local
@@ -91,7 +91,7 @@
     $opt = get_option('MFPAccessPlayer_CDN');
     if($opt==1){
         ?>
-        <script src="https://cdn.rawgit.com/mfpaccessibilite/MFP_AccessPlayer/master/MFP/mfp.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@1119e9b36ed0e84fcd10475a51af315747c74d2a/MFP/mfp.js"></script>
         <?php
     }
     else{
