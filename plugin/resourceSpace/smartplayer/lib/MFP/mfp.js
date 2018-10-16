@@ -1,11 +1,11 @@
 /**
- * MFP AccessPlayer v.1.0
+ * MFP AccessPlayer v.1.0.1
  * http://smartplayer.mfpst.com
  *
  * Copyright MFP Multimedia France Productions
  * Released under GPL 3 licence
  * backgroundImage: "key"
- * Date : 2017-10-19T06:48Z
+ * Date : 2018-10-16T14:58Z
  */
 
 // getting current javascript path to include class
