@@ -91,7 +91,7 @@
     $opt = get_option('MFPAccessPlayer_CDN');
     if($opt==1){
         ?>
-        <script src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@1119e9b36ed0e84fcd10475a51af315747c74d2a/MFP/mfp.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/MFP/mfp.js"></script>
         <?php
     }
     else{
