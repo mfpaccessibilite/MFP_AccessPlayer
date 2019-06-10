@@ -148,7 +148,8 @@ MFP.prototype={
         lang:'',
         videos:{lowdef:'', audiodesc:'', signed:''},
         transcripts:{txt:'',html:''},
-        live:''
+        live:'',
+        theme_class:''
     },
     init:function(){
         // loading options :
@@ -459,7 +460,7 @@ MFP.prototype={
     loadInterface: function(){
     	// load the interface of the player
         $(this.element).addClass('mfp');
-        $(this.element).wrap($("<div class='mfp-wrapper'></div>"));
+        $(this.element).wrap($("<div class='mfp-wrapper "+this.options.theme_class+"'></div>"));
         this.container = $(this.element).parent();
         // adding control-bar
         this.container.append($('<div class="mfp-subtitles-wrapper" />'));
