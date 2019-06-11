@@ -1,5 +1,5 @@
 /**
- * MFP AccessPlayer v.1.0.1
+ * MFP AccessPlayer v.1.0.2
  * http://smartplayer.mfpst.com
  *
  * Copyright MFP Multimedia France Productions
