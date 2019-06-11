@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <title>Démo du lecteur AccessPlayer</title>
+        
+        <script src="../lib/jquery-3.2.1.min.js" type="text/javascript"></script>
+        <script src="../lib/jquery-ui-1.12.1.custom/jquery-ui.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="../lib/jquery-ui-1.12.1.custom/jquery-ui.css" type="text/css" />
+        <!-- demo page css -->
+        <link rel="stylesheet" href="stylesheets/demo.css" media="screen, projection" type="text/css" />
+        <!-- custom css for the player -->
+        <link rel="stylesheet" href="stylesheets/player.css" media="screen, projection" type="text/css" />
+    </head>
+    <body>
+<!-- lien d'évitement (tab navigation?)-->      
+    <nav role="navigation"> 
+        <ul class="nav justify-content-end">
+          <li class="nav-item">
+            <a class="nav-link evitement" href="#navbar">Aller au menu</a>
+          </li>
+              <li class="nav-item">
+            <a class="nav-link evitement" href="#main">Accéder au contenu</a>
+          </li>
+          <li class="nav-item">
+                <a class="nav-link evitement" href="#footer">Aller au pied de page</a>
+             </li>
+        </ul>
+    </nav>
+    
+<!-- header --> 
+    <header role="banner">
+        
+        <a href="https://francetvaccess.fr/mfp-access-player/" tabindex="0"><img src="img/logo.png" alt="France.tv access" /></a>
+        <div class="triangle1"></div>
+        
+        <h1 lang="en">Access Player</h1>
+        <div class="triangle2"></div>
+    
+    </header>
+    
+<!-- main menu -->  
+    <nav role="navigation" id="navbar">
+        <ul>
+            <li><a href="#video" title="" aria-hidden="true"> Vidéo </a</li>
+            <li><a href="#mde" aria-hidden="true"> Mode d'emploi </a></li>
+            <li><a href="../demo_koena/index.html" aria-hidden="true">Demo thème koena</a></li>
+        </ul>           
+    </nav>
+
+<!-- main -->   
+    <main role="main" id="main">
+        <!-- Video area -->
+        <article id="video">
+            <h2>Vidéo</h2>
+            <div class="cont">
+                <div class="container">
+                    <video data-mfp data-options="{
+                        videos:{
+                            lowdef:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_FULL-LowRes.m4v',
+                            audiodesc:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_AD_480.m4v',
+                            signed:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_LDS_480.m4v'
+                        },
+                        transcripts:{
+                            html:'../transcripts/JamyPlayer.htm',
+                            txt:'../transcripts/JamyPlayer.txt'
+                        },
+                        live: '#text-target1',
+                        theme_class: 'ftva_theme'
+                    }">
+                        <source src="https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_FULL2.m4v" type="video/mp4" />
+                        <track src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/demo/tracks/JamyPlayer.stl" kind="subtitles" label="Français (coloration CSA)" srclang="fr" />
+                        <track src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/demo/tracks/JamyPlayer.srt" kind="subtitles" label="Français (personnalisable)" srclang="fr" />
+                        <track src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/demo/tracks/chapters.vtt" kind="chapters" label="Chapitres" srclang="fr" />
+                    </video>
+                </div>
+
+             </div>
+         </article>
+         
+         <!--  Mode d'emploi (mde) area -->
+         <article id="mde">
+            <h2>À propos de cette démonstration</h2>
+            <p>Exemple d'une vidéo utilisant toutes les fonctionnalités du lecteur.</p>
+
+                <h3>Fonctionnalités pour l'accessibilité</h3>
+                    <ul>
+                        <li>Sous-titrage&nbsp;:
+                            <ul>
+                                <li>en version brut, personnalisable via le panneau de configuration (format srt)</li>
+                                <li>en version colorée et positionnée selon les recommandations de la <a href="http://www.csa.fr/Juridical-area/Chartes/Charte-relative-a-la-qualite-du-sous-titrage-a-destination-des-personnes-sourdes-ou-malentendantes-Decembre-2011" target="_blank" title="Charte CSA relative à la qualité du sous-titrage pour les personnes sourdes ou malentendantes de décembre 2011 (nouvelle fenêtre)">charte <abbr title="Conseil supérieur de l'audiovisuel">CSA</abbr></a> (format stl/vtt)</li>
+                            </ul>
+                        </li>
+                        <li>Audiodescription</li>
+                        <li>Langue des signes française (LSF)</li>
+                        <li>Version texte de la vidéo (transcription)</li>
+                    </ul>
+                <h3>Autres fonctionnalités</h3>
+                    <ul>
+                        <li>Transcription en direct (<i lang="en">live transcript</i>)</li>
+                        <li>Chapitrage&nbsp;: possibilité de se rendre directement à certains moments prédéfinis dans la vidéo</li>
+                        <li>Vitesse de lecture</li>
+                        <li>Poids de la vidéo&nbsp;:
+                            <ul>
+                                <li>une version haute définition</li>
+                                <li>une version basse définition</li>
+                            </ul>
+                    </ul>
+        </article>
+        
+        <!-- Transcripts area -->
+        <div id="text-target1">
+                        
+        </div>
+    </main>
+    
+    <!--footer-->
+    <footer role="contentinfo" id="footer">
+        <p>Pour télécharger le code et contribuer, rendez-vous sur le <a href="https://github.com/mfpaccessibilite/MFP_AccessPlayer">compte Github du lecteur vidéo MFP AccessPlayer</a>&nbsp;!</p>
+    </footer>
+        <script src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/MFP/mfp.js" type="text/javascript"></script>
+    </body>
+</html>

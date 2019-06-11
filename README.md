@@ -117,6 +117,7 @@ new MFP(player,options);
 }
 ```
 - `live`        :   the player can display the contents of the subtitles in a block outside the video. We call this feature "live transcript". The texts will be highlighted in real time as they are spoken in the video. You can indicate in the `live` option the identifier of the element of your page where the live transcript will be displayed.  #myLiveTranscript`
+- `theme_class` : you can add a custom class to the player to customize the layout. See our examples on the DemoPage. You will have to manually load the custom css in your html page.
 
 ## Customization and translations
 
@@ -141,7 +142,8 @@ The scripts contained in the MFP > trackreader folder are used to convert the ST
         html:'/transcripts/fr.htm',
         txt:'/transcripts/fr.txt'
     },
-    live: '#text-target1'
+    live: '#text-target1',
+    theme_class: 'ftva_theme'
 }">
     <source src="/videos/video_vo.mp4" type="video/mp4" />
     <track src="/subtitles/fr.srt" kind="subtitles" label="Français (SRT)" srclang="fr" />
@@ -168,7 +170,8 @@ var options = {
         html:'/transcripts/fr.htm',
         txt:'/transcripts/fr.txt'
     },
-    live: 'text-target1'
+    live: 'text-target1',
+    theme_class: 'ftva_theme'
 };
 new MFP(player,options);
 </script>
@@ -312,6 +315,7 @@ new MFP(player,options);
 }
 ```
 - `live`        :   le lecteur peut afficher le contenu des sous-titres dans un bloc en dehors de la vidéo. Nous appelons cette fonctionnalité "live transcript". Les textes seront surlignés en temps réel au moment où ils sont prononcés dans la vidéo. Vous pouvez indiquer au sein de l'option `live` l'identifiant de l'élément de votre page où le live transcript devra être affiché. `#myLiveTranscript`
+- `theme_class` :   vous pouvez ajouter une class css de personnalisation au lecteur vidéo. Vous pouvez regarder nos examples dans les pages démo. Il vous faudra charger votre css personnalisé dans votre page HTML.
 
 ## Personnalisation et traductions
 
@@ -336,7 +340,8 @@ Les scripts contenus dans le dossier MFP > trackreader permettent une conversion
         html:'/transcripts/fr.htm',
         txt:'/transcripts/fr.txt'
     },
-    live: '#text-target1'
+    live: '#text-target1',
+    theme_class: 'ftva_theme'
 }">
     <source src="/videos/video_vo.mp4" type="video/mp4" />
     <track src="/subtitles/fr.srt" kind="subtitles" label="Français (SRT)" srclang="fr" />
@@ -363,7 +368,8 @@ var options = {
         html:'/transcripts/fr.htm',
         txt:'/transcripts/fr.txt'
     },
-    live: 'text-target1'
+    live: 'text-target1',
+    theme_class: 'ftva_theme'
 };
 new MFP(player,options);
 </script>

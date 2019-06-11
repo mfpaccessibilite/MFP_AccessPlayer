@@ -1,0 +1,432 @@
+ /* Change theme using variable */
+
+
+/* General */
+$font-family-text : 'FranceTVBrownWeb';
+$font-family-heading: 'FranceTVBrownWeb-bold';
+
+/* Header */
+$logo-background-color: #000;  /* black */
+$title-background-color: #E04a0B; /*deep orange */
+
+/*--header-gradient-color: linear-gradient to right*/
+$header-gradient-color1: #f2500c;
+$header-gradient-color2: #f45f23; 
+$header-gradient-color3: #f56d35; 
+$header-gradient-color4: #f67a46; 
+$header-gradient-color5: #f78656;
+
+$nav-background-color: #0A0A0A; /* black */
+$nav-borders-color: #6E7881; /* gray */
+$header-text-color: #fff; /* white */
+$nav-hover-color: #f78656; /* light orange */
+/*-- header-triangle--*/
+$header-triangle-height:1.9rem;
+$padding-h1:1.08rem;
+$triangle-spacing:-0.35rem;
+
+/* Main */
+/* mde -> mode d'emploi */
+$h2-h3-color: #cd440A; /*orange*/
+$links-color: #B16316; /*mustard*/
+$main-focus-color: #000;
+
+/*footer */
+$footer-text-color: #fff;
+$footer-background-color: #6E7881;
+$footer-link-color: #fff;
+$footer-focus-color: #fff;
+
+
+/* Custom font for the theme demo page */
+@font-face {
+   font-family: 'FranceTVBrownWeb';
+   src:
+url('../fonts/FranceTVBrownWeb-Light.70aff65f8a07af368b8baf1a5f2a10cf.eot')
+format('embedded-opentype'),
+url('../fonts/FranceTVBrownWeb-Light.aa5780f736f1ad20b99cb25b62561b2b.woff2')
+format('woff2'),
+url('../fonts/FranceTVBrownWeb-Light.0e78986466082ee906a58bac87d7c18f.woff')
+format('woff'),
+url('../fonts/FranceTVBrownWeb-Light.818a554d97c2a6fd77cf041ee16bfd46.ttf')
+format('truetype'),
+url('../fonts/FranceTVBrownWeb-Light.ddb30488921e5b7d513f3e7ffd0ae63c.svg')
+format('svg');
+   font-weight: 300;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: 'FranceTVBrownWeb-bold';
+   src:
+url('../fonts/FranceTVBrownWeb-Bold.bf112cd84605ada2d625444abb8247dd.eot')
+format('embedded-opentype'),
+url('../fonts/FranceTVBrownWeb-Bold.eadbb8d0a8c064375d225a5702a02c57.woff2')
+format('woff2'),
+url('../fonts/FranceTVBrownWeb-Bold.dd40b835b9a60b3bc92e8055172e68b4.woff')
+format('woff'),
+url('../fonts/FranceTVBrownWeb-Bold.9814320e86d62675f34408c8f33f6a7b.ttf')
+format('truetype'),
+url('../fonts/FranceTVBrownWeb-Bold.3efca840478ff0e20074bed4eecadee4.svg')
+format('svg');
+   font-weight: 300;
+   font-style: normal;
+}
+
+html,body{
+    margin: 0;
+    font-family: $font-family-text;
+}
+
+/*------------nav avec liens d'évitements apparaît à la tabulation------------*/
+ul.nav{
+list-style: none;
+margin: 0;
+}
+
+a.evitement {
+   display: inline-block;
+   color: #000;
+   padding: .5em;
+   position: absolute;
+   right: 99999px;
+   z-index: 100;
+}
+
+a.evitement:focus {
+   right: 0;
+}
+
+/* ---------------------------------------------HEADER-----------------------------------------------*/
+header{
+    background-image: linear-gradient(to right, $header-gradient-color1,$header-gradient-color2,$header-gradient-color3,$header-gradient-color4,$header-gradient-color5);
+    color: $header-text-color;
+
+}
+
+/* ---------------------------------------------------
+ * Media queries smalls screens, less than 641 px*/
+ 
+@media screen and (max-width: 20rem){
+
+    header a img{
+        display: inline-block;
+        padding: 0 15%;
+        width: 70%;
+        max-height: 100%;
+        background-color: $logo-background-color;
+    }
+
+    div.triangle1 div.triangle2{
+        display: none;
+    }
+
+    h1{
+        font-style:italic;
+        font-size: 1.5rem;
+        font-weight: 400;
+        height: 70%;
+        width: 100%;
+        line-height: 40px;
+        text-align: center;
+        margin: 0;
+        padding:0;
+        font-family:  $font-family-heading;
+        display:block;
+        background-color: $title-background-color;
+    }
+    
+    nav#navbar{
+        background-color: $nav-background-color;
+        margin-top: 27%;
+        box-shadow: 0 0 2px 2px rgba(0,0,0,.7);
+    }
+
+    nav#navbar ul{
+        padding-left: 0;
+        margin: 0;
+
+    }
+
+    nav#navbar ul li{
+        list-style: none;
+        display: inline-block;
+        border-right: 2px solid $nav-borders-color;
+        padding: 10px 0;
+        width: 49%;
+        text-align: center;
+    }
+
+    nav#navbar ul li a{
+        text-decoration: none;
+        font-size: 1.4rem;
+        font-weight: 400;
+        color: $header-text-color;
+        transition-duration: 0s;
+    }
+
+    nav#navbar ul li a:focus{
+        outline: 1px solid $header-text-color;
+    }
+
+    nav#navbar ul li a:hover{
+        color: $nav-hover-color;
+        text-decoration: underline;
+    }
+
+    nav#navbar ul li a:active{
+        text-decoration: underline;
+        background-color: #000;
+        color: $nav-hover-color;
+    }
+
+}
+
+/*----------------------------------------------------
+ * Media queries "larger" screens more than 641 px*/
+ 
+@media screen and (min-width: 21rem) {
+
+    header a img{
+        background-color: $logo-background-color;
+    }
+
+    div.triangle1{
+        display: inline-block;
+        border-style: solid;
+        border-width: $header-triangle-height 0 $header-triangle-height 20px;
+        border-color: $title-background-color $title-background-color $title-background-color $logo-background-color;
+        _border-color: #000000 #000000 #000000 $logo-background-color;
+        _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+        margin:0 $triangle-spacing;
+    }
+
+    h1{
+        font-style:italic;
+        font-size: 1.5rem;
+        font-weight: 400;
+        margin: 0;
+        padding:$padding-h1;
+        font-family: $font-family-heading;
+        display: inline-block;
+        background-color: $title-background-color;
+        vertical-align:top;
+    }
+
+    div.triangle2{
+        display: inline-block;
+        border-style: solid;
+        border-width: $header-triangle-height 0 $header-triangle-height 20px;
+        border-color: transparent transparent transparent $title-background-color;
+        _border-color: #000000 #000000 #000000 $title-background-color;
+        _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+        margin-left:$triangle-spacing;    
+    }
+    
+    nav#navbar{
+        background-color: $nav-background-color;
+        margin-top: 0;
+        box-shadow: 0 0 2px 2px rgba(0,0,0,.7);
+    }
+
+    nav#navbar ul{
+        padding-left: 0;
+        margin: 0;
+
+    }
+
+    nav#navbar ul li{
+        list-style: none;
+        display: inline-block;
+        border-right: 2px solid $nav-borders-color;
+        padding:0.5rem 1rem;
+    }
+
+    nav#navbar ul li a{
+        text-decoration: none;
+        font-size: 1.4rem;
+        font-weight: 400;
+        color: $header-text-color;
+        transition-duration: 0s;
+    }
+
+    nav#navbar ul li a:focus{
+        outline: 1px solid $header-text-color;
+    }
+
+    nav#navbar ul li a:hover{
+        color: $nav-hover-color;
+        text-decoration: underline;
+    }
+
+    nav#navbar ul li a :active{
+        text-decoration: underline;
+        background-color: #000;
+        color: $nav-hover-color;
+    }
+}
+
+/* ---------------------------------------------MAIN-----------------------------------------------*/
+main{
+    width: 99%;
+    margin: 20px auto;
+    font-size:1.2rem;
+}
+
+h2, h3:not(ui-widget-content>h3){
+    color: $h2-h3-color;
+    margin: auto;
+}
+
+h2{
+    font-size: 2rem;
+    margin-left: 2%;
+}
+
+h3{
+    font-size: 1.4rem;
+}
+
+p:not(footer>p), li{
+    font-family: $font-family-text;
+    line-height: 1.5rem;
+    font-size: 1.4rem;
+}
+
+main a{
+    color: $links-color;
+    font-family: $font-family-text;
+    font-weight: bold;
+}
+            
+main a:hover{
+    text-decoration: none;
+}
+
+main a:focus{
+    outline: 1px solid var(main-focus-color);
+}
+
+/* ---------------------- PLAYER ---------------------------- */
+.cont{/* article#video and article#mde */
+    position: relative;
+}
+
+.cont::after{
+    content:'';
+    display: block;
+    clear: both;
+}
+
+@media screen and (max-width: 640px) {
+    .container{
+        width: 100%;
+    }
+    .video{
+        display:block;
+        width: auto;
+    }
+}
+
+@media screen and (min-width: 641px) {
+    article#video{
+        vertical-align: top;
+        display:inline-block;
+        /* When JS */
+        /*width: auto;*/
+        width : 70%;
+    }
+
+    .cont{/*video */
+        position: relative;
+    }
+
+    .cont::after{
+        content:'';
+        display: block;
+        clear: both;
+    }
+}
+/* ---------------------- USER GUIDE (#mdp) --------------------------- */
+
+/* ------------------------------------------
+ * Media queries SMALL 640 px*/
+ @media screen and (max-width: 640px) {
+     #mde {
+        padding: 15px;
+        width: 95%;
+        display: inline-block;
+    }
+
+}
+
+/*------------------------------------------
+ * Media queries BIGGER 641 px*/
+@media screen and (min-width: 641px) {
+    #mde {
+        padding: 10px;
+        width: 28%;
+        display: inline-block;
+    }
+
+}
+
+
+
+/* ---------------------- TRANSCRIPTS ---------------------------- */
+#text-target, #text-target1{
+    width: 60%;
+    padding-top: 20px;
+}
+
+/* ------------------- USELESS FOR THE MOMENT ---------------------- */
+/* ------------------- OR UNDEFINED IN HTML---------------------- */
+
+code{
+    border: 1px solid #333;
+    padding: 10px;
+    margin: 5px;
+    display: block;
+    background-color: #CCC;
+    max-width: 1000px;
+    overflow: auto;
+}
+
+#desc table{
+    max-width: 1000px;
+}
+
+#desc table tr td, #desc table tr th{
+    padding: 4px;
+    border: 1px solid #000;
+}
+
+#desc table tr th{
+    background-color: #EEE;
+}
+
+
+/* ------------------------------------------------------ FOOTER ------------------------------------------------------- */
+
+footer{
+    background-color: $footer-background-color;
+    padding: 1% 20%;
+    margin: 2% 0 0 0;
+    color: $footer-text-color;
+    text-align: center;
+}
+
+footer a {
+    color: $footer-link-color;
+}
+
+footer a:focus{
+    outline: 1px solid $footer-focus-color;
+}
+footer a:hover{
+    text-decoration: none;
+}
+
+
+    
+

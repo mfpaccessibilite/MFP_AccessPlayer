@@ -1,5 +1,5 @@
 /**
- * MFP AccessPlayer v.1.0.1
+ * MFP AccessPlayer v.1.0.2
  * http://smartplayer.mfpst.com
  *
  * Copyright MFP Multimedia France Productions
@@ -148,7 +148,8 @@ MFP.prototype={
         lang:'',
         videos:{lowdef:'', audiodesc:'', signed:''},
         transcripts:{txt:'',html:''},
-        live:''
+        live:'',
+        theme_class:''
     },
     init:function(){
         // loading options :
@@ -342,7 +343,9 @@ MFP.prototype={
         //sub.find('.svp-subtitles').append(cue.getCuesAsHTML());
         $(this.container).find('.mfp-subtitles-wrapper').append(sub);
         var div = $(this.container).find('.mfp-subtitles-wrapper .sub-'+cue.track.subid+'-'+cue.id);
-        console.log(cue);
+        if(MFPDebug){
+	        console.log(cue);
+	    }
         if(cue.align=="middle" || cue.align=="center"){
             div.css('text-align','center');
         } else if(cue.align=='start'){
@@ -401,6 +404,7 @@ MFP.prototype={
         }
 
     },
+    
     	updateLive:function(){
 		if(MFPDebug){
 	        console.log('update live');
@@ -430,6 +434,7 @@ MFP.prototype={
                                     if(MFPDebug){
 	                                    console.log('setting video currentTime to : '+tcin);
 	                                }
+	                                this.redrawCues();
                                     $(this.element)[0].currentTime=tcin;
                                     this.redrawCues();
                                     
@@ -459,7 +464,7 @@ MFP.prototype={
     loadInterface: function(){
     	// load the interface of the player
         $(this.element).addClass('mfp');
-        $(this.element).wrap($("<div class='mfp-wrapper'></div>"));
+        $(this.element).wrap($("<div class='mfp-wrapper "+this.options.theme_class+"'></div>"));
         this.container = $(this.element).parent();
         // adding control-bar
         this.container.append($('<div class="mfp-subtitles-wrapper" />'));
