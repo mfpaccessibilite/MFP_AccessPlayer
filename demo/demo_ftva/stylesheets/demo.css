@@ -1,0 +1,418 @@
+@charset "UTF-8";
+/* Change theme using variable */
+/* General */
+/* Header */
+/* black */
+/*deep orange */
+/*--header-gradient-color: linear-gradient to right*/
+/* black */
+/* gray */
+/* white */
+/* light orange */
+/*-- header-triangle--*/
+/* Main */
+/* mde -> mode d'emploi */
+/*orange*/
+/*mustard*/
+/*footer */
+/* Custom font for the theme demo page */
+@font-face {
+  font-family: 'FranceTVBrownWeb';
+  src: url("../fonts/FranceTVBrownWeb-Light.70aff65f8a07af368b8baf1a5f2a10cf.eot") format("embedded-opentype"), url("../fonts/FranceTVBrownWeb-Light.aa5780f736f1ad20b99cb25b62561b2b.woff2") format("woff2"), url("../fonts/FranceTVBrownWeb-Light.0e78986466082ee906a58bac87d7c18f.woff") format("woff"), url("../fonts/FranceTVBrownWeb-Light.818a554d97c2a6fd77cf041ee16bfd46.ttf") format("truetype"), url("../fonts/FranceTVBrownWeb-Light.ddb30488921e5b7d513f3e7ffd0ae63c.svg") format("svg");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'FranceTVBrownWeb-bold';
+  src: url("../fonts/FranceTVBrownWeb-Bold.bf112cd84605ada2d625444abb8247dd.eot") format("embedded-opentype"), url("../fonts/FranceTVBrownWeb-Bold.eadbb8d0a8c064375d225a5702a02c57.woff2") format("woff2"), url("../fonts/FranceTVBrownWeb-Bold.dd40b835b9a60b3bc92e8055172e68b4.woff") format("woff"), url("../fonts/FranceTVBrownWeb-Bold.9814320e86d62675f34408c8f33f6a7b.ttf") format("truetype"), url("../fonts/FranceTVBrownWeb-Bold.3efca840478ff0e20074bed4eecadee4.svg") format("svg");
+  font-weight: 300;
+  font-style: normal;
+}
+/* line 76, ../sass/demo.scss */
+html, body {
+  margin: 0;
+  font-family: "FranceTVBrownWeb";
+}
+
+/*------------nav avec liens d'évitements apparaît à la tabulation------------*/
+/* line 82, ../sass/demo.scss */
+ul.nav {
+  list-style: none;
+  margin: 0;
+}
+
+/* line 87, ../sass/demo.scss */
+a.evitement {
+  display: inline-block;
+  color: #000;
+  padding: .5em;
+  position: absolute;
+  right: 99999px;
+  z-index: 100;
+}
+
+/* line 96, ../sass/demo.scss */
+a.evitement:focus {
+  right: 0;
+}
+
+/* ---------------------------------------------HEADER-----------------------------------------------*/
+/* line 101, ../sass/demo.scss */
+header {
+  background-image: linear-gradient(to right, #f2500c, #f45f23, #f56d35, #f67a46, #f78656);
+  color: #fff;
+}
+
+/* ---------------------------------------------------
+ * Media queries smalls screens, less than 641 px*/
+@media screen and (max-width: 20rem) {
+  /* line 112, ../sass/demo.scss */
+  header a img {
+    display: inline-block;
+    padding: 0 15%;
+    width: 70%;
+    max-height: 100%;
+    background-color: #000;
+  }
+
+  /* line 120, ../sass/demo.scss */
+  div.triangle1 div.triangle2 {
+    display: none;
+  }
+
+  /* line 124, ../sass/demo.scss */
+  h1 {
+    font-style: italic;
+    font-size: 1.5rem;
+    font-weight: 400;
+    height: 70%;
+    width: 100%;
+    line-height: 40px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    font-family: "FranceTVBrownWeb-bold";
+    display: block;
+    background-color: #E04a0B;
+  }
+
+  /* line 139, ../sass/demo.scss */
+  nav#navbar {
+    background-color: #0A0A0A;
+    margin-top: 27%;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.7);
+  }
+
+  /* line 145, ../sass/demo.scss */
+  nav#navbar ul {
+    padding-left: 0;
+    margin: 0;
+  }
+
+  /* line 151, ../sass/demo.scss */
+  nav#navbar ul li {
+    list-style: none;
+    display: inline-block;
+    border-right: 2px solid #6E7881;
+    padding: 10px 0;
+    width: 49%;
+    text-align: center;
+  }
+
+  /* line 160, ../sass/demo.scss */
+  nav#navbar ul li a {
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #fff;
+    transition-duration: 0s;
+  }
+
+  /* line 168, ../sass/demo.scss */
+  nav#navbar ul li a:focus {
+    outline: 1px solid #fff;
+  }
+
+  /* line 172, ../sass/demo.scss */
+  nav#navbar ul li a:hover {
+    color: #f78656;
+    text-decoration: underline;
+  }
+
+  /* line 177, ../sass/demo.scss */
+  nav#navbar ul li a:active {
+    text-decoration: underline;
+    background-color: #000;
+    color: #f78656;
+  }
+}
+/*----------------------------------------------------
+ * Media queries "larger" screens more than 641 px*/
+@media screen and (min-width: 21rem) {
+  /* line 190, ../sass/demo.scss */
+  header a img {
+    background-color: #000;
+  }
+
+  /* line 194, ../sass/demo.scss */
+  div.triangle1 {
+    display: inline-block;
+    border-style: solid;
+    border-width: 1.9rem 0 1.9rem 20px;
+    border-color: #E04a0B #E04a0B #E04a0B #000;
+    _border-color: #000000 #000000 #000000 #000;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+    margin: 0 -0.35rem;
+  }
+
+  /* line 204, ../sass/demo.scss */
+  h1 {
+    font-style: italic;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 1.08rem;
+    font-family: "FranceTVBrownWeb-bold";
+    display: inline-block;
+    background-color: #E04a0B;
+    vertical-align: top;
+  }
+
+  /* line 216, ../sass/demo.scss */
+  div.triangle2 {
+    display: inline-block;
+    border-style: solid;
+    border-width: 1.9rem 0 1.9rem 20px;
+    border-color: transparent transparent transparent #E04a0B;
+    _border-color: #000000 #000000 #000000 #E04a0B;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+    margin-left: -0.35rem;
+  }
+
+  /* line 226, ../sass/demo.scss */
+  nav#navbar {
+    background-color: #0A0A0A;
+    margin-top: 0;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.7);
+  }
+
+  /* line 232, ../sass/demo.scss */
+  nav#navbar ul {
+    padding-left: 0;
+    margin: 0;
+  }
+
+  /* line 238, ../sass/demo.scss */
+  nav#navbar ul li {
+    list-style: none;
+    display: inline-block;
+    border-right: 2px solid #6E7881;
+    padding: 0.5rem 1rem;
+  }
+
+  /* line 245, ../sass/demo.scss */
+  nav#navbar ul li a {
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #fff;
+    transition-duration: 0s;
+  }
+
+  /* line 253, ../sass/demo.scss */
+  nav#navbar ul li a:focus {
+    outline: 1px solid #fff;
+  }
+
+  /* line 257, ../sass/demo.scss */
+  nav#navbar ul li a:hover {
+    color: #f78656;
+    text-decoration: underline;
+  }
+
+  /* line 262, ../sass/demo.scss */
+  nav#navbar ul li a :active {
+    text-decoration: underline;
+    background-color: #000;
+    color: #f78656;
+  }
+}
+/* ---------------------------------------------MAIN-----------------------------------------------*/
+/* line 270, ../sass/demo.scss */
+main {
+  width: 99%;
+  margin: 20px auto;
+  font-size: 1.2rem;
+}
+
+/* line 276, ../sass/demo.scss */
+h2, h3:not(ui-widget-content > h3) {
+  color: #cd440A;
+  margin: auto;
+}
+
+/* line 281, ../sass/demo.scss */
+h2 {
+  font-size: 2rem;
+  margin-left: 2%;
+}
+
+/* line 286, ../sass/demo.scss */
+h3 {
+  font-size: 1.4rem;
+}
+
+/* line 290, ../sass/demo.scss */
+p:not(footer > p), li {
+  font-family: "FranceTVBrownWeb";
+  line-height: 1.5rem;
+  font-size: 1.4rem;
+}
+
+/* line 296, ../sass/demo.scss */
+main a {
+  color: #B16316;
+  font-family: "FranceTVBrownWeb";
+  font-weight: bold;
+}
+
+/* line 302, ../sass/demo.scss */
+main a:hover {
+  text-decoration: none;
+}
+
+/* line 306, ../sass/demo.scss */
+main a:focus {
+  outline: 1px solid var(main-focus-color);
+}
+
+/* ---------------------- PLAYER ---------------------------- */
+/* line 311, ../sass/demo.scss */
+.cont {
+  /* article#video and article#mde */
+  position: relative;
+}
+
+/* line 315, ../sass/demo.scss */
+.cont::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+@media screen and (max-width: 640px) {
+  /* line 322, ../sass/demo.scss */
+  .container {
+    width: 100%;
+  }
+
+  /* line 325, ../sass/demo.scss */
+  .video {
+    display: block;
+    width: auto;
+  }
+}
+@media screen and (min-width: 641px) {
+  /* line 332, ../sass/demo.scss */
+  article#video {
+    vertical-align: top;
+    display: inline-block;
+    /* When JS */
+    /*width: auto;*/
+    width: 70%;
+  }
+
+  /* line 340, ../sass/demo.scss */
+  .cont {
+    /*video */
+    position: relative;
+  }
+
+  /* line 344, ../sass/demo.scss */
+  .cont::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+/* ---------------------- USER GUIDE (#mdp) --------------------------- */
+/* ------------------------------------------
+ * Media queries SMALL 640 px*/
+@media screen and (max-width: 640px) {
+  /* line 355, ../sass/demo.scss */
+  #mde {
+    padding: 15px;
+    width: 95%;
+    display: inline-block;
+  }
+}
+/*------------------------------------------
+ * Media queries BIGGER 641 px*/
+@media screen and (min-width: 641px) {
+  /* line 366, ../sass/demo.scss */
+  #mde {
+    padding: 10px;
+    width: 28%;
+    display: inline-block;
+  }
+}
+/* ---------------------- TRANSCRIPTS ---------------------------- */
+/* line 377, ../sass/demo.scss */
+#text-target, #text-target1 {
+  width: 60%;
+  padding-top: 20px;
+}
+
+/* ------------------- USELESS FOR THE MOMENT ---------------------- */
+/* ------------------- OR UNDEFINED IN HTML---------------------- */
+/* line 385, ../sass/demo.scss */
+code {
+  border: 1px solid #333;
+  padding: 10px;
+  margin: 5px;
+  display: block;
+  background-color: #CCC;
+  max-width: 1000px;
+  overflow: auto;
+}
+
+/* line 395, ../sass/demo.scss */
+#desc table {
+  max-width: 1000px;
+}
+
+/* line 399, ../sass/demo.scss */
+#desc table tr td, #desc table tr th {
+  padding: 4px;
+  border: 1px solid #000;
+}
+
+/* line 404, ../sass/demo.scss */
+#desc table tr th {
+  background-color: #EEE;
+}
+
+/* ------------------------------------------------------ FOOTER ------------------------------------------------------- */
+/* line 411, ../sass/demo.scss */
+footer {
+  background-color: #6E7881;
+  padding: 1% 20%;
+  margin: 2% 0 0 0;
+  color: #fff;
+  text-align: center;
+}
+
+/* line 419, ../sass/demo.scss */
+footer a {
+  color: #fff;
+}
+
+/* line 423, ../sass/demo.scss */
+footer a:focus {
+  outline: 1px solid #fff;
+}
+
+/* line 426, ../sass/demo.scss */
+footer a:hover {
+  text-decoration: none;
+}

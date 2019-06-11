@@ -1,0 +1,418 @@
+@charset "UTF-8";
+/* Change theme using variable */
+/* General*/
+/* Header */
+/* white */
+/*dark green */
+/*--header-gradient-color: linear-gradient to right*/
+/* green */
+/*dark green*/
+/* white */
+/* light orange */
+/*-- header-triangle--*/
+/* Main */
+/* mde -> mode d'emploi */
+/*dark green*/
+/*green*/
+/*footer */
+/*dark green*/
+@font-face {
+  font-family: 'Lato';
+  src: url("../fonts/Lato-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Lato-bold';
+  src: url("../fonts/Lato-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: bold;
+}
+/* line 59, ../sass/demo.scss */
+html, body {
+  margin: 0;
+  font-family: Lato;
+}
+
+/*------------nav avec liens d'évitements apparaît à la tabulation------------*/
+/* line 65, ../sass/demo.scss */
+ul.nav {
+  list-style: none;
+  margin: 0;
+}
+
+/* line 70, ../sass/demo.scss */
+a.evitement {
+  display: inline-block;
+  color: #000;
+  padding: .5em;
+  position: absolute;
+  right: 99999px;
+  z-index: 100;
+}
+
+/* line 79, ../sass/demo.scss */
+a.evitement:focus {
+  right: 0;
+}
+
+/* ---------------------------------------------HEADER-----------------------------------------------*/
+/* line 84, ../sass/demo.scss */
+header {
+  background-image: linear-gradient(to right, #1d4b0d, #1d4b0d, #3E8526, #3E8526, #3E8526);
+  color: #fff;
+}
+
+/* ---------------------------------------------------
+ * Media queries smalls screens, less than 641 px*/
+@media screen and (max-width: 20rem) {
+  /* line 95, ../sass/demo.scss */
+  header a img {
+    display: inline-block;
+    padding: 0 15%;
+    width: 70%;
+    max-height: 100%;
+    background-color: #fff;
+  }
+
+  /* line 103, ../sass/demo.scss */
+  div.triangle1 div.triangle2 {
+    display: none;
+  }
+
+  /* line 107, ../sass/demo.scss */
+  h1 {
+    font-style: italic;
+    font-size: 1.5rem;
+    font-weight: 400;
+    height: 70%;
+    width: 100%;
+    line-height: 40px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    font-family: Lato-bold;
+    display: block;
+    background-color: #16380A;
+  }
+
+  /* line 122, ../sass/demo.scss */
+  nav#navbar {
+    background-color: #3E8526;
+    margin-top: 27%;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.7);
+  }
+
+  /* line 128, ../sass/demo.scss */
+  nav#navbar ul {
+    padding-left: 0;
+    margin: 0;
+  }
+
+  /* line 134, ../sass/demo.scss */
+  nav#navbar ul li {
+    list-style: none;
+    display: inline-block;
+    border-right: 2px solid #16380A;
+    padding: 10px 0;
+    width: 49%;
+    text-align: center;
+  }
+
+  /* line 143, ../sass/demo.scss */
+  nav#navbar ul li a {
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #fff;
+    transition-duration: 0s;
+  }
+
+  /* line 151, ../sass/demo.scss */
+  nav#navbar ul li a:focus {
+    outline: 1px solid #fff;
+  }
+
+  /* line 155, ../sass/demo.scss */
+  nav#navbar ul li a:hover {
+    color: #f78656;
+    text-decoration: underline;
+  }
+
+  /* line 160, ../sass/demo.scss */
+  nav#navbar ul li a:active {
+    text-decoration: underline;
+    background-color: #000;
+    color: #f78656;
+  }
+}
+/*----------------------------------------------------
+ * Media queries "larger" screens more than 641 px*/
+@media screen and (min-width: 21rem) {
+  /* line 173, ../sass/demo.scss */
+  header a img {
+    background-color: #fff;
+  }
+
+  /* line 177, ../sass/demo.scss */
+  div.triangle1 {
+    display: inline-block;
+    border-style: solid;
+    border-width: 1.9rem 0 1.9rem 20px;
+    border-color: #16380A #16380A #16380A #fff;
+    _border-color: #000000 #000000 #000000 #fff;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+    margin: 0 -0.35rem;
+  }
+
+  /* line 187, ../sass/demo.scss */
+  h1 {
+    font-style: italic;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0;
+    padding: 1.08rem;
+    font-family: Lato-bold;
+    display: inline-block;
+    background-color: #16380A;
+    vertical-align: top;
+  }
+
+  /* line 199, ../sass/demo.scss */
+  div.triangle2 {
+    display: inline-block;
+    border-style: solid;
+    border-width: 1.9rem 0 1.9rem 20px;
+    border-color: transparent transparent transparent #16380A;
+    _border-color: #000000 #000000 #000000 #16380A;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+    margin-left: -0.35rem;
+  }
+
+  /* line 209, ../sass/demo.scss */
+  nav#navbar {
+    background-color: #3E8526;
+    margin-top: 0;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.7);
+  }
+
+  /* line 215, ../sass/demo.scss */
+  nav#navbar ul {
+    padding-left: 0;
+    margin: 0;
+  }
+
+  /* line 221, ../sass/demo.scss */
+  nav#navbar ul li {
+    list-style: none;
+    display: inline-block;
+    border-right: 2px solid #16380A;
+    padding: 0.5rem 1rem;
+  }
+
+  /* line 228, ../sass/demo.scss */
+  nav#navbar ul li a {
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #fff;
+    transition-duration: 0s;
+  }
+
+  /* line 236, ../sass/demo.scss */
+  nav#navbar ul li a:focus {
+    outline: 1px solid #fff;
+  }
+
+  /* line 240, ../sass/demo.scss */
+  nav#navbar ul li a:hover {
+    color: #f78656;
+    text-decoration: underline;
+  }
+
+  /* line 245, ../sass/demo.scss */
+  nav#navbar ul li a :active {
+    text-decoration: underline;
+    background-color: #000;
+    color: #f78656;
+  }
+}
+/* ---------------------------------------------MAIN-----------------------------------------------*/
+/* line 253, ../sass/demo.scss */
+main {
+  width: 99%;
+  margin: 20px auto;
+  font-size: 1.2rem;
+}
+
+/* line 259, ../sass/demo.scss */
+h2, h3:not(ui-widget-content > h3) {
+  color: #16380A;
+  margin: auto;
+}
+
+/* line 264, ../sass/demo.scss */
+h2 {
+  font-size: 2rem;
+  margin-left: 2%;
+}
+
+/* line 269, ../sass/demo.scss */
+h3 {
+  font-size: 1.4rem;
+}
+
+/* line 273, ../sass/demo.scss */
+p:not(footer > p), li {
+  font-family: Lato;
+  line-height: 1.5rem;
+  font-size: 1.4rem;
+}
+
+/* line 279, ../sass/demo.scss */
+main a {
+  color: #3E8526;
+  font-family: Lato;
+  font-weight: bold;
+}
+
+/* line 285, ../sass/demo.scss */
+main a:hover {
+  text-decoration: none;
+}
+
+/* line 289, ../sass/demo.scss */
+main a:focus {
+  outline: 1px solid var(main-focus-color);
+}
+
+/* ---------------------- PLAYER ---------------------------- */
+/* line 294, ../sass/demo.scss */
+.cont {
+  /* article#video and article#mde */
+  position: relative;
+}
+
+/* line 298, ../sass/demo.scss */
+.cont::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+@media screen and (max-width: 640px) {
+  /* line 305, ../sass/demo.scss */
+  .container {
+    width: 100%;
+  }
+
+  /* line 308, ../sass/demo.scss */
+  .video {
+    display: block;
+    width: auto;
+  }
+}
+@media screen and (min-width: 641px) {
+  /* line 315, ../sass/demo.scss */
+  article#video {
+    vertical-align: top;
+    display: inline-block;
+    /* When JS */
+    /*width: auto;*/
+    width: 70%;
+  }
+
+  /* line 323, ../sass/demo.scss */
+  .cont {
+    /*video */
+    position: relative;
+  }
+
+  /* line 327, ../sass/demo.scss */
+  .cont::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+/* ---------------------- USER GUIDE (#mdp) --------------------------- */
+/* ------------------------------------------
+ * Media queries SMALL 640 px*/
+@media screen and (max-width: 640px) {
+  /* line 338, ../sass/demo.scss */
+  #mde {
+    padding: 15px;
+    width: 95%;
+    display: inline-block;
+  }
+}
+/*------------------------------------------
+ * Media queries BIGGER 641 px*/
+@media screen and (min-width: 641px) {
+  /* line 349, ../sass/demo.scss */
+  #mde {
+    padding: 10px;
+    width: 28%;
+    display: inline-block;
+  }
+}
+/* ---------------------- TRANSCRIPTS ---------------------------- */
+/* line 360, ../sass/demo.scss */
+#text-target, #text-target1 {
+  width: 60%;
+  padding-top: 20px;
+}
+
+/* ------------------- USELESS FOR THE MOMENT ---------------------- */
+/* ------------------- OR UNDEFINED IN HTML---------------------- */
+/* line 368, ../sass/demo.scss */
+code {
+  border: 1px solid #333;
+  padding: 10px;
+  margin: 5px;
+  display: block;
+  background-color: #CCC;
+  max-width: 1000px;
+  overflow: auto;
+}
+
+/* line 378, ../sass/demo.scss */
+#desc table {
+  max-width: 1000px;
+}
+
+/* line 382, ../sass/demo.scss */
+#desc table tr td, #desc table tr th {
+  padding: 4px;
+  border: 1px solid #000;
+}
+
+/* line 387, ../sass/demo.scss */
+#desc table tr th {
+  background-color: #EEE;
+}
+
+/* ------------------------------------------------------ FOOTER ------------------------------------------------------- */
+/* line 394, ../sass/demo.scss */
+footer {
+  background-color: #16380A;
+  padding: 1% 20%;
+  margin: 2% 0 0 0;
+  color: #fff;
+  text-align: center;
+}
+
+/* line 402, ../sass/demo.scss */
+footer a {
+  color: #fff;
+}
+
+/* line 406, ../sass/demo.scss */
+footer a:focus {
+  outline: 1px solid #fff;
+}
+
+/* line 409, ../sass/demo.scss */
+footer a:hover {
+  text-decoration: none;
+}
