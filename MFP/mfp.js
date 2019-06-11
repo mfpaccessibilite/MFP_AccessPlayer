@@ -343,7 +343,9 @@ MFP.prototype={
         //sub.find('.svp-subtitles').append(cue.getCuesAsHTML());
         $(this.container).find('.mfp-subtitles-wrapper').append(sub);
         var div = $(this.container).find('.mfp-subtitles-wrapper .sub-'+cue.track.subid+'-'+cue.id);
-        console.log(cue);
+        if(MFPDebug){
+	        console.log(cue);
+	    }
         if(cue.align=="middle" || cue.align=="center"){
             div.css('text-align','center');
         } else if(cue.align=='start'){
@@ -402,6 +404,7 @@ MFP.prototype={
         }
 
     },
+    
     	updateLive:function(){
 		if(MFPDebug){
 	        console.log('update live');
@@ -431,6 +434,7 @@ MFP.prototype={
                                     if(MFPDebug){
 	                                    console.log('setting video currentTime to : '+tcin);
 	                                }
+	                                this.redrawCues();
                                     $(this.element)[0].currentTime=tcin;
                                     this.redrawCues();
                                     
