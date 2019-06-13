@@ -28,20 +28,20 @@
   font-weight: 700;
   font-style: bold;
 }
-/* line 59, ../sass/demo.scss */
+/* line 60, ../sass/demo-blue.scss */
 html, body {
   margin: 0;
   font-family: Lato;
 }
 
 /*------------nav avec liens d'évitements apparaît à la tabulation------------*/
-/* line 65, ../sass/demo.scss */
+/* line 66, ../sass/demo-blue.scss */
 ul.nav {
   list-style: none;
   margin: 0;
 }
 
-/* line 70, ../sass/demo.scss */
+/* line 71, ../sass/demo-blue.scss */
 a.evitement {
   display: inline-block;
   color: #000;
@@ -51,13 +51,13 @@ a.evitement {
   z-index: 100;
 }
 
-/* line 79, ../sass/demo.scss */
+/* line 80, ../sass/demo-blue.scss */
 a.evitement:focus {
   right: 0;
 }
 
 /* ---------------------------------------------HEADER-----------------------------------------------*/
-/* line 84, ../sass/demo.scss */
+/* line 85, ../sass/demo-blue.scss */
 header {
   background-image: linear-gradient(to right, #0094c8, #0094c8, #0094c8, #0094c8, #0094c8);
   color: #fff;
@@ -66,21 +66,21 @@ header {
 /* ---------------------------------------------------
  * Media queries smalls screens, less than 641 px*/
 @media screen and (max-width: 20rem) {
-  /* line 95, ../sass/demo.scss */
+  /* line 96, ../sass/demo-blue.scss */
   header a img {
     display: inline-block;
     padding: 0 15%;
     width: 70%;
     max-height: 100%;
-    background-color: #0094c8;
+    background-color: #000;
   }
 
-  /* line 103, ../sass/demo.scss */
+  /* line 104, ../sass/demo-blue.scss */
   div.triangle1 div.triangle2 {
     display: none;
   }
 
-  /* line 107, ../sass/demo.scss */
+  /* line 108, ../sass/demo-blue.scss */
   h1 {
     font-style: italic;
     font-size: 1.5rem;
@@ -96,20 +96,20 @@ header {
     background-color: #057EB6;
   }
 
-  /* line 122, ../sass/demo.scss */
+  /* line 123, ../sass/demo-blue.scss */
   nav#navbar {
     background-color: #057EB6;
     margin-top: 27%;
     box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.7);
   }
 
-  /* line 128, ../sass/demo.scss */
+  /* line 129, ../sass/demo-blue.scss */
   nav#navbar ul {
     padding-left: 0;
     margin: 0;
   }
 
-  /* line 134, ../sass/demo.scss */
+  /* line 135, ../sass/demo-blue.scss */
   nav#navbar ul li {
     list-style: none;
     display: inline-block;
@@ -119,7 +119,7 @@ header {
     text-align: center;
   }
 
-  /* line 143, ../sass/demo.scss */
+  /* line 144, ../sass/demo-blue.scss */
   nav#navbar ul li a {
     text-decoration: none;
     font-size: 1.4rem;
@@ -128,18 +128,18 @@ header {
     transition-duration: 0s;
   }
 
-  /* line 151, ../sass/demo.scss */
+  /* line 152, ../sass/demo-blue.scss */
   nav#navbar ul li a:focus {
     outline: 1px solid #fff;
   }
 
-  /* line 155, ../sass/demo.scss */
+  /* line 156, ../sass/demo-blue.scss */
   nav#navbar ul li a:hover {
     color: #000;
     text-decoration: underline;
   }
 
-  /* line 160, ../sass/demo.scss */
+  /* line 161, ../sass/demo-blue.scss */
   nav#navbar ul li a:active {
     text-decoration: underline;
     background-color: #000;
@@ -149,23 +149,23 @@ header {
 /*----------------------------------------------------
  * Media queries "larger" screens more than 641 px*/
 @media screen and (min-width: 21rem) {
-  /* line 173, ../sass/demo.scss */
+  /* line 174, ../sass/demo-blue.scss */
   header a img {
-    background-color: #0094c8;
+    background-color: #000;
   }
 
-  /* line 177, ../sass/demo.scss */
+  /* line 178, ../sass/demo-blue.scss */
   div.triangle1 {
     display: inline-block;
     border-style: solid;
     border-width: 1.9rem 0 1.9rem 20px;
-    border-color: #057EB6 #057EB6 #057EB6 #0094c8;
-    _border-color: #000000 #000000 #000000 #0094c8;
+    border-color: #057EB6 #057EB6 #057EB6 #000;
+    _border-color: #000000 #000000 #000000 #000;
     _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
     margin: 0 -0.35rem;
   }
 
-  /* line 187, ../sass/demo.scss */
+  /* line 188, ../sass/demo-blue.scss */
   h1 {
     font-style: italic;
     font-size: 1.5rem;
@@ -178,7 +178,7 @@ header {
     vertical-align: top;
   }
 
-  /* line 199, ../sass/demo.scss */
+  /* line 200, ../sass/demo-blue.scss */
   div.triangle2 {
     display: inline-block;
     border-style: solid;
@@ -189,20 +189,20 @@ header {
     margin-left: -0.35rem;
   }
 
-  /* line 209, ../sass/demo.scss */
+  /* line 210, ../sass/demo-blue.scss */
   nav#navbar {
     background-color: #057EB6;
     margin-top: 0;
     box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.7);
   }
 
-  /* line 215, ../sass/demo.scss */
+  /* line 216, ../sass/demo-blue.scss */
   nav#navbar ul {
     padding-left: 0;
     margin: 0;
   }
 
-  /* line 221, ../sass/demo.scss */
+  /* line 222, ../sass/demo-blue.scss */
   nav#navbar ul li {
     list-style: none;
     display: inline-block;
@@ -210,7 +210,7 @@ header {
     padding: 0.5rem 1rem;
   }
 
-  /* line 228, ../sass/demo.scss */
+  /* line 229, ../sass/demo-blue.scss */
   nav#navbar ul li a {
     text-decoration: none;
     font-size: 1.4rem;
@@ -219,18 +219,18 @@ header {
     transition-duration: 0s;
   }
 
-  /* line 236, ../sass/demo.scss */
+  /* line 237, ../sass/demo-blue.scss */
   nav#navbar ul li a:focus {
     outline: 1px solid #fff;
   }
 
-  /* line 240, ../sass/demo.scss */
+  /* line 241, ../sass/demo-blue.scss */
   nav#navbar ul li a:hover {
     color: #000;
     text-decoration: underline;
   }
 
-  /* line 245, ../sass/demo.scss */
+  /* line 246, ../sass/demo-blue.scss */
   nav#navbar ul li a :active {
     text-decoration: underline;
     background-color: #000;
@@ -238,62 +238,62 @@ header {
   }
 }
 /* ---------------------------------------------MAIN-----------------------------------------------*/
-/* line 253, ../sass/demo.scss */
+/* line 254, ../sass/demo-blue.scss */
 main {
   width: 99%;
   margin: 20px auto;
   font-size: 1.2rem;
 }
 
-/* line 259, ../sass/demo.scss */
+/* line 260, ../sass/demo-blue.scss */
 h2, h3:not(ui-widget-content > h3) {
   color: #000;
   margin: auto;
 }
 
-/* line 264, ../sass/demo.scss */
+/* line 265, ../sass/demo-blue.scss */
 h2 {
   font-size: 2rem;
   margin-left: 2%;
 }
 
-/* line 269, ../sass/demo.scss */
+/* line 270, ../sass/demo-blue.scss */
 h3 {
   font-size: 1.4rem;
 }
 
-/* line 273, ../sass/demo.scss */
+/* line 274, ../sass/demo-blue.scss */
 p:not(footer > p), li {
   font-family: Lato;
   line-height: 1.5rem;
   font-size: 1.4rem;
 }
 
-/* line 279, ../sass/demo.scss */
+/* line 280, ../sass/demo-blue.scss */
 main a {
   color: #057eb6;
   font-family: Lato;
   font-weight: bold;
 }
 
-/* line 285, ../sass/demo.scss */
+/* line 286, ../sass/demo-blue.scss */
 main a:hover {
   text-decoration: none;
 }
 
-/* line 289, ../sass/demo.scss */
+/* line 290, ../sass/demo-blue.scss */
 main a:focus {
   outline: 1px solid var(main-focus-color);
 }
 
 /* ---------------------- PLAYER ---------------------------- */
-/* line 294, ../sass/demo.scss */
+/* line 295, ../sass/demo-blue.scss */
 .cont {
   /* article#video and article#mde */
   position: relative;
 }
 
-/* line 298, ../sass/demo.scss */
+/* line 299, ../sass/demo-blue.scss */
 .cont::after {
   content: '';
   display: block;
@@ -301,19 +301,19 @@ main a:focus {
 }
 
 @media screen and (max-width: 640px) {
-  /* line 305, ../sass/demo.scss */
+  /* line 306, ../sass/demo-blue.scss */
   .container {
     width: 100%;
   }
 
-  /* line 308, ../sass/demo.scss */
+  /* line 309, ../sass/demo-blue.scss */
   .video {
     display: block;
     width: auto;
   }
 }
 @media screen and (min-width: 641px) {
-  /* line 315, ../sass/demo.scss */
+  /* line 316, ../sass/demo-blue.scss */
   article#video {
     vertical-align: top;
     display: inline-block;
@@ -322,13 +322,13 @@ main a:focus {
     width: 70%;
   }
 
-  /* line 323, ../sass/demo.scss */
+  /* line 324, ../sass/demo-blue.scss */
   .cont {
     /*video */
     position: relative;
   }
 
-  /* line 327, ../sass/demo.scss */
+  /* line 328, ../sass/demo-blue.scss */
   .cont::after {
     content: '';
     display: block;
@@ -339,7 +339,7 @@ main a:focus {
 /* ------------------------------------------
  * Media queries SMALL 640 px*/
 @media screen and (max-width: 640px) {
-  /* line 338, ../sass/demo.scss */
+  /* line 339, ../sass/demo-blue.scss */
   #mde {
     padding: 15px;
     width: 95%;
@@ -349,7 +349,7 @@ main a:focus {
 /*------------------------------------------
  * Media queries BIGGER 641 px*/
 @media screen and (min-width: 641px) {
-  /* line 349, ../sass/demo.scss */
+  /* line 350, ../sass/demo-blue.scss */
   #mde {
     padding: 10px;
     width: 28%;
@@ -357,7 +357,7 @@ main a:focus {
   }
 }
 /* ---------------------- TRANSCRIPTS ---------------------------- */
-/* line 360, ../sass/demo.scss */
+/* line 361, ../sass/demo-blue.scss */
 #text-target, #text-target1 {
   width: 60%;
   padding-top: 20px;
@@ -365,7 +365,7 @@ main a:focus {
 
 /* ------------------- USELESS FOR THE MOMENT ---------------------- */
 /* ------------------- OR UNDEFINED IN HTML---------------------- */
-/* line 368, ../sass/demo.scss */
+/* line 369, ../sass/demo-blue.scss */
 code {
   border: 1px solid #333;
   padding: 10px;
@@ -376,24 +376,24 @@ code {
   overflow: auto;
 }
 
-/* line 378, ../sass/demo.scss */
+/* line 379, ../sass/demo-blue.scss */
 #desc table {
   max-width: 1000px;
 }
 
-/* line 382, ../sass/demo.scss */
+/* line 383, ../sass/demo-blue.scss */
 #desc table tr td, #desc table tr th {
   padding: 4px;
   border: 1px solid #000;
 }
 
-/* line 387, ../sass/demo.scss */
+/* line 388, ../sass/demo-blue.scss */
 #desc table tr th {
   background-color: #EEE;
 }
 
 /* ------------------------------------------------------ FOOTER ------------------------------------------------------- */
-/* line 394, ../sass/demo.scss */
+/* line 395, ../sass/demo-blue.scss */
 footer {
   background-color: #057eb6;
   padding: 1% 20%;
@@ -402,17 +402,17 @@ footer {
   text-align: center;
 }
 
-/* line 402, ../sass/demo.scss */
+/* line 403, ../sass/demo-blue.scss */
 footer a {
   color: #fff;
 }
 
-/* line 406, ../sass/demo.scss */
+/* line 407, ../sass/demo-blue.scss */
 footer a:focus {
   outline: 1px solid #fff;
 }
 
-/* line 409, ../sass/demo.scss */
+/* line 410, ../sass/demo-blue.scss */
 footer a:hover {
   text-decoration: none;
 }
