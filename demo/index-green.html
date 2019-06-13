@@ -4,13 +4,13 @@
         <meta charset="utf-8" />
         <title>Démo du lecteur AccessPlayer</title>
         
-        <script src="../lib/jquery-3.2.1.min.js" type="text/javascript"></script>
-        <script src="../lib/jquery-ui-1.12.1.custom/jquery-ui.min.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="../lib/jquery-ui-1.12.1.custom/jquery-ui.css" type="text/css" />
+        <script src="lib/jquery-3.2.1.min.js" type="text/javascript"></script>
+        <script src="lib/jquery-ui-1.12.1.custom/jquery-ui.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="lib/jquery-ui-1.12.1.custom/jquery-ui.css" type="text/css" />
         <!-- demo page css -->
-        <link rel="stylesheet" href="stylesheets/demo.css" media="screen, projection" type="text/css" />
+        <link rel="stylesheet" href="stylesheets/demo-green.css" media="screen, projection" type="text/css" />
         <!-- custom css for the player -->
-        <link rel="stylesheet" href="stylesheets/player.css" media="screen, projection" type="text/css" />
+        <link rel="stylesheet" href="stylesheets/player-green.css" media="screen, projection" type="text/css" />
     </head>
     <body>
 <!-- lien d'évitement (tab navigation?)-->      
@@ -31,7 +31,7 @@
 <!-- header --> 
     <header role="banner">
         
-        <a href="https://francetvaccess.fr/mfp-access-player/" tabindex="0"><img src="img/logo.png" alt="Koena" /></a>
+        <a href="https://francetvaccess.fr/mfp-access-player/" tabindex="0"><img src="img/logo.png" alt="France.tv access" /></a>
         <div class="triangle1"></div>
         
         <h1 lang="en">Access Player</h1>
@@ -44,7 +44,8 @@
         <ul>
             <li><a href="#video" title="" aria-hidden="true"> Vidéo </a</li>
             <li><a href="#mde" aria-hidden="true"> Mode d'emploi </a></li>
-            <li><a href="../demo_ftva/index.html" aria-hidden="true">Demo thème france•tv access</a></li>
+            <li><a href="index.html" aria-hidden="true">Demo thème Red</a></li>
+            <li><a href="index-blue.html" aria-hidden="true">Demo thème Blue</a></li>
         </ul>           
     </nav>
 
@@ -66,7 +67,7 @@
                             txt:'../transcripts/JamyPlayer.txt'
                         },
                         live: '#text-target1',
-                        theme_class: 'koena_theme'
+                        theme_class: 'green_theme'
                     }">
                         <source src="https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_FULL2.m4v" type="video/mp4" />
                         <track src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/demo/tracks/JamyPlayer.stl" kind="subtitles" label="Français (coloration CSA)" srclang="fr" />

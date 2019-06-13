@@ -19,32 +19,33 @@ $btn-modal-close-radius: 15px;
 
 
 /* colors */
-$outline-color: #3E8526;
+$outline-color: #0094C8;
 $background-color: #000;
-$timeline-bar-color: #3E8526;/* past time */
+$timeline-bar-color: #0094C8;/* past time */
 $timeline-bar-unbuffer-color: #CCC;
-$timeline-bar-buffer-color: #C6EEB7;
-$btn-hover: #3E8526;
-$audio-bar-color: #3E8526;/* turned on */
+$timeline-bar-buffer-color: #BBEEFE;
+$btn-hover: #0094C8;
+$audio-bar-color: #0094C8;/* turned on */
 $audio-bar-inactive-color: rgba(33,32,32,.9);
 $btn-speed-bgcolor: #333;
-$btn-speed-bordercolor: #3E8526;
+$btn-speed-bordercolor: #0094C8;
 $btn-active: #FFF;
 $btn-disabled: #888;
 	
 /* modal */
 $modal-background-color: rgba(33,32,32,.9);
-$modal-header-bgcolor: #3E8526;
+$modal-header-bgcolor: #0094C8;
 $modal-header-txtcolor: #000;
-$modal-border-color: #3E8526;
+$modal-border-color: #16380a;
 $modal-text-color: #fff;
 $modal-option-active: rgba(73,73,73,.9);
 $modal-option-hover: rgba(56,56,56,.9);
 
 
+
 /* place here the name of your overiding class */
 
-.mfp-wrapper.koena_theme{
+.mfp-wrapper.blue_theme{
 	background-color: $background-color;
 	.control-bar{
 		background-color: $background-color;
