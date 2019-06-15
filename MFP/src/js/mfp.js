@@ -7,7 +7,7 @@
  * backgroundImage: "key"
  * Date : 2018-10-16T14:58Z
  */
-
+import MFP_Menu from './MFP_Menu';
 
 (function(){
     var scriptEls = document.getElementsByTagName('script');
@@ -16,89 +16,6 @@
     var mfpPath = scriptPath.substr(0, scriptPath.lastIndexOf('/') + 1);
     var MFPDebug = false;
 
-    var MFP_menu = function(){
-        var element = arguments[0];
-        if(arguments.length > 1){
-            var options = arguments[1];
-        }
-        else{
-            var options = {};
-        }
-        this.element = $(element);
-        this.options = options;
-    };
-    MFP_menu.prototype={
-        default_options: {
-            select:function(elmt){}
-        },
-        init:function(){
-            this.loadOptions();
-            this.prepareContent();
-        },
-        prepareContent:function(){
-            this.element.attr('role','menu').addClass('mfp_list').attr('tabindex','0');
-            this.element.on('focus',function(){
-                if($(this).find('li.selected').length>0){
-                    $(this).find('li.selected').focus();
-                }
-                else{
-                    $(this).find('li:first-child').focus();
-                }
-            });
-            this.element.find('li').attr('role','menuitem').attr('tabindex','-1');
-            this.element.find('li').on('focus',function(e){
-                $(this).addClass('focus');
-            });
-            this.element.find('li').on('blur',function(e){
-                $(this).removeClass('focus');
-            });
-            this.element.find('li').click(function(e){
-                var that = e.currentTarget;
-                $(that).parent().find('li').removeAttr('aria-selected');
-                $(that).parent().find('li').removeClass('selected');
-                $(that).addClass('selected');
-                $(that).attr('aria-selected','true');
-                this.options.select(that);
-            }.bind(this))
-            this.element.find('li').on('keydown',function(e){
-                var that = e.currentTarget;
-                if(e.which==38){ //up
-                    if($(that).prev().length>0){
-                        $(that).prev().focus();
-                    }
-                    else{
-                        $(that).parent().find('li:last-child').focus();
-                    }
-
-                }
-                else if(e.which==40){ //down
-                    if($(that).next().length>0){
-                        $(that).next().focus();
-                    }
-                    else{
-                        $(that).parent().find('li:first-child').focus();
-                    }
-                }
-                else if(e.which == 9){ // tab
-                    e.preventDefault();
-                    $(that).parent().parent().find('.ui-dialog-titlebar button').focus();
-                }
-                else if(e.which == 13){ // enter
-                    e.preventDefault();
-                    $(that).parent().find('li').removeAttr('aria-selected');
-                    $(that).parent().find('li').removeClass('selected');
-                    $(that).addClass('selected');
-                    $(that).attr('aria-selected','true');
-                    this.options.select(that);
-
-                }
-
-            }.bind(this));
-        },
-        loadOptions:function(){
-            this.options = $.extend( {}, this.default_options, this.options );
-        }
-    };
     var MFP = function(){
         var element = arguments[0];
         if(arguments.length > 1){
@@ -118,9 +35,7 @@
         this.liveOn=false;
         this.seeking=false;
     };
-        /*
 
-        */
     MFP.prototype={
         default_options: {
             lang:'',
@@ -739,7 +654,7 @@
                 }
 
                 $(menu[0]).append(men);
-                var m = new MFP_menu($(menu[0]),{
+                var m = new MFP_Menu($(menu[0]),{
                     select:function(elmt){
                         if($(elmt).hasClass('preferences')){
                            $(this.container).find('.right-part .pref-block .menu').dialog( "open" );
@@ -824,7 +739,7 @@
 
                 }
                 //$(menu[0]).menu({role:'listbox',items:'li'});
-                var m = new MFP_menu($(menu[0]),{
+                var m = new MFP_Menu($(menu[0]),{
                     select:function(elmt){
                         console.log('chapter selected');
                         this.element[0].currentTime=$(elmt).data('start');
@@ -1010,7 +925,7 @@
                 var men = $('<li class="" data-src="'+this.options.transcripts.txt+'"><span class="mfp-icon-txt">'+this.lang.transcript+' TXT</span></li>');
                 $(menu[0]).append(men);
             }
-            var m = new MFP_menu($(menu[0]),{
+            var m = new MFP_Menu($(menu[0]),{
                 select:function(elmt){
                     if($(elmt).hasClass('mfp_live')){
                         if($(this.container).find('.right-part .transcripts-block .transcripts').hasClass('off')){
@@ -1440,7 +1355,7 @@
     window.mfpPath = mfpPath;
     window.MFP = MFP;
     window.MFPDebug = MFPDebug;
-    
+
     $('head').append('<link rel="stylesheet" href="'+mfpPath+'stylesheets/screen.css" type="text/css" />');
     var videos = $('video[data-mfp]');
     for(var i=0; i<videos.length; i++){
