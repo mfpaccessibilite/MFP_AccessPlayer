@@ -18,8 +18,11 @@ export default class MFP{
       else{
           var options = {};
       }
-      this.element = $(element);
-      this.options = options;
+      this.options = $.extend( {}, this.default_options, options );
+      var {video, element} = videoFactory.makeVideoInstance(this.options, element);
+      this.video = video;
+      this.element = element;
+      this.options.videos.highdef=this.video.currentSrc;
       this.subtitles=[];
       this.captions=[];
       this.descriptions=[];
@@ -32,17 +35,10 @@ export default class MFP{
 
   init(){
       // loading options :
-      this.element[0].controls=false;
-      $(this.element[0]).attr('tabindex',"-1");
-      this.loadOptions();
+      this.video.controls = false;
+      this.video.tabindex = -1;
       this.loadLang();
       //this.loadTracks();
-  }
-
-  loadOptions(){
-          this.options = $.extend( {}, this.default_options, this.options );
-          console.log(this.options);
-          this.options.videos.highdef=this.element[0].currentSrc;
   }
 
   loadLang(){
@@ -321,7 +317,7 @@ export default class MFP{
                                       console.log('setting video currentTime to : '+tcin);
                                   }
                                   this.redrawCues();
-                                    $(this.element)[0].currentTime=tcin;
+                                    this.video.currentTime=tcin;
                                     this.redrawCues();
 
                                 }.bind(this));
@@ -691,7 +687,7 @@ export default class MFP{
                         this.updateLive();
                         this.fontSize();
                     }
-                    //this.element[0].currentTime=$(elmt).data('start');
+                    //this.video.currentTime=$(elmt).data('start');
                     //$(this.container).find('.right-part .chapters-block .menu').dialog('close');
                 }.bind(this)
             });
@@ -722,7 +718,7 @@ export default class MFP{
             for(var i = 0; i<cues.length ; i++){
                 var cue = cues[i];
                 var men = $('<li class="cue chapter-'+i+'" data-start="'+cue.startTime+'">'+cue.text+'</li>');
-                if(this.element[0].currentTime>=cue.startTime && this.element[0].currentTime<cue.endTime){
+                if(this.video.currentTime>=cue.startTime && this.video.currentTime<cue.endTime){
                     $(men).addClass('selected');
                 }
                 $(menu[0]).append(men);
@@ -740,7 +736,7 @@ export default class MFP{
             var m = new MFP_Menu($(menu[0]),{
                 select:function(elmt){
                     console.log('chapter selected');
-                    this.element[0].currentTime=$(elmt).data('start');
+                    this.video.currentTime=$(elmt).data('start');
                     $(this.container).find('.right-part .chapters-block .menu').dialog('close');
                 }.bind(this)
             });
@@ -754,7 +750,7 @@ export default class MFP{
             //this.reloadChapters();
             /*
             $(menu[0]).menu({select: function( event, ui ) {
-                this.element[0].currentTime=ui.item.data('start');
+                this.video.currentTime=ui.item.data('start');
                 $(this.container).find('.right-part .chapters-block .menu').dialog( "close" );
                 //ui.item.css('background','green');
                 //console.log();
@@ -766,7 +762,8 @@ export default class MFP{
 
     initVideosAlt(){
         var btn = $(this.container).find('.video_hd');
-        btn.click(function(){
+        btn.click(()=>{
+
             $(this.container).find('.video_audiodesc').addClass('off');
             $(this.container).find('.video_audiodesc').attr('title',this.lang.activate+' '+this.lang.audiodesc);
             $(this.container).find('.video_audiodesc .mfp-hidden').html(this.lang.activate+' '+this.lang.audiodesc);
@@ -776,52 +773,53 @@ export default class MFP{
             $(this.container).find('.video_signed .mfp-hidden').html(this.lang.activate+' '+this.lang.signed);
 
             var btn = $(this.container).find('.video_hd');
-            var time = this.element[0].currentTime;
-            var paused = this.element[0].paused;
-            var opt = {elmt : this, time : time, paused : paused};
+            var time = this.video.currentTime;
+            var paused = this.video.paused;
+
             if(btn.hasClass('off') || (this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
-                this.element[0].pause();
+                this.video.pause();
                 if(btn.hasClass('off')){
                     btn.removeClass('off');
                     if(btn.hasClass('mfp-icon-hd')){
-                        this.element[0].src=this.options.videos.highdef;
+                        this.video.src=this.options.videos.highdef;
                         if((this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
                             btn.attr('title',this.lang.activate+' '+this.lang.lowdef);
                             btn.find('span').html(this.lang.activate+' '+this.lang.lowdef);
                         }
                     }
                     else{
-                        this.element[0].src=this.options.videos.lowdef;
+                        this.video.src=this.options.videos.lowdef;
                         btn.attr('title',this.lang.activate+' '+this.lang.highdef);
                         btn.find('span').html(this.lang.activate+' '+this.lang.highdef);
                     }
                 }
                 else{
                     if(btn.hasClass('mfp-icon-hd')){
-                        this.element[0].src=this.options.videos.lowdef;
+                        this.video.src=this.options.videos.lowdef;
                         btn.attr('title',this.lang.activate+' '+this.lang.highdef);
                         btn.find('span').html(this.lang.activate+' '+this.lang.highdef);
                         btn.removeClass('mfp-icon-hd');
                         btn.addClass('mfp-icon-ld');
                     }
                     else{
-                        this.element[0].src=this.options.videos.highdef;
+                        this.video.src=this.options.videos.highdef;
                         btn.attr('title',this.lang.activate+' '+this.lang.lowdef);
                         btn.find('span').html(this.lang.activate+' '+this.lang.lowdef);
                         btn.removeClass('mfp-icon-ld');
                         btn.addClass('mfp-icon-hd');
                     }
                 }
-                $(this.element[0]).bind('canplay',function(event){
-                    this.elmt.element[0].currentTime=this.time;
-                    if(!this.paused){
-                        this.elmt.element[0].play();
+                this.video.on('canplay', (event)=>{
+                    this.video.currentTime = time;
+                    if(!paused){
+                        this.video.play();
                     }
-                    $(this.elmt.element[0]).unbind('canplay');
-                }.bind(opt));
+                    this.video.off('canplay');
+                });
             }
-        }.bind(this));
-        $(this.container).find('.video_audiodesc').click(function(){
+        });
+
+        $(this.container).find('.video_audiodesc').click(()=>{
             var btn = $(this.container).find('.video_audiodesc');
             btn.attr('title',this.lang.desactivate+' '+this.lang.audiodesc);
             btn.find('span').html(this.lang.desactivate+' '+this.lang.audiodesc);
@@ -845,24 +843,25 @@ export default class MFP{
                 }
                 $(this.container).find('.video_signed').addClass('off');
                 btn.removeClass('off');
-                var time = this.element[0].currentTime;
-                var paused = this.element[0].paused;
-                var opt = {elmt : this, time : time, paused : paused};
-                this.element[0].pause();
-                this.element[0].src=this.options.videos.audiodesc;
-                $(this.element[0]).bind('canplay',function(event){
-                    this.elmt.element[0].currentTime=this.time;
-                    if(!this.paused){
-                        this.elmt.element[0].play();
+                var time   = this.video.currentTime;
+                var paused = this.video.paused;
+                this.video.pause();
+                this.video.src=this.options.videos.audiodesc;
+
+                this.video.on('canplay', (event)=>{
+                    this.video.currentTime = time;
+                    if(!paused){
+                        this.video.play();
                     }
-                    $(this.elmt.element[0]).unbind('canplay');
-                }.bind(opt));
+                    this.video.off('canplay');
+                });
             }
             else{
                 $(this.container).find(this.options.last_video).trigger('click');
             }
-        }.bind(this));
-        $(this.container).find('.video_signed').click(function(){
+        });
+
+        $(this.container).find('.video_signed').click(()=>{
             var btn = $(this.container).find('.video_signed');
             btn.attr('title',this.lang.desactivate+' '+this.lang.signed);
             btn.find('span').html(this.lang.desactivate+' '+this.lang.signed);
@@ -886,23 +885,23 @@ export default class MFP{
                 }
                 $(this.container).find('.video_audiodesc').addClass('off');
                 btn.removeClass('off');
-                var time = this.element[0].currentTime;
-                var paused = this.element[0].paused;
-                var opt = {elmt : this, time : time, paused : paused};
-                this.element[0].pause();
-                this.element[0].src=this.options.videos.signed;
-                $(this.element[0]).bind('canplay',function(event){
-                    this.elmt.element[0].currentTime=this.time;
-                    if(!this.paused){
-                        this.elmt.element[0].play();
+                var time = this.video.currentTime;
+                var paused = this.video.paused;
+                this.video.pause();
+                this.video.src=this.options.videos.signed;
+
+                this.video.on('canplay', (event)=>{
+                    this.video.currentTime = time;
+                    if(!paused){
+                        this.video.play();
                     }
-                    $(this.elmt.element[0]).unbind('canplay');
-                }.bind(opt));
+                    this.video.off('canplay');
+                });
             }
             else{
                 $(this.container).find(this.options.last_video).trigger('click');
             }
-        }.bind(this));
+        });
 
     }
 
@@ -982,18 +981,18 @@ export default class MFP{
     initPlayBackSpeedEvents(){
         $(this.container).find('.speed').on('change',function(e){
             var speed = $(this.container).find('.speed')[0].value;
-            this.element[0].playbackRate=speed;
+            this.video.playbackRate=speed;
         }.bind(this));
     }
 
     initPlayEvents(){
         $(this.container).find('.play').click(function(e){
             e.preventDefault();
-            if($(this.element)[0].paused){
-                $(this.element)[0].play();
+            if(this.video.paused){
+                this.video.play();
             }
             else{
-                $(this.element)[0].pause();
+                this.video.pause();
             }
         }.bind(this));
     }
@@ -1004,7 +1003,7 @@ export default class MFP{
         //progress.on('click',function(){console.log('click');});
         //progress.on('slidestart',function(){console.log('start');});
         progress.on('slidestart',function(){
-            var video = $(this.element)[0];
+            var video = this.video;
             this.current_play=video.paused;
             video.pause();
             this.redrawCues();
@@ -1016,7 +1015,7 @@ export default class MFP{
             this.seekUpdate();
         }.bind(this));
         progress.on('slidestop',function(){
-            var video = $(this.element)[0];
+            var video = this.video;
             this.seekUpdate();
             if(!this.current_play){
                 video.play();
@@ -1032,25 +1031,25 @@ export default class MFP{
 
         progress.on('keydown',function(e){
 
-            var t = this.element[0].currentTime;
+            var t = this.video.currentTime;
             if(e.which==37 || e.which==40){
                 e.preventDefault();
                 //back 5 seconds;
                 if((t-5)>0){
-                    this.element[0].currentTime=t-5;
+                    this.video.currentTime=t-5;
                 }
                 else{
-                    this.element[0].currentTime=0;
+                    this.video.currentTime=0;
                 }
             }
             else if(e.which==38 || e.which==39){
                 e.preventDefault();
                 //forward 5 seconds ;
-                if((t+5)>this.element[0].duration){
-                    this.element[0].currentTime=this.element[0].duration;
+                if((t+5)>this.video.duration){
+                    this.video.currentTime=this.video.duration;
                 }
                 else{
-                    this.element[0].currentTime=t+5;
+                    this.video.currentTime=t+5;
                 }
             }
             console.log('key : '+e.keyCode);
@@ -1058,12 +1057,12 @@ export default class MFP{
     }
 
     seekUpdate(){
-        var video = $(this.element)[0];
+        var video = this.video;
         video.currentTime=video.duration * $(this.controlBar).find('.progress-bar').slider('option',"value") / 100;
     }
 
     soundUpdate(e){
-        var video = $(this.element)[0];
+        var video = this.video;
         video.volume=$(this.container).find('.sound-range').slider('option','value') / 100;
         //$(this.container).find('.sound-range').attr('aria-valuetext', Math.round(video.volume *100) + '% '+this.lang.volume);
         var h = this.soundBar.find('.ui-slider-handle');
@@ -1086,18 +1085,18 @@ export default class MFP{
         $(this.container).find('.sound-range').on('slidechange',function(){this.soundUpdate();}.bind(this));
         $(this.container).find('.sound').click(function(){
             var sound_btn = $(this.container).find('.sound');
-            if(this.element[0].volume>0){
-                sound_btn.attr('old_snd',this.element[0].volume);
+            if(this.video.volume>0){
+                sound_btn.attr('old_snd',this.video.volume);
                 $(this.container).find('.sound-range').slider('option','value',0);
                 sound_btn.find('span').html(this.lang.soundOn);
                 sound_btn.attr('title',this.lang.soundOn);
 
                 this.soundUpdate();
 
-                //this.element[0].volume=0;
+                //this.video.volume=0;
             }
             else{
-                this.element[0].volume=sound_btn.attr('old_snd');
+                this.video.volume=sound_btn.attr('old_snd');
                 $(this.container).find('.sound-range').slider('option','value',sound_btn.attr('old_snd')*100);
                 sound_btn.find('span').html(this.lang.soundOff);
                 sound_btn.attr('title',this.lang.soundOff);
@@ -1113,38 +1112,38 @@ export default class MFP{
         this.container.on('keypress',function(e){
             if(e.which==32){
                 e.preventDefault();
-                if(this.element[0].paused){
-                    this.element[0].play();
+                if(this.video.paused){
+                    this.video.play();
                 }
                 else{
-                    this.element[0].pause();
+                    this.video.pause();
                 }
             }
         }.bind(this));
         */
-        var video = $(this.element);
-        video.on('loadedmetadata',function(){
+        var video = this.video;
+        video.on('loadedmetadata', ()=>{
             this.fontSize();
-        }.bind(this));
-        video.on('play',function(e){
+        });
+        video.on('play', (e)=>{
             $(this.container).find('.play').removeClass('mfp-icon-play').addClass('mfp-icon-pause');
             $(this.container).find('.play span').html(this.lang.pause);
             $(this.container).find('.play').attr('title',this.lang.pause);
             $(this.container).find('.play').attr('aria-label',this.lang.pause);
-        }.bind(this));
-        video.on('pause',function(e){
+        });
+        video.on('pause', (e) => {
             $(this.container).find('.play').removeClass('mfp-icon-pause').addClass('mfp-icon-play');
             $(this.container).find('.play span').html(this.lang.play);
             $(this.container).find('.play').attr('title',this.lang.play);
             $(this.container).find('.play').attr('aria-label',this.lang.play);
-        }.bind(this));
-        video.on('timeupdate',function(e){
-            var time = video[0].currentTime;
-            var duration = video[0].duration;
+        });
+        video.on('timeupdate', (e)=>{
+            var time = this.video.currentTime;
+            var duration = this.video.duration;
             if(!this.seeking){
                 $(this.container).find('.progress-bar').slider('option','value',(time/duration)*100);
             }
-            var tmp = Math.round(video[0].currentTime);
+            var tmp = Math.round(this.video.currentTime);
             var hr = 0;
             var min = 0;
             var minute = 0;
@@ -1170,13 +1169,14 @@ export default class MFP{
             //$(this.controlBar).find('.progress-bar').attr('aria-valuetext',min+':'+sec+' '+this.lang.on+' '+this.duration);
             h.attr('aria-valuetext',dura+' '+this.lang.on+' '+this.duration);
             h.attr('aria-valuenow',(time/duration)*100);
-        }.bind(this));
-        video.on('durationchange',function(e){
+        });
+
+        video.on('durationchange', (e)=>{
             this.initDuration();
-        }.bind(this));
-        video.on('progress',function(e){
-            var buffer = $(this.element)[0].buffered;
-            var duration = $(this.element)[0].duration;
+        });
+        video.on('progress', (e)=>{
+            var buffer = this.video.buffered;
+            var duration = this.video.duration;
             if(buffer.length>0){
                 var left = Math.round((buffer.start(0)/duration)*10000) / 100;
                 var width = (Math.round((buffer.end(0)/duration)*10000) / 100) - left;
@@ -1185,10 +1185,10 @@ export default class MFP{
                 b.css('width',width + '%');
             }
             //console.log(buffer.start(0)+' '+buffer.end(0));
-        }.bind(this));
+        });
         /*
         video.on('volumechange',function(e){
-            var volume = $(this.element)[0].volume/100;
+            var volume = this.video.volume/100;
             $(this.container).find('.sound-range')[0].value=volume;
             this.soundUpdate();
         }.bind(this));
@@ -1196,7 +1196,7 @@ export default class MFP{
     }
 
     initDuration(){
-        var duration = Math.round($(this.element)[0].duration);
+        var duration = Math.round(this.video.duration);
         if(!isNaN(duration)){
             var tmp = duration;
             var hr = 0;
@@ -1227,7 +1227,7 @@ export default class MFP{
 
     initFullScreenEvents(){
         // event for iphone/ipad to display standar subtitle on fullscreen :
-        $(this.element)[0].addEventListener('webkitbeginfullscreen',function(){
+        this.video.addEventListener('webkitbeginfullscreen',function(){
           if(MFPDebug){
               console.log('iPhone/iPad going fullscreen');
           }
@@ -1238,10 +1238,10 @@ export default class MFP{
             }
             $(this.container).addClass('showcue');
         }.bind(this));
-        $(this.element)[0].addEventListener('webkitendfullscreen',function(){
+        this.video.addEventListener('webkitendfullscreen',function(){
           if(MFPDebug){
               console.log('iPhone/iPad leaving fullscreen');
-              console.log($(this.element)[0].textTracks);
+              console.log(this.video.textTracks);
           }
             for(var i=0;i<this.subtitles.length;i++){
                 if(this.subtitles[i].track.mode=='showing'){
@@ -1338,7 +1338,7 @@ export default class MFP{
                 }
                 else{
                     // none of the events work so we are on mobile or tablet, so asking fullscreen on the video directly
-                    $(this.element)[0].webkitEnterFullscreen();
+                    this.video.webkitEnterFullscreen();
 
 
                 }
