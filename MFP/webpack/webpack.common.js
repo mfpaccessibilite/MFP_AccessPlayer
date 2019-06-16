@@ -10,6 +10,8 @@ module.exports = {
     'stylesheets/screen': Path.resolve(__dirname, '../src/sass/screen.scss'),
     'stylesheets/demo-blue':  Path.resolve(__dirname, '../src/sass/demo-blue.scss'),
     'stylesheets/player-blue':  Path.resolve(__dirname, '../src/sass/player-blue.scss'),
+    'stylesheets/player-green':  Path.resolve(__dirname, '../src/sass/player-green.scss'),
+    'stylesheets/player-red':  Path.resolve(__dirname, '../src/sass/player-red.scss'),
     'trackreader/loadTrackType-srt': Path.resolve(__dirname, '../src/js/trackreader/loadTrackType-srt.js'),
     'trackreader/loadTrackType-stl': Path.resolve(__dirname, '../src/js/trackreader/loadTrackType-stl.js'),
     'video-players/loadVideoPlayer-html5': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-html5.js'),
