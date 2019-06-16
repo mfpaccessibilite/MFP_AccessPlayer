@@ -1,3 +1,13 @@
+/**
+ * MFP AccessPlayer v.1.0.2
+ * http://smartplayer.mfpst.com
+ *
+ * Copyright MFP Multimedia France Productions
+ * Released under GPL 3 licence
+ * backgroundImage: "key"
+ * Date : 2018-10-16T14:58Z
+ */
+ 
 export default class MFP_Menu {
 
   constructor(){
