@@ -794,48 +794,49 @@ export default class MFP{
 
             var btn = $(this.container).find('.video_hd');
             this.video.getCurrentTime().then((time)=>{
-              var paused = this.video.isPaused();
-              if(btn.hasClass('off') || (this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
-                  this.video.pause();
-                  if(btn.hasClass('off')){
-                      btn.removeClass('off');
-                      if(btn.hasClass('mfp-icon-hd')){
-                          this.video.setSrc(this.options.videos.highdef);
-                          if((this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
-                              btn.attr('title',this.lang.activate+' '+this.lang.lowdef);
-                              btn.find('span').html(this.lang.activate+' '+this.lang.lowdef);
-                          }
-                      }
-                      else{
-                          this.video.setSrc(this.options.videos.lowdef);
-                          btn.attr('title',this.lang.activate+' '+this.lang.highdef);
-                          btn.find('span').html(this.lang.activate+' '+this.lang.highdef);
-                      }
-                  }
-                  else{
-                      if(btn.hasClass('mfp-icon-hd')){
-                          this.video.setSrc(this.options.videos.lowdef);
-                          btn.attr('title',this.lang.activate+' '+this.lang.highdef);
-                          btn.find('span').html(this.lang.activate+' '+this.lang.highdef);
-                          btn.removeClass('mfp-icon-hd');
-                          btn.addClass('mfp-icon-ld');
-                      }
-                      else{
-                          this.video.setSrc(this.options.videos.highdef);
-                          btn.attr('title',this.lang.activate+' '+this.lang.lowdef);
-                          btn.find('span').html(this.lang.activate+' '+this.lang.lowdef);
-                          btn.removeClass('mfp-icon-ld');
-                          btn.addClass('mfp-icon-hd');
-                      }
-                  }
-                  this.video.on('canplay', (event)=>{
-                      this.video.setCurrentTime(time);
-                      if(!paused){
-                          this.video.play();
-                      }
-                      this.video.off('canplay');
-                  });
-              }
+                this.video.getPaused().then((paused)=>{
+                    if(btn.hasClass('off') || (this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
+                        this.video.pause();
+                        if(btn.hasClass('off')){
+                            btn.removeClass('off');
+                            if(btn.hasClass('mfp-icon-hd')){
+                                this.video.setSrc(this.options.videos.highdef);
+                                if((this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
+                                    btn.attr('title',this.lang.activate+' '+this.lang.lowdef);
+                                    btn.find('span').html(this.lang.activate+' '+this.lang.lowdef);
+                                }
+                            }
+                            else{
+                                this.video.setSrc(this.options.videos.lowdef);
+                                btn.attr('title',this.lang.activate+' '+this.lang.highdef);
+                                btn.find('span').html(this.lang.activate+' '+this.lang.highdef);
+                            }
+                        }
+                        else{
+                            if(btn.hasClass('mfp-icon-hd')){
+                                this.video.setSrc(this.options.videos.lowdef);
+                                btn.attr('title',this.lang.activate+' '+this.lang.highdef);
+                                btn.find('span').html(this.lang.activate+' '+this.lang.highdef);
+                                btn.removeClass('mfp-icon-hd');
+                                btn.addClass('mfp-icon-ld');
+                            }
+                            else{
+                                this.video.setSrc(this.options.videos.highdef);
+                                btn.attr('title',this.lang.activate+' '+this.lang.lowdef);
+                                btn.find('span').html(this.lang.activate+' '+this.lang.lowdef);
+                                btn.removeClass('mfp-icon-ld');
+                                btn.addClass('mfp-icon-hd');
+                            }
+                        }
+                        this.video.on('canplay', (event)=>{
+                            this.video.setCurrentTime(time);
+                            if(!paused){
+                                this.video.play();
+                            }
+                            this.video.off('canplay');
+                        });
+                    }
+                });
             });
         });
 
@@ -864,15 +865,16 @@ export default class MFP{
                 $(this.container).find('.video_signed').addClass('off');
                 btn.removeClass('off');
                 this.video.getCurrentTime().then((time)=>{
-                    var paused = this.video.isPaused();
-                    this.video.pause();
-                    this.video.setSrc(this.options.videos.audiodesc);
-                    this.video.on('canplay', (event)=>{
-                        this.video.setCurrentTime(time);
-                        if(!paused){
-                            this.video.play();
-                        }
-                        this.video.off('canplay');
+                    this.video.getPaused().then((paused)=>{
+                        this.video.pause();
+                        this.video.setSrc(this.options.videos.audiodesc);
+                        this.video.on('canplay', (event)=>{
+                            this.video.setCurrentTime(time);
+                            if(!paused){
+                                this.video.play();
+                            }
+                            this.video.off('canplay');
+                        });
                     });
                 });
             }
@@ -906,16 +908,16 @@ export default class MFP{
                 $(this.container).find('.video_audiodesc').addClass('off');
                 btn.removeClass('off');
                 this.video.getCurrentTime().then((time)=>{
-                    var paused = this.video.isPaused();
-                    this.video.pause();
-                    this.video.setSrc(this.options.videos.signed);
-
-                    this.video.on('canplay', (event)=>{
-                        this.video.setCurrentTime(time);
-                        if(!paused){
-                            this.video.play();
-                        }
-                        this.video.off('canplay');
+                    this.video.getPaused().then((paused)=>{
+                        this.video.pause();
+                        this.video.setSrc(this.options.videos.signed);
+                        this.video.on('canplay', (event)=>{
+                            this.video.setCurrentTime(time);
+                            if(!paused){
+                                this.video.play();
+                            }
+                            this.video.off('canplay');
+                        });
                     });
                 });
             }

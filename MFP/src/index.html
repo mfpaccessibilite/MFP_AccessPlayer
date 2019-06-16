@@ -44,25 +44,6 @@
 
 		<!-- main -->
 		    <main role="main" id="main">
-		        <!-- Video area -->
-		        <article id="video">
-		            <h2>Vidéo Vimeo</h2>
-		            <div class="cont">
-		                <div class="container">
-		                    <div data-mfp data-options="{
-														type: 'vimeo',
-														path: '51800249',
-		                        transcripts:{
-		                            html:'../transcripts/JamyPlayer.htm',
-		                            txt:'../transcripts/JamyPlayer.txt'
-		                        },
-		                        live: '#text-target1',
-		                        theme_class: 'blue_theme'
-		                    }">
-											</div>
-		                </div>
-		             </div>
-		         </article>
 						 <!-- Video area -->
 						 <article id="video">
 						 		<h2>Vidéo hébergée sur le serveur</h2>
@@ -89,42 +70,60 @@
 						 				</div>
 						 		 </div>
 						  </article>
-		         <!--  Mode d'emploi (mde) area -->
-		         <article id="mde">
-		            <h2>À propos de cette démonstration</h2>
-		            <p>Exemple d'une vidéo utilisant toutes les fonctionnalités du lecteur.</p>
+							<article id="mde">
+								 <h2>À propos de cette démonstration</h2>
+								 <p>Exemple d'une vidéo utilisant toutes les fonctionnalités du lecteur.</p>
+									<h3>Fonctionnalités pour l'accessibilité</h3>
+											<ul>
+													<li>Sous-titrage&nbsp;:
+															<ul>
+																	<li>en version brut, personnalisable via le panneau de configuration (format srt)</li>
+																	<li>en version colorée et positionnée selon les recommandations de la <a href="http://www.csa.fr/Juridical-area/Chartes/Charte-relative-a-la-qualite-du-sous-titrage-a-destination-des-personnes-sourdes-ou-malentendantes-Decembre-2011" target="_blank" title="Charte CSA relative à la qualité du sous-titrage pour les personnes sourdes ou malentendantes de décembre 2011 (nouvelle fenêtre)">charte <abbr title="Conseil supérieur de l'audiovisuel">CSA</abbr></a> (format stl/vtt)</li>
+															</ul>
+													</li>
+													<li>Audiodescription</li>
+													<li>Langue des signes française (LSF)</li>
+													<li>Version texte de la vidéo (transcription)</li>
+											</ul>
+									<h3>Autres fonctionnalités</h3>
+									<ul>
+											<li>Transcription en direct (<i lang="en">live transcript</i>)</li>
+											<li>Chapitrage&nbsp;: possibilité de se rendre directement à certains moments prédéfinis dans la vidéo</li>
+											<li>Vitesse de lecture</li>
+											<li>Poids de la vidéo&nbsp;:
+													<ul>
+															<li>une version haute définition</li>
+															<li>une version basse définition</li>
+													</ul>
+									</ul>
+						 </article>
+						 <!-- Transcripts area -->
+						 <div id="text-target1">
 
-		                <h3>Fonctionnalités pour l'accessibilité</h3>
-		                    <ul>
-		                        <li>Sous-titrage&nbsp;:
-		                            <ul>
-		                                <li>en version brut, personnalisable via le panneau de configuration (format srt)</li>
-		                                <li>en version colorée et positionnée selon les recommandations de la <a href="http://www.csa.fr/Juridical-area/Chartes/Charte-relative-a-la-qualite-du-sous-titrage-a-destination-des-personnes-sourdes-ou-malentendantes-Decembre-2011" target="_blank" title="Charte CSA relative à la qualité du sous-titrage pour les personnes sourdes ou malentendantes de décembre 2011 (nouvelle fenêtre)">charte <abbr title="Conseil supérieur de l'audiovisuel">CSA</abbr></a> (format stl/vtt)</li>
-		                            </ul>
-		                        </li>
-		                        <li>Audiodescription</li>
-		                        <li>Langue des signes française (LSF)</li>
-		                        <li>Version texte de la vidéo (transcription)</li>
-		                    </ul>
-		                <h3>Autres fonctionnalités</h3>
-		                    <ul>
-		                        <li>Transcription en direct (<i lang="en">live transcript</i>)</li>
-		                        <li>Chapitrage&nbsp;: possibilité de se rendre directement à certains moments prédéfinis dans la vidéo</li>
-		                        <li>Vitesse de lecture</li>
-		                        <li>Poids de la vidéo&nbsp;:
-		                            <ul>
-		                                <li>une version haute définition</li>
-		                                <li>une version basse définition</li>
-		                            </ul>
-		                    </ul>
-		        </article>
-
-		        <!-- Transcripts area -->
-		        <div id="text-target1">
-
-		        </div>
-		    </main>
-
+						 </div>
+						 <!-- Video area -->
+						 <article id="video">
+								 <h2>Vidéo Vimeo</h2>
+								 <div class="cont">
+										 <div class="container">
+												 <div data-mfp data-options="{
+														 type: 'vimeo',
+														 path: '51800249',
+														 transcripts:{
+																 html:'../transcripts/JamyPlayer.htm',
+																 txt:'../transcripts/JamyPlayer.txt'
+														 },
+														 live: '#text-target1',
+														 theme_class: 'blue_theme'
+												 }">
+											 </div>
+										 </div>
+									</div>
+							</article>
+							<!-- Transcripts area -->
+							<div id="text-target2">
+							</div>
+		     </main>
 		    <!--footer-->
 		    <footer role="contentinfo" id="footer">
 		        <p>Pour télécharger le code et contribuer, rendez-vous sur le <a href="https://github.com/mfpaccessibilite/MFP_AccessPlayer">compte Github du lecteur vidéo MFP AccessPlayer</a>&nbsp;!</p>

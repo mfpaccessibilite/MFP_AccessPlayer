@@ -2,23 +2,33 @@ const Path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
     mfp: Path.resolve(__dirname, '../src/js/mfp.js'),
-    screen: Path.resolve(__dirname, '../src/sass/screen.scss')
+    'stylesheets/screen': Path.resolve(__dirname, '../src/sass/screen.scss'),
+    'stylesheets/demo-blue':  Path.resolve(__dirname, '../src/sass/demo-blue.scss'),
+    'stylesheets/player-blue':  Path.resolve(__dirname, '../src/sass/player-blue.scss'),
+    'trackreader/loadTrackType-srt': Path.resolve(__dirname, '../src/js/trackreader/loadTrackType-srt.js'),
+    'trackreader/loadTrackType-stl': Path.resolve(__dirname, '../src/js/trackreader/loadTrackType-stl.js'),
+    'video-players/loadVideoPlayer-html5': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-html5.js'),
+    'video-players/loadVideoPlayer-vimeo': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-vimeo.js')
   },
   output: {
     path: Path.join(__dirname, '../dist'),
     filename: '[name].js'
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       { from: Path.resolve(__dirname, '../public'), to: '.' }
     ]),
     new HtmlWebpackPlugin({
-      template: Path.resolve(__dirname, '../src/index.html')
+      template: Path.resolve(__dirname, '../src/index.html'),
+      inject: false
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css'
     })
   ],
   resolve: {
@@ -34,14 +44,38 @@ module.exports = {
         type: 'javascript/auto'
       },
       {
-        test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+        test: /\.(ico|jpg|jpeg|png|gif)(\?.*)?$/,
         use: {
           loader: 'file-loader',
           options: {
-            name: '[path][name].[ext]'
+              name: '[name].[ext]',
+              outputPath: 'img/'
           }
         }
       },
+      {
+          test: /\.(eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+          use: [{
+              loader: 'file-loader',
+              options: {
+                  name: '[name].[ext]',
+                  outputPath: 'fonts/'
+              }
+          }]
+      },
+      {
+        test: /\.s?css$/i,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+                publicPath: '/',
+            }
+          },
+          {loader:'css-loader'},
+          {loader:'sass-loader'}
+        ],
+      }
     ]
   }
 };
