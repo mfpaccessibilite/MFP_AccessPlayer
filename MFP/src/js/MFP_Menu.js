@@ -44,7 +44,7 @@ export default class MFP_Menu {
           $(that).addClass('selected');
           $(that).attr('aria-selected','true');
           this.options.select(that);
-      }.bind(this))
+      }.bind(this));
       this.element.find('li').on('keydown',function(e){
           var that = e.currentTarget;
           if(e.which==38){ //up
