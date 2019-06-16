@@ -1,10 +1,11 @@
 import MFP_Menu from './MFP_Menu';
-import {videoFactory} from './VideoFactory';
+const _ = require('lodash');
 
 export default class MFP{
 
   constructor(){
       this.default_options = {
+            type: 'html5',
             lang:'',
             videos:{lowdef:'', audiodesc:'', signed:''},
             transcripts:{txt:'',html:''},
@@ -19,10 +20,7 @@ export default class MFP{
           var options = {};
       }
       this.options = $.extend( {}, this.default_options, options );
-      var {video, element} = videoFactory.makeVideoInstance(this.options, element);
-      this.video = video;
       this.element = element;
-      this.options.videos.highdef=this.video.currentSrc;
       this.subtitles=[];
       this.captions=[];
       this.descriptions=[];
@@ -34,11 +32,32 @@ export default class MFP{
   }
 
   init(){
-      // loading options :
-      this.video.controls = false;
-      this.video.tabindex = -1;
-      this.loadLang();
-      //this.loadTracks();
+      // Load Video Player
+      this.loadVideo().then(()=>{
+          this.video.controls = false;
+          this.video.tabindex = -1;
+          this.options.videos.highdef = this.video.currentSrc;
+          this.loadLang();
+        //this.loadTracks();
+      });
+  }
+
+  loadVideo(){
+      return new Promise((resolve, reject)=>{
+          let videoLoader = 'loadVideo'+_.capitalize(this.options.type);
+          if(this[videoLoader]==undefined){
+              let name = 'loadVideoPlayer-'+ this.options.type.toLowerCase();
+              $.getScript(mfpPath+'video-players/'+name+'.js')
+                .done((script,textStatus)=>{
+                    this.loadVideo().then(()=>{
+                        resolve();
+                    });
+                });
+          }else{
+              this.video = this[videoLoader]();
+              resolve();
+          }
+      });
   }
 
   loadLang(){

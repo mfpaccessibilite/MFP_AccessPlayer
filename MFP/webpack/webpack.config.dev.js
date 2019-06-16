@@ -13,7 +13,11 @@ module.exports = merge(common, {
   },
   entry:{
     'demo-blue':  Path.resolve(__dirname, '../src/sass/demo-blue.scss'),
-    'player-blue':  Path.resolve(__dirname, '../src/sass/player-blue.scss')
+    'player-blue':  Path.resolve(__dirname, '../src/sass/player-blue.scss'),
+    'trackreader/loadTrackType-srt': Path.resolve(__dirname, '../src/js/trackreader/loadTrackType-srt.js'),
+    'trackreader/loadTrackType-stl': Path.resolve(__dirname, '../src/js/trackreader/loadTrackType-stl.js'),
+    'video-players/loadVideoPlayer-html5': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-html5.js'),
+    'video-players/loadVideoPlayer-vimeo': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-vimeo.js'),
   },
   devServer: {
     inline: true

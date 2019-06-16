@@ -1,0 +1,5 @@
+
+
+MFP.prototype.loadVideoVimeo = function(){
+
+};
