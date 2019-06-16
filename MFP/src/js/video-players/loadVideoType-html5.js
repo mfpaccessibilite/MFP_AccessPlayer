@@ -1,30 +1,105 @@
 
+class VideoHtml5{
+
+    constructor(options, video){
+        this.options = options;
+        this.video   = video;
+    }
+
+    init(){}
+
+    webkitEnterFullscreen(){
+        this.video.webkitEnterFullscreen();
+    }
+
+    on(event, callback){
+        return $(this.video).on(event, callback);
+    }
+
+    off(event, callback=null){
+        return $(this.video).off(event, callback);
+    }
+
+    play(){
+        return this.video.play();
+    }
+
+    pause(){
+        return this.video.pause();
+    }
+
+    getDuration(){
+        return new Promise((resolve, reject)=>{
+            resolve(this.video.duration);
+        });
+    }
+
+    getCurrentTime(){
+        return new Promise((resolve, reject)=>{
+            resolve(this.video.currentTime);
+        });
+    }
+
+    setCurrentTime(time){
+        this.video.currentTime = time;
+    }
+
+    getBuffered(){
+        return new Promise((resolve, reject)=>{
+            resolve(this.video.buffered);
+        });
+    }
+
+    getTextTracks(){
+        return new Promise((resolve, reject)=>{
+          resolve(this.video.textTracks);
+        });
+    }
+
+    getCurrentSrc(){
+        return new Promise((resolve, reject)=>{
+            resolve(this.video.currentSrc);
+        });
+    }
+
+    setSrc(src){
+        this.video.src = src;
+    }
+
+    getPaused(){
+        return new Promise((resolve, reject)=>{
+            resolve(this.video.paused);
+        });
+    }
+
+    setControls(status){
+        this.video.controls = status;
+    }
+
+    setTabIndex(index){
+        this.video.tabindex = index;
+    }
+
+    setPlaybackRate(rate){
+        this.video.playbackRate = rate;
+    }
+
+    getVolume(){
+        return new Promise((resolve, reject)=>{
+            resolve(this.video.volume);
+        });
+    }
+
+    setVolume(volume){
+        this.video.volume = volume;
+    }
+}
+
 
 MFP.prototype.loadVideoHtml5 = function(){
-    const video = $(this.element)[0];
-    const videoProxy = new Proxy(video, {
-        get(target, propKey, receiver) {
-            if(propKey=='on'){
-                return this.on.bind(target);
-            }
-            if(propKey=='off'){
-                return this.off.bind(target);
-            }
-            if(target[propKey].bind!==undefined){
-                return target[propKey].bind(target);
-            }
-            return target[propKey];
-        },
-        set(target, propKey, value, receiver) {
-            target[propKey] = value;
-            return true;
-        },
-        on(event, callback){
-          return $(video).on(event, callback);
-        },
-        off(event, callback=null){
-          return $(video).off(event, callback);
-        }
+    return new Promise((resolve, reject) => {
+        let videoElement = $(this.element)[0];
+        const video = new VideoHtml5(this.options, videoElement);
+        resolve(video);
     });
-    return videoProxy;
 };

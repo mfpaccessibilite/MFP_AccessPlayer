@@ -34,11 +34,13 @@ export default class MFP{
   init(){
       // Load Video Player
       this.loadVideo().then(()=>{
-          this.video.controls = false;
-          this.video.tabindex = -1;
-          this.options.videos.highdef = this.video.currentSrc;
-          this.loadLang();
-        //this.loadTracks();
+          this.video.setControls(false);
+          this.video.setTabIndex(-1);
+          this.video.getCurrentSrc().then((src)=>{
+              this.options.videos.highdef = src;
+              this.loadLang();
+              //this.loadTracks();
+          });
       });
   }
 
@@ -54,8 +56,10 @@ export default class MFP{
                     });
                 });
           }else{
-              this.video = this[videoLoader]();
-              resolve();
+              this[videoLoader]().then((video)=>{
+                  this.video = video;
+                  resolve();
+              });
           }
       });
   }
@@ -307,7 +311,7 @@ export default class MFP{
     }
 
     updateLive(){
-      if(MFPDebug){
+        if(MFPDebug){
             console.log('update live');
         }
         if(this.options.live!=''){
@@ -316,29 +320,27 @@ export default class MFP{
                 target.empty();
                 if(this.liveOn){
                     for(var i=0;i<this.subtitles.length;i++){
-
                         if(this.subtitles[i].track.mode2=='showing'){
-                          if(MFPDebug){
-                              console.log(this.subtitles[i]);
-                          }
+                            if(MFPDebug){
+                                console.log(this.subtitles[i]);
+                            }
                             var cues = this.subtitles[i].track.cues;
                             if(MFPDebug){
-                              console.log(cues);
-                          }
+                                console.log(cues);
+                            }
                             for(var j=0; j < cues.length; j++){
                                 var l = $("<div tabindex='0' class='live-"+i+"-"+cues[j].id+" mfp-live' data-tcin='"+cues[j].startTime+"' data-tcout='"+cues[j].endTime+"'>"+cues[j].text.replace(/<[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}>/g,"").replace(/\n/g,'<br />')+"</div>");
                                 l.click(function(e){
                                   if(MFPDebug){
                                       console.log(e);
                                   }
-                                    var tcin = $(e.currentTarget).data('tcin');
-                                    if(MFPDebug){
+                                  var tcin = $(e.currentTarget).data('tcin');
+                                  if(MFPDebug){
                                       console.log('setting video currentTime to : '+tcin);
                                   }
                                   this.redrawCues();
-                                    this.video.currentTime=tcin;
-                                    this.redrawCues();
-
+                                  this.video.setCurrentTime(tcin);
+                                  this.redrawCues();
                                 }.bind(this));
                                 l.keypress(function(event){
                                     var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -734,55 +736,54 @@ export default class MFP{
             }.bind(this));
             var menu = $(this.container).find('.right-part .chapters-block .menu');
             var cues = this.chapters[0].track.cues;
-            for(var i = 0; i<cues.length ; i++){
-                var cue = cues[i];
-                var men = $('<li class="cue chapter-'+i+'" data-start="'+cue.startTime+'">'+cue.text+'</li>');
-                if(this.video.currentTime>=cue.startTime && this.video.currentTime<cue.endTime){
-                    $(men).addClass('selected');
-                }
-                $(menu[0]).append(men);
-                cue.onenter = function(){
-                    $(this).attr('aria-selected','true');
-                    $(this).addClass('selected');
-                }.bind(men);
-                cue.onexit=function(){
-                    $(this).removeAttr('aria-selected');
-                    $(this).removeClass('selected');
-                }.bind(men);
+            this.video.getCurrentTime().then((currentTime)=>{
+              for(var i = 0; i<cues.length ; i++){
+                  var cue = cues[i];
+                  var men = $('<li class="cue chapter-'+i+'" data-start="'+cue.startTime+'">'+cue.text+'</li>');
+                  if(currentTime>=cue.startTime && currentTime<cue.endTime){
+                      $(men).addClass('selected');
+                  }
+                  $(menu[0]).append(men);
+                  cue.onenter = function(){
+                      $(this).attr('aria-selected','true');
+                      $(this).addClass('selected');
+                  }.bind(men);
+                  cue.onexit=function(){
+                      $(this).removeAttr('aria-selected');
+                      $(this).removeClass('selected');
+                  }.bind(men);
+              }
+              //$(menu[0]).menu({role:'listbox',items:'li'});
+              var m = new MFP_Menu($(menu[0]),{
+                  select:function(elmt){
+                      console.log('chapter selected');
+                      this.video.setCurrentTime($(elmt).data('start'));
+                      $(this.container).find('.right-part .chapters-block .menu').dialog('close');
+                  }.bind(this)
+              });
+              m.init();
 
-            }
-            //$(menu[0]).menu({role:'listbox',items:'li'});
-            var m = new MFP_Menu($(menu[0]),{
-                select:function(elmt){
-                    console.log('chapter selected');
-                    this.video.currentTime=$(elmt).data('start');
-                    $(this.container).find('.right-part .chapters-block .menu').dialog('close');
-                }.bind(this)
+              $(menu[0]).dialog({ autoOpen: false, resizable: false,closeText: this.lang.close, position: { my: "left bottom", at: "left top", of: btn },maxHeight: 400 });
+              $(menu[0]).dialog({
+                appendTo: $(this.container).find('.right-part .chapters-block')
+              });
+
+              //this.reloadChapters();
+              /*
+              $(menu[0]).menu({select: function( event, ui ) {
+                  this.video.currentTime=ui.item.data('start');
+                  $(this.container).find('.right-part .chapters-block .menu').dialog( "close" );
+                  //ui.item.css('background','green');
+                  //console.log();
+              }.bind(this)});
+              */
             });
-            m.init();
-
-            $(menu[0]).dialog({ autoOpen: false, resizable: false,closeText: this.lang.close, position: { my: "left bottom", at: "left top", of: btn },maxHeight: 400 });
-            $(menu[0]).dialog({
-              appendTo: $(this.container).find('.right-part .chapters-block')
-            });
-
-            //this.reloadChapters();
-            /*
-            $(menu[0]).menu({select: function( event, ui ) {
-                this.video.currentTime=ui.item.data('start');
-                $(this.container).find('.right-part .chapters-block .menu').dialog( "close" );
-                //ui.item.css('background','green');
-                //console.log();
-            }.bind(this)});
-            */
-
         }
     }
 
     initVideosAlt(){
         var btn = $(this.container).find('.video_hd');
         btn.click(()=>{
-
             $(this.container).find('.video_audiodesc').addClass('off');
             $(this.container).find('.video_audiodesc').attr('title',this.lang.activate+' '+this.lang.audiodesc);
             $(this.container).find('.video_audiodesc .mfp-hidden').html(this.lang.activate+' '+this.lang.audiodesc);
@@ -792,50 +793,50 @@ export default class MFP{
             $(this.container).find('.video_signed .mfp-hidden').html(this.lang.activate+' '+this.lang.signed);
 
             var btn = $(this.container).find('.video_hd');
-            var time = this.video.currentTime;
-            var paused = this.video.paused;
-
-            if(btn.hasClass('off') || (this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
-                this.video.pause();
-                if(btn.hasClass('off')){
-                    btn.removeClass('off');
-                    if(btn.hasClass('mfp-icon-hd')){
-                        this.video.src=this.options.videos.highdef;
-                        if((this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
-                            btn.attr('title',this.lang.activate+' '+this.lang.lowdef);
-                            btn.find('span').html(this.lang.activate+' '+this.lang.lowdef);
-                        }
-                    }
-                    else{
-                        this.video.src=this.options.videos.lowdef;
-                        btn.attr('title',this.lang.activate+' '+this.lang.highdef);
-                        btn.find('span').html(this.lang.activate+' '+this.lang.highdef);
-                    }
-                }
-                else{
-                    if(btn.hasClass('mfp-icon-hd')){
-                        this.video.src=this.options.videos.lowdef;
-                        btn.attr('title',this.lang.activate+' '+this.lang.highdef);
-                        btn.find('span').html(this.lang.activate+' '+this.lang.highdef);
-                        btn.removeClass('mfp-icon-hd');
-                        btn.addClass('mfp-icon-ld');
-                    }
-                    else{
-                        this.video.src=this.options.videos.highdef;
-                        btn.attr('title',this.lang.activate+' '+this.lang.lowdef);
-                        btn.find('span').html(this.lang.activate+' '+this.lang.lowdef);
-                        btn.removeClass('mfp-icon-ld');
-                        btn.addClass('mfp-icon-hd');
-                    }
-                }
-                this.video.on('canplay', (event)=>{
-                    this.video.currentTime = time;
-                    if(!paused){
-                        this.video.play();
-                    }
-                    this.video.off('canplay');
-                });
-            }
+            this.video.getCurrentTime().then((time)=>{
+              var paused = this.video.isPaused();
+              if(btn.hasClass('off') || (this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
+                  this.video.pause();
+                  if(btn.hasClass('off')){
+                      btn.removeClass('off');
+                      if(btn.hasClass('mfp-icon-hd')){
+                          this.video.setSrc(this.options.videos.highdef);
+                          if((this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
+                              btn.attr('title',this.lang.activate+' '+this.lang.lowdef);
+                              btn.find('span').html(this.lang.activate+' '+this.lang.lowdef);
+                          }
+                      }
+                      else{
+                          this.video.setSrc(this.options.videos.lowdef);
+                          btn.attr('title',this.lang.activate+' '+this.lang.highdef);
+                          btn.find('span').html(this.lang.activate+' '+this.lang.highdef);
+                      }
+                  }
+                  else{
+                      if(btn.hasClass('mfp-icon-hd')){
+                          this.video.setSrc(this.options.videos.lowdef);
+                          btn.attr('title',this.lang.activate+' '+this.lang.highdef);
+                          btn.find('span').html(this.lang.activate+' '+this.lang.highdef);
+                          btn.removeClass('mfp-icon-hd');
+                          btn.addClass('mfp-icon-ld');
+                      }
+                      else{
+                          this.video.setSrc(this.options.videos.highdef);
+                          btn.attr('title',this.lang.activate+' '+this.lang.lowdef);
+                          btn.find('span').html(this.lang.activate+' '+this.lang.lowdef);
+                          btn.removeClass('mfp-icon-ld');
+                          btn.addClass('mfp-icon-hd');
+                      }
+                  }
+                  this.video.on('canplay', (event)=>{
+                      this.video.setCurrentTime(time);
+                      if(!paused){
+                          this.video.play();
+                      }
+                      this.video.off('canplay');
+                  });
+              }
+            });
         });
 
         $(this.container).find('.video_audiodesc').click(()=>{
@@ -862,17 +863,17 @@ export default class MFP{
                 }
                 $(this.container).find('.video_signed').addClass('off');
                 btn.removeClass('off');
-                var time   = this.video.currentTime;
-                var paused = this.video.paused;
-                this.video.pause();
-                this.video.src=this.options.videos.audiodesc;
-
-                this.video.on('canplay', (event)=>{
-                    this.video.currentTime = time;
-                    if(!paused){
-                        this.video.play();
-                    }
-                    this.video.off('canplay');
+                this.video.getCurrentTime().then((time)=>{
+                    var paused = this.video.isPaused();
+                    this.video.pause();
+                    this.video.setSrc(this.options.videos.audiodesc);
+                    this.video.on('canplay', (event)=>{
+                        this.video.setCurrentTime(time);
+                        if(!paused){
+                            this.video.play();
+                        }
+                        this.video.off('canplay');
+                    });
                 });
             }
             else{
@@ -904,17 +905,18 @@ export default class MFP{
                 }
                 $(this.container).find('.video_audiodesc').addClass('off');
                 btn.removeClass('off');
-                var time = this.video.currentTime;
-                var paused = this.video.paused;
-                this.video.pause();
-                this.video.src=this.options.videos.signed;
+                this.video.getCurrentTime().then((time)=>{
+                    var paused = this.video.isPaused();
+                    this.video.pause();
+                    this.video.setSrc(this.options.videos.signed);
 
-                this.video.on('canplay', (event)=>{
-                    this.video.currentTime = time;
-                    if(!paused){
-                        this.video.play();
-                    }
-                    this.video.off('canplay');
+                    this.video.on('canplay', (event)=>{
+                        this.video.setCurrentTime(time);
+                        if(!paused){
+                            this.video.play();
+                        }
+                        this.video.off('canplay');
+                    });
                 });
             }
             else{
@@ -1000,44 +1002,47 @@ export default class MFP{
     initPlayBackSpeedEvents(){
         $(this.container).find('.speed').on('change',function(e){
             var speed = $(this.container).find('.speed')[0].value;
-            this.video.playbackRate=speed;
+            this.video.setPlaybackRate(speed);
         }.bind(this));
     }
 
     initPlayEvents(){
         $(this.container).find('.play').click(function(e){
             e.preventDefault();
-            if(this.video.paused){
-                this.video.play();
-            }
-            else{
-                this.video.pause();
-            }
+            this.video.getPaused().then((paused)=>{
+                if(paused){
+                    this.video.play();
+                }else{
+                    this.video.pause();
+                }
+            });
         }.bind(this));
     }
 
     progressEvents(){
         var progress = $(this.controlBar).find('.progress-bar');
-        progress.on('slide',function(){this.seekUpdate();}.bind(this));
+        progress.on('slide', ()=>{
+            this.seekUpdate();
+        });
         //progress.on('click',function(){console.log('click');});
         //progress.on('slidestart',function(){console.log('start');});
-        progress.on('slidestart',function(){
-            var video = this.video;
-            this.current_play=video.paused;
-            video.pause();
-            this.redrawCues();
-            this.updateLive();
-            this.seeking=true;
-            if(MFPDebug){
-              console.log('pausing video');
-          }
-            this.seekUpdate();
-        }.bind(this));
-        progress.on('slidestop',function(){
-            var video = this.video;
+        progress.on('slidestart', ()=>{
+            this.video.getPaused().then((paused)=>{
+                this.current_play=paused;
+                this.video.pause();
+                this.redrawCues();
+                this.updateLive();
+                this.seeking=true;
+                if(MFPDebug){
+                  console.log('pausing video');
+                }
+                this.seekUpdate();
+            });
+        });
+        progress.on('slidestop', ()=>{
             this.seekUpdate();
             if(!this.current_play){
-                video.play();
+                this.video.play();
                 this.redrawCues();
                 this.updateLive();
                 if(MFPDebug){
@@ -1045,53 +1050,58 @@ export default class MFP{
               }
             }
             this.seeking=false;
-        }.bind(this));
+        });
         //progress.on('update',function(){this.seekUpdate();}.bind(this));
 
-        progress.on('keydown',function(e){
-
-            var t = this.video.currentTime;
-            if(e.which==37 || e.which==40){
-                e.preventDefault();
-                //back 5 seconds;
-                if((t-5)>0){
-                    this.video.currentTime=t-5;
+        progress.on('keydown', (e) => {
+            this.video.getCurrentTime().then((time)=>{
+                if(e.which==37 || e.which==40){
+                    e.preventDefault();
+                    //back 5 seconds;
+                    if((time-5)>0){
+                        this.video.setCurrentTime(time-5);
+                    }
+                    else{
+                        this.video.setCurrentTime(0);
+                    }
+                }else if(e.which==38 || e.which==39){
+                    e.preventDefault();
+                    //forward 5 seconds ;
+                    this.video.getDuration().then((duration)=>{
+                        if((time+5)>duration){
+                            this.video.setCurrentTime(duration);
+                        }
+                        else{
+                            this.video.setCurrentTime(time+5);
+                        }
+                    });
                 }
-                else{
-                    this.video.currentTime=0;
-                }
-            }
-            else if(e.which==38 || e.which==39){
-                e.preventDefault();
-                //forward 5 seconds ;
-                if((t+5)>this.video.duration){
-                    this.video.currentTime=this.video.duration;
-                }
-                else{
-                    this.video.currentTime=t+5;
-                }
-            }
-            console.log('key : '+e.keyCode);
-        }.bind(this));
+            });
+        });
     }
 
     seekUpdate(){
-        var video = this.video;
-        video.currentTime=video.duration * $(this.controlBar).find('.progress-bar').slider('option',"value") / 100;
+        return new Promise((resolve, reject)=>{
+            this.video.getDuration().then((duration)=>{
+                let currentTime = (duration * $(this.controlBar).find('.progress-bar').slider('option',"value"))/100;
+                this.video.setCurrentTime(currentTime);
+                resolve();
+            });
+        });
     }
 
     soundUpdate(e){
         var video = this.video;
-        video.volume=$(this.container).find('.sound-range').slider('option','value') / 100;
+        video.setVolume($(this.container).find('.sound-range').slider('option','value') / 100);
         //$(this.container).find('.sound-range').attr('aria-valuetext', Math.round(video.volume *100) + '% '+this.lang.volume);
         var h = this.soundBar.find('.ui-slider-handle');
-        h.attr('aria-valuenow',video.volume*100);
+        h.attr('aria-valuenow',video.getVolume()*100);
         h.attr('aria-valuetext', Math.round(video.volume *100)+'% '+this.lang.volume);
 
-        if(video.volume >= 0.5){
+        if(video.getVolume() >= 0.5){
             $(this.container).find('.sound').removeClass('mfp-icon-volume-mute').removeClass('mfp-icon-volume-down').addClass('mfp-icon-volume-up');
         }
-        else if(video.volume > 0){
+        else if(video.getVolume() > 0){
             $(this.container).find('.sound').removeClass('mfp-icon-volume-mute').removeClass('mfp-icon-volume-up').addClass('mfp-icon-volume-down');
         }
         else{
@@ -1102,28 +1112,25 @@ export default class MFP{
     initSoundEvents(){
         $(this.container).find('.sound-range').on('slide',function(){this.soundUpdate();}.bind(this));
         $(this.container).find('.sound-range').on('slidechange',function(){this.soundUpdate();}.bind(this));
-        $(this.container).find('.sound').click(function(){
+        $(this.container).find('.sound').click(()=>{
             var sound_btn = $(this.container).find('.sound');
-            if(this.video.volume>0){
-                sound_btn.attr('old_snd',this.video.volume);
-                $(this.container).find('.sound-range').slider('option','value',0);
-                sound_btn.find('span').html(this.lang.soundOn);
-                sound_btn.attr('title',this.lang.soundOn);
-
-                this.soundUpdate();
-
-                //this.video.volume=0;
-            }
-            else{
-                this.video.volume=sound_btn.attr('old_snd');
-                $(this.container).find('.sound-range').slider('option','value',sound_btn.attr('old_snd')*100);
-                sound_btn.find('span').html(this.lang.soundOff);
-                sound_btn.attr('title',this.lang.soundOff);
-                this.soundUpdate();
-            }
-
-
-        }.bind(this));
+            this.video.getVolume().then((volume)=>{
+              if(volume>0){
+                  sound_btn.attr('old_snd', volume);
+                  $(this.container).find('.sound-range').slider('option','value',0);
+                  sound_btn.find('span').html(this.lang.soundOn);
+                  sound_btn.attr('title',this.lang.soundOn);
+                  this.soundUpdate();
+              }
+              else{
+                  this.video.setVolume(sound_btn.attr('old_snd'));
+                  $(this.container).find('.sound-range').slider('option','value',sound_btn.attr('old_snd')*100);
+                  sound_btn.find('span').html(this.lang.soundOff);
+                  sound_btn.attr('title',this.lang.soundOff);
+                  this.soundUpdate();
+              }
+            });
+        });
     }
 
     bindvideoEvent(){
@@ -1157,53 +1164,56 @@ export default class MFP{
             $(this.container).find('.play').attr('aria-label',this.lang.play);
         });
         video.on('timeupdate', (e)=>{
-            var time = this.video.currentTime;
-            var duration = this.video.duration;
-            if(!this.seeking){
-                $(this.container).find('.progress-bar').slider('option','value',(time/duration)*100);
-            }
-            var tmp = Math.round(this.video.currentTime);
-            var hr = 0;
-            var min = 0;
-            var minute = 0;
-            var sec = 0;
-            var dura = '';
-            sec = tmp%60;
-            min = ((tmp - sec) / 60)%60;
-            minute = ((tmp - sec) / 60);
-            hr = (tmp - sec - 60 * min) / 3600;
-            if(hr > 0){
-                dura=hr+':';
-            }
-            if(sec < 10 ){
-                sec = '0' + sec;
-            }
-            if(min < 10 && hr > 0){
-                min = '0' + min;
-            }
-            dura=dura+min+':'+sec;
+            this.video.getCurrentTime().then((time)=>{
+                this.video.getDuration().then((duration)=>{
+                  if(!this.seeking){
+                      $(this.container).find('.progress-bar').slider('option','value',(time/duration)*100);
+                  }
+                  var tmp = Math.round(time);
+                  var hr = 0;
+                  var min = 0;
+                  var minute = 0;
+                  var sec = 0;
+                  var dura = '';
+                  sec = tmp%60;
+                  min = ((tmp - sec) / 60)%60;
+                  minute = ((tmp - sec) / 60);
+                  hr = (tmp - sec - 60 * min) / 3600;
+                  if(hr > 0){
+                      dura=hr+':';
+                  }
+                  if(sec < 10 ){
+                      sec = '0' + sec;
+                  }
+                  if(min < 10 && hr > 0){
+                      min = '0' + min;
+                  }
+                  dura=dura+min+':'+sec;
 
-            $(this.container).find('.timer-current').html(dura);
-            var h = this.progressBar.find('.ui-slider-handle');
-            //$(this.controlBar).find('.progress-bar').attr('aria-valuetext',min+':'+sec+' '+this.lang.on+' '+this.duration);
-            h.attr('aria-valuetext',dura+' '+this.lang.on+' '+this.duration);
-            h.attr('aria-valuenow',(time/duration)*100);
+                  $(this.container).find('.timer-current').html(dura);
+                  var h = this.progressBar.find('.ui-slider-handle');
+                  //$(this.controlBar).find('.progress-bar').attr('aria-valuetext',min+':'+sec+' '+this.lang.on+' '+this.duration);
+                  h.attr('aria-valuetext',dura+' '+this.lang.on+' '+this.duration);
+                  h.attr('aria-valuenow',(time/duration)*100);
+                });
+            });
         });
 
         video.on('durationchange', (e)=>{
             this.initDuration();
         });
         video.on('progress', (e)=>{
-            var buffer = this.video.buffered;
-            var duration = this.video.duration;
-            if(buffer.length>0){
-                var left = Math.round((buffer.start(0)/duration)*10000) / 100;
-                var width = (Math.round((buffer.end(0)/duration)*10000) / 100) - left;
-                var b = $(this.container).find('.progress-buffer .buffer');
-                b.css('left',left + '%');
-                b.css('width',width + '%');
-            }
-            //console.log(buffer.start(0)+' '+buffer.end(0));
+            this.video.getBuffered().then((buffer)=>{
+                this.video.getDuration().then((duration)=>{
+                    if(buffer.length>0){
+                        var left = Math.round((buffer.start(0)/duration)*10000) / 100;
+                        var width = (Math.round((buffer.end(0)/duration)*10000) / 100) - left;
+                        var b = $(this.container).find('.progress-buffer .buffer');
+                        b.css('left',left + '%');
+                        b.css('width',width + '%');
+                    }
+                });
+            });
         });
         /*
         video.on('volumechange',function(e){
@@ -1215,38 +1225,38 @@ export default class MFP{
     }
 
     initDuration(){
-        var duration = Math.round(this.video.duration);
-        if(!isNaN(duration)){
-            var tmp = duration;
-            var hr = 0;
-            var min = 0;
-            var minute = 0;
-            var sec = 0;
-            var dura = '';
-            sec = tmp%60;
-            min = ((tmp - sec) / 60)%60;
-            minute = ((tmp - sec) / 60);
-            hr = (tmp - sec - 60 * min) / 3600;
-            if(hr > 0){
-                dura=hr+':';
+        this.video.getDuration().then((duration)=>{
+            duration = Math.round(duration);
+            if(!isNaN(duration)){
+                var tmp = duration;
+                var hr = 0;
+                var min = 0;
+                var minute = 0;
+                var sec = 0;
+                var dura = '';
+                sec = tmp%60;
+                min = ((tmp - sec) / 60)%60;
+                minute = ((tmp - sec) / 60);
+                hr = (tmp - sec - 60 * min) / 3600;
+                if(hr > 0){
+                    dura=hr+':';
+                }
+                if(sec < 10){
+                    sec = '0' + sec;
+                }
+                if(min < 10 && hr > 0){
+                    min = '0' + min;
+                }
+                dura=dura+min+':'+sec;
+                $(this.container).find('.timer-duration').html(dura);
+                this.duration = dura;
             }
-            if(sec < 10){
-                sec = '0' + sec;
-            }
-            if(min < 10 && hr > 0){
-                min = '0' + min;
-            }
-            dura=dura+min+':'+sec;
-
-
-        $(this.container).find('.timer-duration').html(dura);
-        this.duration = dura;
-        }
+        });
     }
 
     initFullScreenEvents(){
         // event for iphone/ipad to display standar subtitle on fullscreen :
-        this.video.addEventListener('webkitbeginfullscreen',function(){
+        this.video.on('webkitbeginfullscreen',function(){
           if(MFPDebug){
               console.log('iPhone/iPad going fullscreen');
           }
@@ -1257,11 +1267,13 @@ export default class MFP{
             }
             $(this.container).addClass('showcue');
         }.bind(this));
-        this.video.addEventListener('webkitendfullscreen',function(){
-          if(MFPDebug){
-              console.log('iPhone/iPad leaving fullscreen');
-              console.log(this.video.textTracks);
-          }
+        this.video.on('webkitendfullscreen',function(){
+            if(MFPDebug){
+                console.log('iPhone/iPad leaving fullscreen');
+                this.video.getTextTracks().then((tracks)=>{
+                    console.log(tracks);
+                });
+            }
             for(var i=0;i<this.subtitles.length;i++){
                 if(this.subtitles[i].track.mode=='showing'){
                     this.subtitles[i].track.mode2='showing';

@@ -46,15 +46,12 @@
 		    <main role="main" id="main">
 		        <!-- Video area -->
 		        <article id="video">
-		            <h2>Vidéo</h2>
+		            <h2>Vidéo Vimeo</h2>
 		            <div class="cont">
 		                <div class="container">
-		                    <video data-mfp data-options="{
-		                        videos:{
-		                            lowdef:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_FULL-LowRes.m4v',
-		                            audiodesc:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_AD_480.m4v',
-		                            signed:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_LDS_480.m4v'
-		                        },
+		                    <div data-mfp data-options="{
+														type: 'vimeo',
+														path: '51800249',
 		                        transcripts:{
 		                            html:'../transcripts/JamyPlayer.htm',
 		                            txt:'../transcripts/JamyPlayer.txt'
@@ -62,16 +59,36 @@
 		                        live: '#text-target1',
 		                        theme_class: 'blue_theme'
 		                    }">
-		                        <source src="https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_FULL2.m4v" type="video/mp4" />
-		                        <track src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/demo/tracks/JamyPlayer.stl" kind="subtitles" label="Français (coloration CSA)" srclang="fr" />
-		                        <track src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/demo/tracks/JamyPlayer.srt" kind="subtitles" label="Français (personnalisable)" srclang="fr" />
-		                        <track src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/demo/tracks/chapters.vtt" kind="chapters" label="Chapitres" srclang="fr" />
-		                    </video>
+											</div>
 		                </div>
-
 		             </div>
 		         </article>
-
+						 <!-- Video area -->
+						 <article id="video">
+						 		<h2>Vidéo hébergée sur le serveur</h2>
+						 		<div class="cont">
+						 				<div class="container">
+						 						<video data-mfp data-options="{
+						 								videos:{
+						 										lowdef:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_FULL-LowRes.m4v',
+						 										audiodesc:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_AD_480.m4v',
+						 										signed:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_LDS_480.m4v'
+						 								},
+						 								transcripts:{
+						 										html:'../transcripts/JamyPlayer.htm',
+						 										txt:'../transcripts/JamyPlayer.txt'
+						 								},
+						 								live: '#text-target1',
+						 								theme_class: 'blue_theme'
+						 						}">
+						 								<source src="https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_FULL2.m4v" type="video/mp4" />
+						 								<track src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/demo/tracks/JamyPlayer.stl" kind="subtitles" label="Français (coloration CSA)" srclang="fr" />
+						 								<track src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/demo/tracks/JamyPlayer.srt" kind="subtitles" label="Français (personnalisable)" srclang="fr" />
+						 								<track src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/demo/tracks/chapters.vtt" kind="chapters" label="Chapitres" srclang="fr" />
+						 						</video>
+						 				</div>
+						 		 </div>
+						  </article>
 		         <!--  Mode d'emploi (mde) area -->
 		         <article id="mde">
 		            <h2>À propos de cette démonstration</h2>

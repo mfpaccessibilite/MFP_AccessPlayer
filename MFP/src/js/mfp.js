@@ -14,7 +14,7 @@ import MFP from './MFP';
     var thisScriptEl = scriptEls[scriptEls.length - 1];
     var scriptPath = thisScriptEl.src;
     var mfpPath = scriptPath.substr(0, scriptPath.lastIndexOf('/') + 1);
-    var MFPDebug = false;
+    var MFPDebug = true;
 
     // including css
     window.mfpPath = mfpPath;
@@ -22,7 +22,7 @@ import MFP from './MFP';
     window.MFPDebug = MFPDebug;
 
     $('head').append('<link rel="stylesheet" href="'+mfpPath+'stylesheets/screen.css" type="text/css" />');
-    var videos = $('video[data-mfp]');
+    var videos = $('*[data-mfp]');
     for(var i=0; i<videos.length; i++){
         var opt = $(videos[i]).data('options');
         if(typeof opt === "undefined"){
@@ -30,11 +30,10 @@ import MFP from './MFP';
         }
         else{
         	if(typeof opt !== 'object'){
-            	opt = 'opt = '+opt;
-
-                eval(opt);
-            }
-            var vid = new MFP($(videos[i]),opt);
+             opt = 'opt = '+opt;
+             eval(opt);
+          }
+          var vid = new MFP($(videos[i]),opt);
         }
         vid.init();
     }
