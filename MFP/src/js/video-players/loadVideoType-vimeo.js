@@ -7,23 +7,26 @@
  * backgroundImage: "key"
  * Date : 2018-10-16T14:58Z
  */
- 
+const md5 = require('md5');
+
 class VimeoPlayer{
 
   constructor(options, element){
       this.options = options;
       this.element = element;
+      this.domId   = 'vimeo-player-'+md5(JSON.stringify(options));
   }
 
   init(){
       return new Promise((resolve, reject)=>{
         $.getScript("https://player.vimeo.com/api/player.js")
           .done((script,textStatus) => {
-            const playerCode = `<div id="myVideo"></div>`;
+            const playerCode = `<div id="${this.domId}"></div>`;
             $(this.element).html(playerCode);
-            this.video = new Vimeo.Player('myVideo', {
+            this.video = new Vimeo.Player(this.domId, {
                 id: this.options.path,
-                maxheight: 720
+                maxheight: 720,
+                controls: false
             });
             resolve();
         });
