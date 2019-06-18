@@ -114,7 +114,8 @@ class VimeoPlayer{
   }
 
   setVolume(volume){
-      this.video.volume = volume;
+      console.log(volume);
+      this.video.setVolume(volume);
   }
 
 }

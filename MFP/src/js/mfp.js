@@ -7,7 +7,7 @@
  * backgroundImage: "key"
  * Date : 2018-10-16T14:58Z
  */
-import MFP from './MFP';
+import MFP from './lib/MFP';
 
 (function(){
     var scriptEls = document.getElementsByTagName('script');
