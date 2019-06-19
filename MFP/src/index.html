@@ -46,12 +46,17 @@
 		    <main role="main" id="main">
 						 <!-- Video area -->
 						 <article id="video">
-						 		<h2>Vidéo hébergée sur le serveur</h2>
+						 		<h2>Vidéo with vimeo sources</h2>
 						 		<div class="cont">
 						 				<div class="container">
 						 						<video data-mfp data-options="{
+														type: 'vimeo',
+													 	id:   '51800249',
 						 								videos:{
-						 										lowdef:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_FULL-LowRes.m4v',
+						 										lowdef:{
+																		type: 'vimeo',
+																		id: '325758364'
+																},
 						 										audiodesc:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_AD_480.m4v',
 						 										signed:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_LDS_480.m4v'
 						 								},
@@ -62,10 +67,9 @@
 						 								live: '#text-target1',
 						 								theme_class: 'blue_theme'
 						 						}">
-						 								<source src="https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_FULL2.m4v" type="video/mp4" />
-						 								<track src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/demo/tracks/JamyPlayer.stl" kind="subtitles" label="Français (coloration CSA)" srclang="fr" />
-						 								<track src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/demo/tracks/JamyPlayer.srt" kind="subtitles" label="Français (personnalisable)" srclang="fr" />
-						 								<track src="https://cdn.jsdelivr.net/gh/mfpaccessibilite/MFP_AccessPlayer@latest/demo/tracks/chapters.vtt" kind="chapters" label="Chapitres" srclang="fr" />
+						 								<track src="/tracks/JamyPlayer.stl" kind="subtitles" label="Français (coloration CSA)" srclang="fr" />
+						 								<track src="/tracks/JamyPlayer.srt" kind="subtitles" label="Français (personnalisable)" srclang="fr" />
+						 								<track src="/tracks/chapters.vtt" kind="chapters" label="Chapitres" srclang="fr" />
 						 						</video>
 						 				</div>
 						 		 </div>
@@ -103,22 +107,29 @@
 						 </div>
 						 <!-- Video area -->
 						 <article id="video">
-								 <h2>Vidéo Vimeo</h2>
-								 <div class="cont">
-										 <div class="container">
-												 <div data-mfp data-options="{
-														 type: 'vimeo',
-														 path: '51800249',
-														 transcripts:{
-																 html:'../transcripts/JamyPlayer.htm',
-																 txt:'../transcripts/JamyPlayer.txt'
-														 },
-														 live: '#text-target1',
-														 theme_class: 'blue_theme'
-												 }">
-											 </div>
-										 </div>
-									</div>
+								<h2>Vidéo hébergée sur le serveur</h2>
+								<div class="cont">
+										<div class="container">
+												<video data-mfp data-options="{
+														videos:{
+																lowdef:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_FULL-LowRes.m4v',
+																audiodesc:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_AD_480.m4v',
+																signed:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_LDS_480.m4v'
+														},
+														transcripts:{
+																html:'../transcripts/JamyPlayer.htm',
+																txt:'../transcripts/JamyPlayer.txt'
+														},
+														live: '#text-target1',
+														theme_class: 'blue_theme'
+												}">
+														<source src="https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_FULL2.m4v" type="video/mp4" />
+														<track src="/tracks/JamyPlayer.stl" kind="subtitles" label="Français (coloration CSA)" srclang="fr" />
+						 								<track src="/tracks/JamyPlayer.srt" kind="subtitles" label="Français (personnalisable)" srclang="fr" />
+						 								<track src="/tracks/chapters.vtt" kind="chapters" label="Chapitres" srclang="fr" />
+												</video>
+										</div>
+								 </div>
 							</article>
 							<!-- Transcripts area -->
 							<div id="text-target2">

@@ -11,9 +11,10 @@ const md5 = require('md5');
 
 class VimeoPlayer{
 
-  constructor(options, element){
-      this.options = options;
-      this.element = element;
+  constructor(video, options, element){
+      this.video     = video;
+      this.options   = options;
+      this.container = element;
       this.domId   = 'vimeo-player-'+md5(JSON.stringify(options));
   }
 
@@ -22,19 +23,28 @@ class VimeoPlayer{
         $.getScript("https://player.vimeo.com/api/player.js")
           .done((script,textStatus) => {
             const playerCode = `<div id="${this.domId}"></div>`;
-            $(this.element).html(playerCode);
-            this.video = new Vimeo.Player(this.domId, {
-                id: this.options.path,
+            const videoContainer = $(this.container).find('.video-container')[0];
+            $(videoContainer).html(playerCode);
+            const width = $(videoContainer).width();
+            console.log(width);
+            this.videoPlayer = new Vimeo.Player(this.domId, {
+                id: this.video.id,
+                maxwidth: '100%',
                 maxheight: 720,
-                controls: false
+                controls: false,
+                width: width
             });
+            if(this.video.startAt!==undefined){
+                var time = Math.round(this.video.startAt);
+                this.videoPlayer.setCurrentTime(time);
+            }
             resolve();
         });
       });
   }
 
   webkitEnterFullscreen(){
-      this.video.webkitEnterFullscreen();
+      this.videoPlayer.webkitEnterFullscreen();
   }
 
   on(event, callback){
@@ -46,41 +56,46 @@ class VimeoPlayer{
       video.on('durationchange', (e)=>{
       video.on('progress', (e)=>{
       **/
-
-      return this.video.on(event, callback);
+      if(event==='canplay'){
+          return callback();
+      }
+      return this.videoPlayer.on(event, callback);
   }
 
   off(event, callback=null){
-      return $(this.video).off(event, callback);
+      if(event==='canplay'){
+          return;
+      }
+      return $(this.videoPlayer).off(event, callback);
   }
 
   play(){
-      return this.video.play();
+      return this.videoPlayer.play();
   }
 
   pause(){
-      return this.video.pause();
+      return this.videoPlayer.pause();
   }
 
   getDuration(){
-      return this.video.getDuration();
+      return this.videoPlayer.getDuration();
   }
 
   getCurrentTime(){
-      return this.video.getCurrentTime();
+      return this.videoPlayer.getCurrentTime();
   }
 
   setCurrentTime(time){
       time = Math.round(time);
-      this.video.setCurrentTime(time);
+      this.videoPlayer.setCurrentTime(time);
   }
 
   getBuffered(){
-      return this.video.buffered;
+      return this.videoPlayer.buffered;
   }
 
   getTextTracks(){
-      return this.video.textTracks;
+      return this.videoPlayer.textTracks;
   }
 
   getCurrentSrc(){
@@ -90,39 +105,38 @@ class VimeoPlayer{
   }
 
   setSrc(src){
-      this.video.src = src;
+      this.videoPlayer.src = src;
   }
 
   getPaused(){
-      return this.video.getPaused();
+      return this.videoPlayer.getPaused();
   }
 
   setControls(status){
-      this.video.controls = status;
+      this.videoPlayer.controls = status;
   }
 
   setTabIndex(index){
-      this.video.tabindex = index;
+      this.videoPlayer.tabindex = index;
   }
 
   setPlaybackRate(rate){
-      this.video.setPlaybackRate(rate);
+      this.videoPlayer.setPlaybackRate(rate);
   }
 
   getVolume(){
-      return this.video.getVolume();
+      return this.videoPlayer.getVolume();
   }
 
   setVolume(volume){
-      console.log(volume);
-      this.video.setVolume(volume);
+      this.videoPlayer.setVolume(volume);
   }
 
 }
 
-MFP.prototype.loadVideoVimeo = function(){
+MFP.prototype.loadVideoVimeo = function(videoOps){
     return new Promise((resolve, reject)=>{
-      const video = new VimeoPlayer(this.options, this.element);
+      const video = new VimeoPlayer(videoOps, this.options, this.container);
       video.init().then(()=>{
           resolve(video);
       });

@@ -14,6 +14,7 @@ module.exports = {
     'stylesheets/player-red':  Path.resolve(__dirname, '../src/sass/player-red.scss'),
     'trackreader/loadTrackType-srt': Path.resolve(__dirname, '../src/js/trackreader/loadTrackType-srt.js'),
     'trackreader/loadTrackType-stl': Path.resolve(__dirname, '../src/js/trackreader/loadTrackType-stl.js'),
+    'trackreader/stl': Path.resolve(__dirname, '../src/js/trackreader/stl.scss'),
     'video-players/loadVideoPlayer-html5': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-html5.js'),
     'video-players/loadVideoPlayer-vimeo': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-vimeo.js')
   },

@@ -1,7 +1,7 @@
 /**
  * MFP AccessPlayer v.1.0
  * http://smartplayer.mfpst.com
- * 
+ *
  * Extention to READ track in STL fileformat
  *
  * Copyright MFP Multimedia France Productions
@@ -9,12 +9,13 @@
  * backgroundImage: "key"
  * Date : 2017-10-19T06:48Z
  */
+import MFP_Cue from '../lib/MFP_Cue';
 
 $('head').append('<link rel="stylesheet" href="'+mfpPath+'trackreader/stl.css" type="text/css" />');
 MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
     Number.prototype.padLeft = function (n,str){
         return Array(n-String(this).length+1).join(str||'0')+this;
-    }
+    };
     var parser={
         player:null,
         track:null,
@@ -25,14 +26,14 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
             xhr.responseType = 'arraybuffer';
             xhr.onload = function(e) {
                 if (xhr.status != 200) {
-                    // error loading: 
+                    // error loading:
                     parser.track.mode=disabled;
                     parser.player.subtitles.splice($(parser.track).data('pos'),1);
                     parser.player.initSubtitlesMenu();
                 }
                 else{
                     parser.track.mode='hidden';
-                    parser.track.readyState=2;
+                    //parser.track.readyState=2;
                     var arrayBuffer = xhr.response;
                     var byteArray = new Uint8Array(arrayBuffer);
                     var gsi = byteArray.subarray(0, 1024);
@@ -49,7 +50,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                     else{
                         var imsec=30;
                     }
-                    for(i=1024;i<byteArray.length;i=i+128){
+                    for(let i=1024;i<byteArray.length;i=i+128){
                         var tti = byteArray.subarray(i,i+128);
                         var group = tti.subarray(0,1);
                         var num = tti.subarray(1,3);
@@ -71,7 +72,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         }
                         jc=parser.byteArrayToLong(jc);
                         //console.log(tcit);
-                        var cue = new VTTCue(tcit,tcot,txt);
+                        var cue = new MFP_Cue(tcit,tcot,txt);
                         if(jc==1){
                             cue.align='start';
                         } else if(jc==3){
@@ -79,8 +80,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         }
                         cue.line=line;
                         cue.id=parser.byteArrayToLong(num);
-                        parser.track.track.addCue(cue);
-                        console.log(cue);
+                        parser.track.addCue(cue);
                     }
                     parser.player.loadedTrack(parser.track);
                     //parser.player.initSubtitlesMenu();
@@ -94,7 +94,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
         UInt8ArrayToString:function(uarray){
             var myString = '';
             for (var i=0; i<uarray.byteLength; i++) {
-                myString += String.fromCharCode(uarray[i])
+                myString += String.fromCharCode(uarray[i]);
             }
             return myString;
         },
@@ -109,19 +109,19 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
         UInt8ArrayToInt:function(uarray){
             var myString = '';
             for (var i=0; i<uarray.byteLength; i++) {
-                myString += String.fromCharCode(uarray[i])
+                myString += String.fromCharCode(uarray[i]);
             }
             return myString;
         },
         stringToBytes:function( str ) {
           var ch, st, re = [];
           for (var i = 0; i < str.length; i++ ) {
-            ch = str.charCodeAt(i);  // get char 
+            ch = str.charCodeAt(i);  // get char
             st = [];                 // set up "stack"
             do {
               st.push( ch & 0xFF );  // push byte to stack
               ch = ch >> 8;          // shift value down by 1 byte
-            }  
+            }
             while ( ch );
             // add stack contents to result
             // done because chars have "wrong" endianness
@@ -143,7 +143,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                     var ret = '&'+t+this.modifier+';';
                     var temp= document.createElement('p');
                     temp.innerHTML= ret;
-                    str= temp.textContent || temp.innerText;
+                    var str= temp.textContent || temp.innerText;
                     temp=null;
                     this.modifier='';
                     return str;
@@ -200,11 +200,11 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                     }
                     if(this.under){
                         text+='</u>';
-                    }    
+                    }
                     text+='</c>';
                     this.countOpen--;
                 }
-                
+
                 return text;
             },
             openTag: function(){
@@ -248,15 +248,15 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                 var text3 = '';
                 text = this.openTag();
                 var last2 = '';
-            for(var i=0;i<n19.length;i++){
-                //text = text + toHexString(n19.substring(i,i+1));
-                var t = n19[i].toString(16).toUpperCase();
-                if(t.length==1){
-                    t = '0'+t;
-                }
-                last=t;
-                text2+=' '+t;
-                if(cct=='00'){
+                for(var i=0;i<n19.length;i++){
+                  //text = text + toHexString(n19.substring(i,i+1));
+                  var t = n19[i].toString(16).toUpperCase();
+                  if(t.length==1){
+                      t = '0'+t;
+                  }
+                  let last=t;
+                  text2+=' '+t;
+                  if(cct=='00'){
                     // Latin Alphabet
                     switch (t) {
                         case '00' :
@@ -305,20 +305,20 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                                //text = text + '</div>';
                             }
                             break;
-                        case '0B' : 
+                        case '0B' :
                             if(last=='0B' && text3!=''){
                                 if(last2=='0B'){
                                     text=text+this.closeAllTags();
                                     text = text + "\n";
                                     text=text+this.openTag();
                                     text3='';
-                                    last2='';    
+                                    last2='';
                                 }
                                 else{
                                     last2='0B';
                                 }
                                 //text = text + '<div>';
-                                
+
                             }
                             //text = text + '<br />';
                             break;
@@ -348,7 +348,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         case '2D' : text = text +this.get_char('-');text3+=' ';break;
                         case '2E' : text = text +this.get_char('.');text3+=' ';break;
                         case '2F' : text = text +this.get_char('/');text3+=' ';break;
-                        
+
                         case '30' : text = text +this.get_char('0');text3+=' ';break;
                         case '31' : text = text +this.get_char('1');text3+=' ';break;
                         case '32' : text = text +this.get_char('2');text3+=' ';break;
@@ -365,7 +365,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         case '3D' : text = text +this.get_char('=');text3+=' ';break;
                         case '3E' : text = text +this.get_char('>');text3+=' ';break;
                         case '3F' : text = text +this.get_char('?');text3+=' ';break;
-                        
+
                         case '40' : text = text +this.get_char('@');text3+=' ';break;
                         case '41' : text = text +this.get_char('A');text3+=' ';break;
                         case '42' : text = text +this.get_char('B');text3+=' ';break;
@@ -382,7 +382,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         case '4D' : text = text +this.get_char('M');text3+=' ';break;
                         case '4E' : text = text +this.get_char('N');text3+=' ';break;
                         case '4F' : text = text +this.get_char('O');text3+=' ';break;
-                        
+
                         case '50' : text = text +this.get_char('P');text3+=' ';break;
                         case '51' : text = text +this.get_char('Q');text3+=' ';break;
                         case '52' : text = text +this.get_char('R');text3+=' ';break;
@@ -399,7 +399,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         case '5D' : text = text +this.get_char(']');text3+=' ';break;
                         case '5E' : text = text +this.get_char('^');text3+=' ';break;
                         case '5F' : text = text +this.get_char('_');text3+=' ';break;
-                        
+
                         case '60' : text = text +this.get_char('`');text3+=' ';break;
                         case '61' : text = text +this.get_char('a');text3+=' ';break;
                         case '62' : text = text +this.get_char('b');text3+=' ';break;
@@ -416,7 +416,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         case '6D' : text = text +this.get_char('m');text3+=' ';break;
                         case '6E' : text = text +this.get_char('n');text3+=' ';break;
                         case '6F' : text = text +this.get_char('o');text3+=' ';break;
-                        
+
                         case '70' : text = text +this.get_char('p');text3+=' ';break;
                         case '71' : text = text +this.get_char('q');text3+=' ';break;
                         case '72' : text = text +this.get_char('r');text3+=' ';break;
@@ -432,7 +432,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         case '7C' : text = text +this.get_char('|');text3+=' ';break;
                         case '7D' : text = text +this.get_char('}');text3+=' ';break;
                         case '7E' : text = text +this.get_char('~');text3+=' ';break;
-                        
+
                         case '80' : text = text + '<i>';this.italic=true;break;
                         case '81' : text = text + '</i>';this.italic=false;break;
                         case '82' : text = text + '<u>';this.under=true;break;
@@ -440,7 +440,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         case '84' : text = text + '<strong>';this.strong=true;break;
                         case '85' : text = text + '</strong>';this.strong=false;break;
                         case '8A' : text = text + this.add_br();text3+=' ';break;
-                        
+
                         case 'A0' : text = text +this.get_char('&nbsp;');text3+=' ';break;
                         case 'A1' : text = text +this.get_char('¡');text3+=' ';break;
                         case 'A2' : text = text +this.get_char('¢');text3+=' ';break;
@@ -457,7 +457,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         case 'AD' : text = text +this.get_char('↑');text3+=' ';break;
                         case 'AE' : text = text +this.get_char('→');text3+=' ';break;
                         case 'AF' : text = text +this.get_char('↓');text3+=' ';break;
-                        
+
                         case 'B0' : text = text +this.get_char('°');text3+=' ';break;
                         case 'B1' : text = text +this.get_char('±');text3+=' ';break;
                         case 'B2' : text = text +this.get_char('²');text3+=' ';break;
@@ -474,7 +474,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         case 'BD' : text = text +this.get_char('½');text3+=' ';break;
                         case 'BE' : text = text +this.get_char('¾');text3+=' ';break;
                         case 'BF' : text = text +this.get_char('¿');text3+=' ';break;
-                        
+
                         case 'C0' : text = text +this.get_char('');text3+=' ';break;
                         case 'C1' : //text = text +this.get_char('`');break;
                             this.modifier='grave';break;
@@ -498,7 +498,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         case 'CE' : //text = text +this.get_char('˛');break;
                             this.modifier='cedil';break;
                         case 'CF' : text = text +this.get_char('ˇ');text3+=' ';break;
-                        
+
                         case 'D0' : text = text +this.get_char('—');text3+=' ';break;
                         case 'D1' : text = text +this.get_char('¹');text3+=' ';break;
                         case 'D2' : text = text +this.get_char('®');text3+=' ';break;
@@ -515,7 +515,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         case 'DD' : text = text +this.get_char('⅜');text3+=' ';break;
                         case 'DE' : text = text +this.get_char('⅝');text3+=' ';break;
                         case 'DF' : text = text +this.get_char('⅞');text3+=' ';break;
-                        
+
                         case 'E0' : text = text +this.get_char('Ω');text3+=' ';break;
                         case 'E1' : text = text +this.get_char('Æ');text3+=' ';break;
                         case 'E2' : text = text +this.get_char('Ð');text3+=' ';break;
@@ -532,12 +532,12 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         case 'ED' : text = text +this.get_char('Ŧ');text3+=' ';break;
                         case 'EE' : text = text +this.get_char('Ŋ');text3+=' ';break;
                         case 'EF' : text = text +this.get_char('ŉ');text3+=' ';break;
-                        
-                        
+
+
                         case 'F0' : text = text +this.get_char('ĸ');text3+=' ';break;
                         case 'F1' : text = text +this.get_char('æ');text3+=' ';break;
                         case 'F2' : text = text +this.get_char('đ');text3+=' ';break;
-                        case 'F3' : text = text +this.get_char('#');text3+=' ';break; // <============ 
+                        case 'F3' : text = text +this.get_char('#');text3+=' ';break; // <============
                         case 'F4' : text = text +this.get_char('ħ');text3+=' ';break;
                         case 'F5' : text = text +this.get_char('%');text3+=' ';break;
                         case 'F6' : text = text +this.get_char('ĳ');text3+=' ';break;
@@ -553,7 +553,7 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
                         default:
                             true;
                     }
-                    
+
                 }
             }
             text +=this.closeTags();
@@ -562,12 +562,12 @@ MFP.prototype.loadTrackTypeSTL=function(player,filepath,track){
             }
         }
     };
-    
+
     parser.player=player;
     parser.track=track;
     parser.render(filepath);
     console.log('Trying to load '+filepath+' with FileTrack Loader .src');
-    
 
-}
+
+};
 console.log('STL reader added');

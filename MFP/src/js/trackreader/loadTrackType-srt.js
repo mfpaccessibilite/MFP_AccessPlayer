@@ -1,7 +1,7 @@
 /**
  * MFP AccessPlayer v.1.0
  * http://smartplayer.mfpst.com
- * 
+ *
  * Extention to READ track in SRT fileformat
  *
  * Copyright MFP Multimedia France Productions
@@ -9,8 +9,9 @@
  * backgroundImage: "key"
  * Date : 2017-10-19T06:48Z
  */
+import MFP_Cue from '../lib/MFP_Cue';
 
-MFP.prototype.loadTrackTypeSRT=function(player,filepath,track){
+MFP.prototype.loadTrackTypeSRT=function(player, filepath, track){
 
     var parser={
         player:null,
@@ -22,45 +23,45 @@ MFP.prototype.loadTrackTypeSRT=function(player,filepath,track){
             xhr.responseType = 'string';
             xhr.onload = function(e) {
                 if (xhr.status != 200) {
-                    // error loading: 
+                    // error loading:
                     parser.track.mode=disabled;
                     parser.player.subtitles.splice($(parser.track).data('pos'),1);
                     parser.player.initSubtitlesMenu();
                 }
                 else{
                     parser.track.mode='hidden';
-                    parser.track.readyState=2;
+                    //parser.track.readyState=2;
                     function strip(s) {
                         return s.replace(/^\s+|\s+$/g,"");
                     }
                     var data=xhr.response;
-                    console.log(data);
-                    srt = data.replace(/\r\n|\r|\n/g, '\n');
+                    var srt = data.replace(/\r\n|\r|\n/g, '\n');
 
                     srt = strip(srt);
 
                     var srt_ = srt.split('\n\n');
 
                     var cont = 0;
-                
-                    for(s in srt_) {
-                        st = srt_[s].split('\n');
+
+                    for(let s in srt_) {
+                        let st = srt_[s].split('\n');
 
                         if(st.length >=2) {
-                            n = st[0];
+                            let n = st[0];
 
-                            i = strip(st[1].split(' --> ')[0]);
-                            o = strip(st[1].split(' --> ')[1]);
-                            t = st[2];
+                            let i = strip(st[1].split(' --> ')[0]);
+                            let o = strip(st[1].split(' --> ')[1]);
+                            let t = st[2];
                             var tcit = (parseInt(i.substring(0,2))*60*60)+(parseInt(i.substring(3,5))*60)+parseInt(i.substring(6,8))+(parseInt(i.substring(9,12))/1000);
                             var tcot = (parseInt(o.substring(0,2))*60*60)+(parseInt(o.substring(3,5))*60)+parseInt(o.substring(6,8))+(parseInt(o.substring(9,12))/1000);
                             if(st.length > 2) {
-                                for(j=3; j<st.length;j++)
+                                for(let j=3; j<st.length;j++){
                                   t += '\n'+st[j];
+                                }
                             }
-                            var cue = new VTTCue(tcit,tcot,t);
+                            var cue = new MFP_Cue(tcit,tcot,t);
                             cue.id=n;
-                            parser.track.track.addCue(cue);
+                            parser.track.addCue(cue);
 
                         }
                         cont++;
@@ -70,7 +71,7 @@ MFP.prototype.loadTrackTypeSRT=function(player,filepath,track){
             };
             xhr.send(null);
         }
-    }
+    };
     parser.player=player;
     parser.track=track;
     parser.render(filepath);

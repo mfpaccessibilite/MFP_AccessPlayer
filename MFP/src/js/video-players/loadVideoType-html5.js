@@ -7,108 +7,126 @@
  * backgroundImage: "key"
  * Date : 2018-10-16T14:58Z
  */
- 
+
 class VideoHtml5{
 
-    constructor(options, video){
-        this.options = options;
-        this.video   = video;
+    constructor(video, options, element){
+        this.video = video;
+        this.options   = options;
+        this.container = element;
     }
 
-    init(){}
+    init(){
+        return new Promise((resolve, reject) => {
+            let src = this.video;
+            if(typeof(this.video)==='object'){
+                src = this.video.src;
+            }
+            const playerCode = `
+            <video class="mfp">
+                <source src="${src}" />
+            </video>`;
+            $(this.container).find('.video-container').html(playerCode);
+            console.log(this.container);
+            this.videoPlayer = $(this.container).find('video')[0];
+            console.log(this.videoPlayer);
+            resolve();
+        });
+    }
 
     webkitEnterFullscreen(){
-        this.video.webkitEnterFullscreen();
+        this.videoPlayer.webkitEnterFullscreen();
     }
 
     on(event, callback){
-        return $(this.video).on(event, callback);
+        return $(this.videoPlayer).on(event, callback);
     }
 
     off(event, callback=null){
-        return $(this.video).off(event, callback);
+        return $(this.videoPlayer).off(event, callback);
     }
 
     play(){
-        return this.video.play();
+        return this.videoPlayer.play();
     }
 
     pause(){
-        return this.video.pause();
+        return this.videoPlayer.pause();
     }
 
     getDuration(){
         return new Promise((resolve, reject)=>{
-            resolve(this.video.duration);
+            resolve(this.videoPlayer.duration);
         });
     }
 
     getCurrentTime(){
         return new Promise((resolve, reject)=>{
-            resolve(this.video.currentTime);
+            resolve(this.videoPlayer.currentTime);
         });
     }
 
     setCurrentTime(time){
-        this.video.currentTime = time;
+        this.videoPlayer.currentTime = time;
     }
 
     getBuffered(){
         return new Promise((resolve, reject)=>{
-            resolve(this.video.buffered);
+            resolve(this.videoPlayer.buffered);
         });
     }
 
     getTextTracks(){
         return new Promise((resolve, reject)=>{
-          resolve(this.video.textTracks);
+          resolve(this.videoPlayer.textTracks);
         });
     }
 
     getCurrentSrc(){
         return new Promise((resolve, reject)=>{
-            resolve(this.video.currentSrc);
+            resolve(this.videoPlayer.currentSrc);
         });
     }
 
     setSrc(src){
-        this.video.src = src;
+        this.videoPlayer.src = src;
     }
 
     getPaused(){
         return new Promise((resolve, reject)=>{
-            resolve(this.video.paused);
+            resolve(this.videoPlayer.paused);
         });
     }
 
     setControls(status){
-        this.video.controls = status;
+        this.videoPlayer.controls = status;
     }
 
     setTabIndex(index){
-        this.video.tabindex = index;
+        this.videoPlayer.tabindex = index;
     }
 
     setPlaybackRate(rate){
-        this.video.playbackRate = rate;
+        this.videoPlayer.playbackRate = rate;
     }
 
     getVolume(){
         return new Promise((resolve, reject)=>{
-            resolve(this.video.volume);
+            resolve(this.videoPlayer.volume);
         });
     }
 
     setVolume(volume){
-        this.video.volume = volume;
+        this.videoPlayer.volume = volume;
     }
 }
 
 
-MFP.prototype.loadVideoHtml5 = function(){
+MFP.prototype.loadVideoHtml5 = function(video){
     return new Promise((resolve, reject) => {
-        let videoElement = $(this.element)[0];
-        const video = new VideoHtml5(this.options, videoElement);
-        resolve(video);
+        const videoPlayer = new VideoHtml5(video, this.options, this.container);
+        videoPlayer.init().then(()=>{
+            resolve(videoPlayer);
+        });
     });
 };
