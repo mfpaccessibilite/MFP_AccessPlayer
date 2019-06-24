@@ -140,7 +140,7 @@ ul.mfp_list{
     &.fullscreen{
         width: 100%;
         height: 100%;
-        video.mfp{
+        .video-container.mfp{
             width: 100%;
             height: calc(100% - 90px);
         }

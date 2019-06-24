@@ -16,6 +16,7 @@ class VimeoPlayer{
       this.options   = options;
       this.container = element;
       this.domId   = 'vimeo-player-'+md5(JSON.stringify(options));
+      this.currentWidth = 0;
   }
 
   init(){
@@ -28,8 +29,9 @@ class VimeoPlayer{
             const width = $(videoContainer).width();
             this.videoPlayer = new Vimeo.Player(this.domId, {
                 id: this.video.id,
+                width: '100%',
                 maxwidth: '100%',
-                maxheight: 720,
+                maxheight: '100%',
                 speed: true,
                 controls: false,
                 width: width,
@@ -38,6 +40,23 @@ class VimeoPlayer{
                 var time = Math.round(this.video.startAt);
                 this.videoPlayer.setCurrentTime(time);
             }
+            setTimeout(()=>{
+                let vimeoIframe = $(videoContainer).find('iframe')[0];
+                $(vimeoIframe).attr('width','100%');
+                this.currentWidth = $(vimeoIframe).width();
+            }, 200);
+
+            setInterval(()=>{
+                let vimeoIframe = $(videoContainer).find('iframe')[0];
+                var width = $(vimeoIframe).width();
+                if(width!==this.currentWidth){
+                    this.currentWidth = width;
+                    let height = width * 0.56;
+                    $(vimeoIframe).attr('height', height+'px');
+                }
+                this.currentWidth = width;
+            },300);
+
             resolve();
         });
       });

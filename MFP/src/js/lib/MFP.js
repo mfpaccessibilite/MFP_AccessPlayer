@@ -386,7 +386,6 @@ export default class MFP{
     }
 
     displayCue(cue){
-        console.log("DISPLAYING CUE");
         let txt = cue.getCueAsHTML();
         var div = document.createElement('div');
         div.appendChild( txt.cloneNode(true) );
@@ -398,8 +397,6 @@ export default class MFP{
         // removing div from firefox bad WEBVTT integration
         var sub = $('<div class="sub-'+cue.track.subid+'-'+cue.id+'"><span class="mfp-subtitles">'+txt+'</span></div>');
         //sub.find('.svp-subtitles').append(cue.getCuesAsHTML());
-        console.log("SUBTITULOS");
-        console.log(sub);
         $(this.container).find('.mfp-subtitles-wrapper').append(sub);
         var div = $(this.container).find('.mfp-subtitles-wrapper .sub-'+cue.track.subid+'-'+cue.id);
         if(MFPDebug){
@@ -513,13 +510,16 @@ export default class MFP{
     }
 
     fontSize(){
-        var videoObj = $(this.container).find('.video-container')[0];
-        var subwrapper = $(this.container).find('.mfp-subtitles-wrapper');
-        var fsize = ($(videoObj).height()/20);
-        subwrapper.css('font-size',fsize+'px');
-        subwrapper.css('line-height','1.6');
-        // setting subtiltes-wrapper height to video height:
-        subwrapper.css('height',$(videoObj).height()+'px');
+        setTimeout(()=>{
+          var videoObj = $(this.container).find('.video-container')[0];
+          var subwrapper = $(this.container).find('.mfp-subtitles-wrapper');
+          var fsize = ($(videoObj).height()/20);
+
+          subwrapper.css('font-size',fsize+'px');
+          subwrapper.css('line-height','1.6');
+          // setting subtiltes-wrapper height to video height:
+          subwrapper.css('height',$(videoObj).height()+'px');
+        },100);
     }
 
     loadInterface(){
@@ -527,7 +527,7 @@ export default class MFP{
         return new Promise((resolve, reject)=>{
             var videoObj = this.startElement;
             $(videoObj).addClass('mfp');
-            $(videoObj).wrap($("<div class='mfp-wrapper "+this.options.theme_class+"'><div class='video-container'></div></div>"));
+            $(videoObj).wrap($("<div class='mfp-wrapper "+this.options.theme_class+"'><div class='video-container mfp'></div></div>"));
             this.container = $(videoObj).parent().parent();
             // adding control-bar
             this.container.append($('<div class="mfp-subtitles-wrapper" />'));
@@ -1031,7 +1031,6 @@ export default class MFP{
                     this.videoPlayer.getPaused().then((paused)=>{
                         this.videoPlayer.pause();
                         this.changeSource(this.options.videos.audiodesc).then(()=>{
-                            console.log("SOURCE CHANGED 2");
                             this.videoPlayer.on('canplay', (event)=>{
                                 this.videoPlayer.setCurrentTime(time);
                                 if(!paused){
@@ -1076,7 +1075,6 @@ export default class MFP{
                     this.videoPlayer.getPaused().then((paused)=>{
                         this.videoPlayer.pause();
                         this.changeSource(this.options.videos.signed).then(()=>{
-                            console.log("SOURCE CHANGED 3");
                             this.videoPlayer.on('canplay', (event)=>{
                                 this.videoPlayer.setCurrentTime(time);
                                 if(!paused){
@@ -1451,6 +1449,7 @@ export default class MFP{
                     // none of the events work so we are on mobile or tablet, so asking fullscreen on the video directly
                     this.videoPlayer.webkitEnterFullscreen();
                 }
+                this.fontSize();
             }
             else{
                 $(this.container).removeClass('showcue');
@@ -1463,6 +1462,7 @@ export default class MFP{
                 } else if (document.msExitFullscreen) {
                     document.msExitFullscreen();
                 }
+                this.fontSize();
             }
         }.bind(this));
     }
