@@ -30,8 +30,9 @@ class VimeoPlayer{
                 id: this.video.id,
                 maxwidth: '100%',
                 maxheight: 720,
+                speed: true,
                 controls: false,
-                width: width
+                width: width,
             });
             if(this.video.startAt!==undefined){
                 var time = Math.round(this.video.startAt);
@@ -44,6 +45,26 @@ class VimeoPlayer{
 
   webkitEnterFullscreen(){
       this.videoPlayer.webkitEnterFullscreen();
+  }
+
+  canChangeSpeedRate(){
+      return new Promise((resolve, reject)=>{
+          this.videoPlayer.getPlaybackRate().then((playbackRate)=>{
+              this.videoPlayer.setPlaybackRate(playbackRate).then((ret)=>{
+                  resolve(true);
+              }).catch((error) => {
+                  resolve(false);
+              });
+          }).catch((error) => {
+              resolve(false);
+          });
+      });
+  }
+
+  getPosibleSpeedRates(){
+      return new Promise((resolve, reject)=>{
+          resolve([0.5,1,1.5,2]);
+      });
   }
 
   on(event, callback){

@@ -184,6 +184,27 @@ export default class MFP{
           for(let track of this.tracks){
               track.setVideoPlayer(videoPlayer);
           }
+          videoPlayer.canChangeSpeedRate().then((canChange)=>{
+              if(canChange){
+                  $(this.container).find('.speed').css('display','inline-block');
+                  videoPlayer.getPosibleSpeedRates().then((speedRates)=>{
+                      const speedSelector = $(this.container).find('.speed')[0];
+                      $(speedSelector).html('');
+                      for(let speedRate of speedRates){
+                          let selected = '';
+                          if(speedRate==1){
+                              selected = "selected='selected'";
+                          }
+                          let option = `<option value='${speedRate}' ${selected}>${speedRate}X</option>`;
+                          $(speedSelector).append(option);
+                      }
+                  });
+              }else{
+                  $(this.container).find('.speed').css('display','none');
+              }
+          });
+
+
           resolve();
           /*
           video.on('volumechange',function(e){

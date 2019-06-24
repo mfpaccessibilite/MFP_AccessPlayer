@@ -32,6 +32,18 @@ class VideoHtml5{
         });
     }
 
+    canChangeSpeedRate(){
+        return new Promise((resolve, reject)=>{
+            resolve(true);
+        });
+    }
+
+    getPosibleSpeedRates(){
+        return new Promise((resolve, reject)=>{
+            resolve([0.25, 0.5, 1, 1.5, 2]);
+        });
+    }
+
     webkitEnterFullscreen(){
         this.videoPlayer.webkitEnterFullscreen();
     }
