@@ -49,6 +49,7 @@ export default class MFP{
           this.loadLang().then(()=>{
               this.loadTracks().then(()=>{
                 this.loadInterface().then(()=>{
+                    this.initChapters();
                     this.loadVideo(mainVideo).then(()=>{
                         this.videoPlayer.setControls(false);
                         this.videoPlayer.setTabIndex(-1);
@@ -234,7 +235,7 @@ export default class MFP{
               console.log('loading tracks');
           }
           var tt = $(this.startElement).find('track');
-
+          var cont = tt.length;
           for(var i=0; i < tt.length; i++){
               var track = new MFP_Track(tt[i]);
               if(MFPDebug){
@@ -269,15 +270,22 @@ export default class MFP{
                   if(MFPDebug){
                       console.log('track load');
                   }
+                  cont--;
+                  if(cont==0){
+                      resolve();
+                  }
                   this.loadedTrack(track);
               });
               track.on('error', (track) =>{
                   this.loadedTrackError(track);
+                  cont--;
+                  if(cont==0){
+                      resolve();
+                  }
               });
               track.load();
               this.tracks.push(track);
           }
-          resolve();
       });
   }
 
@@ -317,10 +325,7 @@ export default class MFP{
         var filename = track.src;
         var ext = filename.split('.').pop().toLowerCase();
         track.ext=ext;
-        if(track.kind==='chapters' && track.cues.length>0){
-            this.initChapters();
-        }
-        else if(track.kind==='subtitles'){
+        if(track.kind==='subtitles'){
             if(track.cues.length==0){
                 track.mode='disabled';
                 if(MFPDebug){
@@ -864,48 +869,47 @@ export default class MFP{
             }.bind(this));
             var menu = $(this.container).find('.right-part .chapters-block .menu');
             var cues = this.chapters[0].track.cues;
-            this.videoPlayer.getCurrentTime().then((currentTime)=>{
-              for(var i = 0; i<cues.length ; i++){
-                  var cue = cues[i];
-                  var men = $('<li class="cue chapter-'+i+'" data-start="'+cue.startTime+'">'+cue.text+'</li>');
-                  if(currentTime>=cue.startTime && currentTime<cue.endTime){
-                      $(men).addClass('selected');
-                  }
-                  $(menu[0]).append(men);
-                  cue.onenter = function(){
-                      $(this).attr('aria-selected','true');
-                      $(this).addClass('selected');
-                  }.bind(men);
-                  cue.onexit=function(){
-                      $(this).removeAttr('aria-selected');
-                      $(this).removeClass('selected');
-                  }.bind(men);
-              }
-              //$(menu[0]).menu({role:'listbox',items:'li'});
-              var m = new MFP_Menu($(menu[0]),{
-                  select:function(elmt){
-                      console.log('chapter selected');
-                      this.videoPlayer.setCurrentTime($(elmt).data('start'));
-                      $(this.container).find('.right-part .chapters-block .menu').dialog('close');
-                  }.bind(this)
-              });
-              m.init();
-
-              $(menu[0]).dialog({ autoOpen: false, resizable: false,closeText: this.lang.close, position: { my: "left bottom", at: "left top", of: btn },maxHeight: 400 });
-              $(menu[0]).dialog({
-                appendTo: $(this.container).find('.right-part .chapters-block')
-              });
-
-              //this.reloadChapters();
-              /*
-              $(menu[0]).menu({select: function( event, ui ) {
-                  this.videoPlayer.currentTime=ui.item.data('start');
-                  $(this.container).find('.right-part .chapters-block .menu').dialog( "close" );
-                  //ui.item.css('background','green');
-                  //console.log();
-              }.bind(this)});
-              */
+            var currentTime = 0;
+            for(var i = 0; i<cues.length ; i++){
+                var cue = cues[i];
+                var men = $('<li class="cue chapter-'+i+'" data-start="'+cue.startTime+'">'+cue.text+'</li>');
+                if(currentTime>=cue.startTime && currentTime<cue.endTime){
+                    $(men).addClass('selected');
+                }
+                $(menu[0]).append(men);
+                cue.on('enter', function(){
+                    $(this).attr('aria-selected','true');
+                    $(this).addClass('selected');
+                }.bind(men));
+                cue.on('exit', function(){
+                    $(this).removeAttr('aria-selected');
+                    $(this).removeClass('selected');
+                }.bind(men));
+            }
+            //$(menu[0]).menu({role:'listbox',items:'li'});
+            var m = new MFP_Menu($(menu[0]),{
+                select:function(elmt){
+                    console.log('chapter selected');
+                    this.videoPlayer.setCurrentTime($(elmt).data('start'));
+                    $(this.container).find('.right-part .chapters-block .menu').dialog('close');
+                }.bind(this)
             });
+            m.init();
+
+            $(menu[0]).dialog({ autoOpen: false, resizable: false,closeText: this.lang.close, position: { my: "left bottom", at: "left top", of: btn },maxHeight: 400 });
+            $(menu[0]).dialog({
+              appendTo: $(this.container).find('.right-part .chapters-block')
+            });
+
+            //this.reloadChapters();
+            /*
+            $(menu[0]).menu({select: function( event, ui ) {
+                this.videoPlayer.currentTime=ui.item.data('start');
+                $(this.container).find('.right-part .chapters-block .menu').dialog( "close" );
+                //ui.item.css('background','green');
+                //console.log();
+            }.bind(this)});
+            */
         }
     }
 

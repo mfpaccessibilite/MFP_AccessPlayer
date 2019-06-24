@@ -26,7 +26,6 @@ class VimeoPlayer{
             const videoContainer = $(this.container).find('.video-container')[0];
             $(videoContainer).html(playerCode);
             const width = $(videoContainer).width();
-            console.log(width);
             this.videoPlayer = new Vimeo.Player(this.domId, {
                 id: this.video.id,
                 maxwidth: '100%',

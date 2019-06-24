@@ -1,9 +1,11 @@
 const md5 = require('md5');
+import MFP_Cue from './MFP_Cue';
 
 export default class MFP_Track{
 
     constructor(track){
         this.trackElement = track;
+        this.trackElement.track.mode = 'hidden';
         track = track.track;
         this.cues = [];
         this.activeCues = [];
@@ -50,6 +52,19 @@ export default class MFP_Track{
     load(){
         if(this.ext!=='vtt'){
             this.dispatchEvent('error', this);
+        }else{
+            this.trackElement.addEventListener('load', ()=>{
+                let trackCues = this.trackElement.track.cues;
+                for(let trackCue of trackCues){
+                    let cue = new MFP_Cue(trackCue.startTime, trackCue.endTime, trackCue.text);
+                    cue.setTrack(this);
+                    this.cues.push(cue);
+                }
+                this.dispatchEvent('load', this);
+            });
+            this.trackElement.addEventListener('error', ()=>{
+                this.dispatchEvent('error', this);
+            });
         }
     }
 

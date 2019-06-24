@@ -27,9 +27,7 @@ class VideoHtml5{
                 <source src="${src}" />
             </video>`;
             $(this.container).find('.video-container').html(playerCode);
-            console.log(this.container);
             this.videoPlayer = $(this.container).find('video')[0];
-            console.log(this.videoPlayer);
             resolve();
         });
     }
