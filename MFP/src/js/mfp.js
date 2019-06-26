@@ -14,7 +14,7 @@ import MFP from './lib/MFP';
     var thisScriptEl = scriptEls[scriptEls.length - 1];
     var scriptPath = thisScriptEl.src;
     var mfpPath = scriptPath.substr(0, scriptPath.lastIndexOf('/') + 1);
-    var MFPDebug = true;
+    var MFPDebug = false;
 
     // including css
     window.mfpPath = mfpPath;

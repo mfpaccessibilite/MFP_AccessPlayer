@@ -172,8 +172,10 @@ export default class MFP{
               videoPlayer.getBuffered().then((buffer)=>{
                   videoPlayer.getDuration().then((duration)=>{
                       if(buffer.length>0){
-                          var left = Math.round((buffer.start(0)/duration)*10000) / 100;
-                          var width = (Math.round((buffer.end(0)/duration)*10000) / 100) - left;
+                          let start = buffer.start(0);
+                          let end   = buffer.end(0);
+                          var left  = Math.round((start/duration)*10000) / 100;
+                          var width = (Math.round((end/duration)*10000) / 100) - left;
                           var b = $(this.container).find('.progress-buffer .buffer');
                           b.css('left',left + '%');
                           b.css('width',width + '%');
@@ -312,12 +314,8 @@ export default class MFP{
 
   loadedTrackError(track){
         if(track.kind==='subtitles'){
-            //this.subtitles.splice($(track).data('pos'),1);
             var filename = track.src;
             var ext = filename.split('.').pop().toLowerCase();
-            //console.log(track);
-            //console.log(ext);
-            console.log(track);
             if (typeof MFP.prototype['loadTrackType'+ext.toUpperCase()] === "undefined") {
                 if(MFPDebug){
                     console.log('need to load JS to take care of .'+ext+' files track');
@@ -358,9 +356,7 @@ export default class MFP{
                 // setup cues event :
                 for(var i=0; i<track.cues.length;i++){
                     var cue = track.cues[i];
-                    console.log(cue);
                     cue.on('enter', (cue) =>{
-                        console.log(cue);
                         if(cue.track.mode2=='showing'){
                             this.displayCue(cue);
                             if(this.options.live!=''){
@@ -370,7 +366,6 @@ export default class MFP{
                         }
                     });
                     cue.on('exit', (cue)=>{
-                        console.log(cue);
                         if(cue.track.mode2=='showing'){
                             $(this.container).find('.mfp-subtitles-wrapper .sub-'+cue.track.subid+'-'+cue.id).remove();
                             if(this.options.live!=''){
@@ -812,8 +807,6 @@ export default class MFP{
             var pref_id = men.attr('id');
             for(var i = 0;i<this.subtitles.length;i++){
                 var track = this.subtitles[i].track;
-                //console.log(track);
-                //console.log('track');
                 var t = $('<li data-id="'+i+'">'+track.label+'</li>');
                 if(track.ext=='srt'){
                   t.attr('aria-owns',pref_id);
