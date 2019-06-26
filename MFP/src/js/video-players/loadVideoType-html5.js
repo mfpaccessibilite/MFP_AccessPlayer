@@ -23,7 +23,7 @@ class VideoHtml5{
                 src = this.video.src;
             }
             const playerCode = `
-            <video class="mfp">
+            <video class="mfp" playsinline>
                 <source src="${src}" />
             </video>`;
             $(this.container).find('.video-container').html(playerCode);
