@@ -65,18 +65,23 @@ class VimeoPlayer{
                 let vimeoIframe = $(videoContainer).find('iframe')[0];
                 $(vimeoIframe).attr('width','100%');
                 this.currentWidth = $(vimeoIframe).width();
-            }, 200);
 
-            setInterval(()=>{
-                let vimeoIframe = $(videoContainer).find('iframe')[0];
-                var width = $(vimeoIframe).width();
-                if(width!==this.currentWidth){
+                const intervalId = setInterval(()=>{
+                    let vimeoIframe = $(videoContainer).find('iframe')[0];
+                    if(vimeoIframe===undefined){
+                        clearInterval(intervalId);
+                        return;
+                    }
+                    var width = $(vimeoIframe).width();
+                    if(width!==this.currentWidth){
+                        this.currentWidth = width;
+                        let height = width * 0.56;
+                        $(vimeoIframe).attr('height', height+'px');
+                    }
                     this.currentWidth = width;
-                    let height = width * 0.56;
-                    $(vimeoIframe).attr('height', height+'px');
-                }
-                this.currentWidth = width;
-            },300);
+                }, 300);
+            }, 300);
+
             this.buffered = new VimeoBuffer(videoPlayer);
             this.videoPlayer = videoPlayer;
             resolve();
