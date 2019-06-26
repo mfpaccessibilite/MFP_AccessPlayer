@@ -58,7 +58,7 @@ export default class MFP{
                 });
               });
           }, ()=>{
-              console.log('Error, default lang script can not be loaded');
+              console.log('Error, default lang script can not be loaded.');
           });
       });
   }
