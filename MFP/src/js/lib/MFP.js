@@ -54,6 +54,8 @@ export default class MFP{
                         this.videoPlayer.setControls(false);
                         this.videoPlayer.setTabIndex(-1);
                         this.initEvents();
+                    }, ()=>{
+                        console.log("Error loading video.");
                     });
                 });
               });
@@ -92,6 +94,12 @@ export default class MFP{
                     this.loadVideo(video).then(()=>{
                         resolve();
                     });
+                }).fail(()=>{
+                    this.loadVideo({
+                        type: 'error',
+                        msg: `Sorry, ${type} is not supported`
+                    });
+                    resolve();
                 });
           }else{
               this[videoLoader](video).then((videoPlayer)=>{
@@ -108,6 +116,9 @@ export default class MFP{
               this.bindVideoEvents().then(()=>{
                   resolve();
               });
+          }, ()=>{
+              console.log("Error loading video.");
+              reject();
           });
       });
   }
@@ -940,7 +951,7 @@ export default class MFP{
 
             var btn = $(this.container).find('.video_hd');
             this.videoPlayer.getCurrentTime().then((time)=>{
-                this.videoPlayer.getPaused().then((paused)=>{
+                  this.videoPlayer.getPaused().then((paused)=>{
                     if(btn.hasClass('off') || (this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
                         this.videoPlayer.pause();
                         let src = null;
@@ -983,13 +994,14 @@ export default class MFP{
                         src.startAt = time;
                         this.changeSource(src).then(()=>{
                             this.videoPlayer.on('canplay', (event)=>{
-                                console.log("CAN PLAY, THEN SETTING CURRENT TIME");
                                 this.videoPlayer.setCurrentTime(time);
                                 if(!paused){
                                     this.videoPlayer.play();
                                 }
                                 this.videoPlayer.off('canplay');
                             });
+                        }, ()=>{
+                          console.log("There was a problem updating the video source");
                         });
                     }
                 });
@@ -1031,6 +1043,8 @@ export default class MFP{
                                 }
                                 this.videoPlayer.off('canplay');
                             });
+                        }, ()=>{
+                          console.log("There was a problem setting the Audio Description Video.");
                         });
                     });
                 });
@@ -1075,6 +1089,8 @@ export default class MFP{
                                 }
                                 this.videoPlayer.off('canplay');
                             });
+                        }, ()=>{
+                          console.log("There was a problem setting the Signed Video");
                         });
                     });
                 });
