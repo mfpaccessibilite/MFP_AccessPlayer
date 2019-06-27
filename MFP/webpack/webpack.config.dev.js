@@ -11,6 +11,7 @@ module.exports = merge(common, {
     chunkFilename: 'js/[name].chunk.js'
   },
   devServer: {
+    open: 'firefox',
     inline: true
   },
   plugins: [

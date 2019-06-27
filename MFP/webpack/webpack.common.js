@@ -16,7 +16,8 @@ module.exports = {
     'trackreader/loadTrackType-stl': Path.resolve(__dirname, '../src/js/trackreader/loadTrackType-stl.js'),
     'trackreader/stl': Path.resolve(__dirname, '../src/js/trackreader/stl.scss'),
     'video-players/loadVideoPlayer-html5': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-html5.js'),
-    'video-players/loadVideoPlayer-vimeo': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-vimeo.js')
+    'video-players/loadVideoPlayer-vimeo': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-vimeo.js'),
+    'video-players/loadVideoPlayer-error': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-error.js')
   },
   output: {
     path: Path.join(__dirname, '../dist'),
