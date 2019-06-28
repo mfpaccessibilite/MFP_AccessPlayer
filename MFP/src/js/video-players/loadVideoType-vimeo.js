@@ -87,7 +87,8 @@ class VimeoPlayer{
                         let height = width * 0.56;
                         let windowHeight = $(window).height();
                         if((this.fullScreen)||(height>windowHeight)){
-                            height = windowHeight - 96;
+                            let barHeight = $($(this.container).find('.control-bar')[0]).height();
+                            height = windowHeight - barHeight;
                         }
                         $(vimeoIframe).attr('height', height+'px');
                     }

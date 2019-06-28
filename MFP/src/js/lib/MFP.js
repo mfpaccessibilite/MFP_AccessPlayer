@@ -63,6 +63,11 @@ export default class MFP{
               console.log('Error, default lang script can not be loaded.');
           });
       });
+      window.addEventListener("resize", () => {
+          setTimeout(()=>{
+              this.fontSize();
+          },300);
+      });
   }
 
   getMainVideo(){
@@ -520,12 +525,23 @@ export default class MFP{
         setTimeout(()=>{
           var videoObj = $(this.container).find('.video-container')[0];
           var subwrapper = $(this.container).find('.mfp-subtitles-wrapper');
-          var fsize = ($(videoObj).height()/20);
+          var height = $(videoObj).height();
+          var width  = $(videoObj).width();
+
+          let fsize = height/20;
+          let subWrapperHeight = height;
+
+          if(window.innerHeight > window.innerWidth){
+              if($(this.container).find('.expand').hasClass('mfp-icon-compress')){
+                  fsize = width/20;
+                  subWrapperHeight = height;
+              }
+          }
 
           subwrapper.css('font-size',fsize+'px');
           subwrapper.css('line-height','1.6');
           // setting subtiltes-wrapper height to video height:
-          subwrapper.css('height',$(videoObj).height()+'px');
+          subwrapper.css('height', subWrapperHeight+'px');
         },100);
     }
 

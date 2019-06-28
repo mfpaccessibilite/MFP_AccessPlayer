@@ -26,10 +26,9 @@ class VideoError{
             const videoContainer = $(this.container).find('.video-container')[0];
             const currentHeight = $(videoContainer).height();
             const msgPadding = currentHeight/3;
-            console.log(this.video.msg);
             const tpl = `
               <div style="width:100%;height:${currentHeight}px;background-color:#000;color:#fff">
-                  <h2 style="margin:0 auto; padding-top:${msgPadding}px;text-align:center;widh:100%;color:#fff;font-size:21px;">${this.video.msg}</h2>
+                  <h2 style="margin:0 auto; padding-top:${msgPadding}px;text-align:center;widh:100%;color:#fff;">${this.video.msg}</h2>
               </div>
             `;
             $(videoContainer).html(tpl);
