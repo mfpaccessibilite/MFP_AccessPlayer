@@ -5,6 +5,24 @@
 // font for small-caps cause chrome doesn't support small-caps in ::cue
 @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC');
 
+ .vimeo-fullscreen{
+    width:100%;
+    height:100%;
+    position:fixed !important;
+    top:0px;
+    left:0px;
+
+    .video-container{
+        width:100%;
+        height: calc(100%-96px) !important;
+
+        iframe .player .vp-controls{
+            display: none;
+        }
+    }
+ }
+
+
  @font-face {
   font-family: 'icomoon';
   src:  url('../fonts/icomoon.eot?uvl9yf');

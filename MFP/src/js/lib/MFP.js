@@ -112,6 +112,7 @@ export default class MFP{
 
   changeSource(src){
       return new Promise((resolve, reject) => {
+          this.videoPlayer.destroy();
           this.loadVideo(src).then(()=>{
               this.bindVideoEvents().then(()=>{
                   resolve();
@@ -1354,125 +1355,134 @@ export default class MFP{
             }
             $(this.container).addClass('showcue');
         }.bind(this));
-            this.videoPlayer.on('webkitendfullscreen',function(){
-            if(MFPDebug){
-                console.log('iPhone/iPad leaving fullscreen');
-                this.videoPlayer.getTextTracks().then((tracks)=>{
-                    console.log(tracks);
-                });
-            }
-            for(var i=0;i<this.subtitles.length;i++){
-                if(this.subtitles[i].track.mode=='showing'){
-                    this.subtitles[i].track.mode2='showing';
-                }
-                else{
-                    this.subtitles[i].track.mode2='hidden';
-                }
-                this.subtitles[i].track.mode='hidden';
-            }
-            // updating subtitles menu when not un fullscreen:
-            var no_sub = true;
-            $(this.container).find('.right-part .subtitles-block .menu li').removeClass('selected');
-            var menus = $(this.container).find('.right-part .subtitles-block .menu li');
-            for(var i=0;i<menus.length;i++){
-                var men = $(menus[i]);
-                if(!men.hasClass('preferences') && !men.hasClass('no-subtitles')){
-                    var id = men.data('id');
-                    if(this.subtitles[id].track.mode2=='showing'){
-                        men.addClass('selected');
-                        no_sub=false;
-                    }
-                }
-            }
-            if(no_sub){
-                $(this.container).find('.right-part .subtitles-block .menu li.no-subtitles').addClass('selected');
-            }
+        //On exit
+        this.videoPlayer.on('webkitendfullscreen',function(){
+          if(MFPDebug){
+              console.log('iPhone/iPad leaving fullscreen');
+              this.videoPlayer.getTextTracks().then((tracks)=>{
+                  console.log(tracks);
+              });
+          }
+          for(var i=0;i<this.subtitles.length;i++){
+              if(this.subtitles[i].track.mode=='showing'){
+                  this.subtitles[i].track.mode2='showing';
+              }
+              else{
+                  this.subtitles[i].track.mode2='hidden';
+              }
+              this.subtitles[i].track.mode='hidden';
+          }
+          // updating subtitles menu when not un fullscreen:
+          var no_sub = true;
+          $(this.container).find('.right-part .subtitles-block .menu li').removeClass('selected');
+          var menus = $(this.container).find('.right-part .subtitles-block .menu li');
+          for(var i=0;i<menus.length;i++){
+              var men = $(menus[i]);
+              if(!men.hasClass('preferences') && !men.hasClass('no-subtitles')){
+                  var id = men.data('id');
+                  if(this.subtitles[id].track.mode2=='showing'){
+                      men.addClass('selected');
+                      no_sub=false;
+                  }
+              }
+          }
+          if(no_sub){
+              $(this.container).find('.right-part .subtitles-block .menu li.no-subtitles').addClass('selected');
+          }
 
-            $(this.container).removeClass('showcue');
-            this.redrawCues();
-        }.bind(this));
+          $(this.container).removeClass('showcue');
+          this.redrawCues();
+      }.bind(this));
 
-        //standard event
-        var container = this.container;
-        $(this.container).find('.expand').click(function(){
-            if($(this.container).find('.expand').hasClass('mfp-icon-expand')){
-                if ($(this.container)[0].requestFullscreen) {
-                    $(this.container)[0].requestFullscreen();
-                    document.addEventListener("fullscreenchange",function(e){
-                        if(document.fullscreen){
-                            $(this.container).find('expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
-                            $(this.container).addClass('fullscreen');
-                            this.fontSize();
-                        }
-                        else{
-                            document.removeEventListener('fullscreenchange',arguments.callee);
-                            $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
-                            $(this.container).removeClass('fullscreen');
-                        }
-                    }.bind(this));
-                } else if ($(this.container)[0].webkitRequestFullscreen) {
-                    $(this.container)[0].webkitRequestFullscreen();
-                    document.addEventListener("webkitfullscreenchange",function(e){
-                        if(document.webkitIsFullScreen){
-                            $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
-                            $(this.container).addClass('fullscreen');
-                            this.fontSize();
-                        }
-                        else{
-                            $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
-                            document.removeEventListener('webkitfullscreenchange',arguments.callee);
-                            $(this.container).removeClass('fullscreen');
-                        }
+      //standard event
+      var container = this.container;
+      $(this.container).find('.expand').click(function(){
+          if($(this.container).find('.expand').hasClass('mfp-icon-expand')){
+              if ($(this.container)[0].requestFullscreen) {
+                  $(this.container)[0].requestFullscreen();
+                  document.addEventListener("fullscreenchange",function(e){
+                      if(document.fullscreen){
+                          $(this.container).find('expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
+                          $(this.container).addClass('fullscreen');
+                          this.fontSize();
+                      }
+                      else{
+                          document.removeEventListener('fullscreenchange',arguments.callee);
+                          $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                          $(this.container).removeClass('fullscreen');
+                      }
+                  }.bind(this));
+              } else if ($(this.container)[0].webkitRequestFullscreen) {
+                  $(this.container)[0].webkitRequestFullscreen();
+                  document.addEventListener("webkitfullscreenchange",function(e){
+                      if(document.webkitIsFullScreen){
+                          $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
+                          $(this.container).addClass('fullscreen');
+                          this.fontSize();
+                      }
+                      else{
+                          $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                          document.removeEventListener('webkitfullscreenchange',arguments.callee);
+                          $(this.container).removeClass('fullscreen');
+                      }
 
-                    }.bind(this));
-                } else if ($(this.container)[0].mozRequestFullScreen) {
-                    $(this.container)[0].mozRequestFullScreen();
-                    document.addEventListener("mozfullscreenchange",function(e){
-                         if(document.mozFullScreen){
-                            $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
-                            $(this.container).addClass('fullscreen');
-                            this.fontSize();
-                        }
-                        else{
-                            document.removeEventListener('mozfullscreenchange',arguments.callee);
-                            $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
-                            $(this.container).removeClass('fullscreen');
-                        }
-                    }.bind(this));
-                } else if ($(this.container)[0].msRequestFullscreen) {
-                    $(this.container)[0].msRequestFullscreen();
-                    document.addEventListener("MSFullscreenChange",function(e){
-                         if(document.msFullScreen){
-                            $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
-                            $(this.container).addClass('fullscreen');
-                            this.fontSize();
-                        }
-                        else{
-                            document.removeEventListener('MSFullscreenChange',arguments.callee);
-                            $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
-                            $(this.container).removeClass('fullscreen');
-                        }
-                    }.bind(this));
-                }
-                else{
-                    // none of the events work so we are on mobile or tablet, so asking fullscreen on the video directly
-                    this.videoPlayer.webkitEnterFullscreen();
-                }
-                this.fontSize();
-            }
-            else{
-                $(this.container).removeClass('showcue');
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
-                this.fontSize();
-            }
-        }.bind(this));
+                  }.bind(this));
+              } else if ($(this.container)[0].mozRequestFullScreen) {
+                  $(this.container)[0].mozRequestFullScreen();
+                  document.addEventListener("mozfullscreenchange",function(e){
+                       if(document.mozFullScreen){
+                          $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
+                          $(this.container).addClass('fullscreen');
+                          this.fontSize();
+                      }
+                      else{
+                          document.removeEventListener('mozfullscreenchange',arguments.callee);
+                          $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                          $(this.container).removeClass('fullscreen');
+                      }
+                  }.bind(this));
+              } else if ($(this.container)[0].msRequestFullscreen) {
+                  $(this.container)[0].msRequestFullscreen();
+                  document.addEventListener("MSFullscreenChange",function(e){
+                       if(document.msFullScreen){
+                          $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
+                          $(this.container).addClass('fullscreen');
+                          this.fontSize();
+                      }
+                      else{
+                          document.removeEventListener('MSFullscreenChange',arguments.callee);
+                          $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                          $(this.container).removeClass('fullscreen');
+                      }
+                  }.bind(this));
+              }
+              else{
+                  // none of the events work so we are on mobile or tablet, so asking fullscreen on the video directly
+                  $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
+                  this.videoPlayer.webkitEnterFullscreen();
+              }
+              this.fontSize();
+          }
+          else{
+              $(this.container).removeClass('showcue');
+              if (document.exitFullscreen) {
+                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                  document.exitFullscreen();
+              } else if (document.webkitExitFullscreen) {
+                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                  document.webkitExitFullscreen();
+              } else if (document.mozCancelFullScreen) {
+                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                  document.mozCancelFullScreen();
+              } else if (document.msExitFullscreen) {
+                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                  document.msExitFullscreen();
+              }else{
+                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                  this.videoPlayer.webkitExitFullscreen();
+              }
+              this.fontSize();
+          }
+      }.bind(this));
     }
 }

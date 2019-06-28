@@ -53,7 +53,7 @@ class VimeoPlayer{
                 width: '100%',
                 maxwidth: '100%',
                 maxheight: '100%',
-                speed: true,
+                speed: false,
                 controls: false,
                 width: width,
             });
@@ -61,26 +61,41 @@ class VimeoPlayer{
                 var time = Math.round(this.video.startAt);
                 videoPlayer.setCurrentTime(time);
             }
-            setTimeout(()=>{
+            let checkWidth = ()=>{
                 let vimeoIframe = $(videoContainer).find('iframe')[0];
+                if(vimeoIframe===undefined){
+                    return setTimeout(checkWidth, 300);
+                }
                 $(vimeoIframe).attr('width','100%');
                 this.currentWidth = $(vimeoIframe).width();
 
-                const intervalId = setInterval(()=>{
-                    let vimeoIframe = $(videoContainer).find('iframe')[0];
-                    if(vimeoIframe===undefined){
-                        clearInterval(intervalId);
-                        return;
+                this.intervalId = setInterval(()=>{
+                    let currentOrientation;
+                    if(window.innerHeight > window.innerWidth){
+                        currentOrientation = 'portrait';
                     }
+                    if(window.innerWidth > window.innerHeight){
+                        currentOrientation = 'landscape';
+                    }
+                    let vimeoIframe = $(videoContainer).find('iframe')[0];
+                    $(vimeoIframe).attr('width','100%');
                     var width = $(vimeoIframe).width();
-                    if(width!==this.currentWidth){
+
+                    if((width!==this.currentWidth)||(this.orientation!==currentOrientation)){
+                        this.orientation = currentOrientation;
                         this.currentWidth = width;
                         let height = width * 0.56;
+                        let windowHeight = $(window).height();
+                        if((this.fullScreen)||(height>windowHeight)){
+                            height = windowHeight - 96;
+                        }
                         $(vimeoIframe).attr('height', height+'px');
                     }
                     this.currentWidth = width;
                 }, 300);
-            }, 300);
+            };
+
+            setTimeout(checkWidth, 100);
 
             this.buffered = new VimeoBuffer(videoPlayer);
             this.videoPlayer = videoPlayer;
@@ -89,8 +104,21 @@ class VimeoPlayer{
       });
   }
 
+  destroy(){
+      if(this.fullScreen){
+          $(this.container).removeClass('vimeo-fullscreen');
+      }
+      clearInterval(this.intervalId);
+  }
+
+  webkitExitFullscreen(){
+      this.fullScreen = false;
+      $(this.container).removeClass('vimeo-fullscreen');
+  }
+
   webkitEnterFullscreen(){
-      this.videoPlayer.webkitEnterFullscreen();
+      $(this.container).addClass('vimeo-fullscreen');
+      this.fullScreen = true;
   }
 
   canChangeSpeedRate(){

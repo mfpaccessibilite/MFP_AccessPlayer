@@ -19,6 +19,8 @@ class VideoError{
         this.duration = 0;
     }
 
+    destroy(){}
+    
     init(){
         return new Promise((resolve, reject) => {
             const videoContainer = $(this.container).find('.video-container')[0];

@@ -16,6 +16,8 @@ class VideoHtml5{
         this.container = element;
     }
 
+    destroy(){}
+    
     init(){
         return new Promise((resolve, reject) => {
             let src = this.video;
