@@ -40,6 +40,7 @@ export default class MFP{
       this.liveOn=false;
       this.seeking=false;
       this.tracks = [];
+      this.notSupportedStandarFullScreen = false;
   }
 
   init(){
@@ -1361,9 +1362,9 @@ export default class MFP{
     initFullScreenEvents(){
         // event for iphone/ipad to display standar subtitle on fullscreen :
         this.videoPlayer.on('webkitbeginfullscreen',function(){
-          if(MFPDebug){
-              console.log('iPhone/iPad going fullscreen');
-          }
+            if(MFPDebug){
+                console.log('iPhone/iPad going fullscreen');
+            }
             for(var i=0;i<this.subtitles.length;i++){
                 if(this.subtitles[i].track.mode2=='showing'){
                     this.subtitles[i].track.mode='showing';
@@ -1476,6 +1477,7 @@ export default class MFP{
                   // none of the events work so we are on mobile or tablet, so asking fullscreen on the video directly
                   $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
                   this.videoPlayer.webkitEnterFullscreen();
+                  this.notSupportedStandarFullScreen = true;
               }
               this.fontSize();
           }
@@ -1496,6 +1498,7 @@ export default class MFP{
               }else{
                   $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
                   this.videoPlayer.webkitExitFullscreen();
+                  this.notSupportedStandarFullScreen = false;
               }
               this.fontSize();
           }

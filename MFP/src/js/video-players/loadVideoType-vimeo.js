@@ -31,11 +31,10 @@ class VimeoBuffer{
 
 class VimeoPlayer{
 
-  constructor(video, options, element){
+  constructor(video, element){
       this.video     = video;
-      this.options   = options;
       this.container = element;
-      this.domId   = 'vimeo-player-'+md5(JSON.stringify(options));
+      this.domId   = 'vimeo-player-'+md5(JSON.stringify(video) + Date.now() + Math.random());
       this.currentWidth = 0;
       this.buffered = null;
   }
@@ -44,6 +43,9 @@ class VimeoPlayer{
       return new Promise((resolve, reject)=>{
         $.getScript("https://player.vimeo.com/api/player.js")
           .done((script,textStatus) => {
+            if(this.video.fullscreen){
+                this.webkitEnterFullscreen();
+            }
             const playerCode = `<div id="${this.domId}"></div>`;
             const videoContainer = $(this.container).find('.video-container')[0];
             $(videoContainer).html(playerCode);
@@ -106,9 +108,6 @@ class VimeoPlayer{
   }
 
   destroy(){
-      if(this.fullScreen){
-          $(this.container).removeClass('vimeo-fullscreen');
-      }
       clearInterval(this.intervalId);
   }
 
@@ -197,7 +196,7 @@ class VimeoPlayer{
 
   getCurrentSrc(){
       return new Promise((resolve, reject)=>{
-          resolve(this.options.path);
+          resolve(this.video.id);
       });
   }
 
@@ -233,9 +232,10 @@ class VimeoPlayer{
 
 MFP.prototype.loadVideoVimeo = function(videoOps){
     return new Promise((resolve, reject)=>{
-      const video = new VimeoPlayer(videoOps, this.options, this.container);
-      video.init().then(()=>{
-          resolve(video);
-      });
+        videoOps.fullscreen = this.notSupportedStandarFullScreen;
+        const video = new VimeoPlayer(videoOps, this.container);
+        video.init().then(()=>{
+            resolve(video);
+        });
     });
 };

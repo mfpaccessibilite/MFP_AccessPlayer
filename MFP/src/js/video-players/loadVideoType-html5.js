@@ -10,20 +10,19 @@
 
 class VideoHtml5{
 
-    constructor(video, options, element){
+    constructor(video, element){
         this.video = video;
-        this.options   = options;
         this.container = element;
     }
 
     destroy(){}
-    
+
     init(){
         return new Promise((resolve, reject) => {
-            let src = this.video;
-            if(typeof(this.video)==='object'){
-                src = this.video.src;
+            if(this.video.fullscreen){
+                this.webkitEnterFullscreen();
             }
+            let src = this.video.src;
             const playerCode = `
             <video class="mfp" playsinline>
                 <source src="${src}" />
@@ -46,8 +45,14 @@ class VideoHtml5{
         });
     }
 
+    webkitExitFullscreen(){
+        this.fullScreen = false;
+        $(this.container).removeClass('vimeo-fullscreen');
+    }
+
     webkitEnterFullscreen(){
-        this.videoPlayer.webkitEnterFullscreen();
+        $(this.container).addClass('vimeo-fullscreen');
+        this.fullScreen = true;
     }
 
     on(event, callback){
@@ -136,7 +141,13 @@ class VideoHtml5{
 
 MFP.prototype.loadVideoHtml5 = function(video){
     return new Promise((resolve, reject) => {
-        const videoPlayer = new VideoHtml5(video, this.options, this.container);
+        if(typeof(video)!=='object'){
+            video = {
+              src: video
+            };
+        }
+        video.fullscreen = this.notSupportedStandarFullScreen;
+        const videoPlayer = new VideoHtml5(video, this.container);
         videoPlayer.init().then(()=>{
             resolve(videoPlayer);
         });
