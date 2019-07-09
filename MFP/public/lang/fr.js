@@ -10,6 +10,7 @@ var lang = {
     searchBar : "Barre de progression (durée)",
     on : 'de',
     playBackrate : 'Vitesse de lecture',
+    rateDesactive : 'Cette vitesse de lecture n\'est pas supportée dans ce format vidéo',
     close : 'Fermer',
     subtitles : 'Sous-titres',
     nosubtitles : 'Aucun sous-titres',

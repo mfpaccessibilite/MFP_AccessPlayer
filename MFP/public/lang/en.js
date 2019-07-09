@@ -10,6 +10,7 @@ var lang = {
     searchBar : "Search Bar",
     on : 'on',
     playBackrate : 'Playback speed',
+    rateDesactive : 'This playback rate is not available in this video format',
     close : 'Close',
     subtitles : 'Subtitles',
     nosubtitles : 'No Subtitles',
