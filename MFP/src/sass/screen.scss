@@ -148,6 +148,10 @@ ul.mfp_list{
 .mfp-wrapper{
     background-color: #000;
     position: relative;
+    .ui-dialog .ui-dialog-title{
+      white-space: pre-wrap;
+      text-overflow: initial;
+    }
 
     video.mfp{
         max-width: 100%;

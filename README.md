@@ -43,7 +43,8 @@ List of JavaScript libraries required to run MFP AccessPlayer video player:
 
 * JavaScript libraries:
     *  JQuery version 3.1.1
-    *  JQuery UI Version 1.12
+    *  JQuery UI Version 1.12.1
+    *  JQuery UI Touch punch
 * Icon font generator: [icomoon] (http://icomoon.io)
 * CSS pre-processor: Sass + Compass
 
@@ -70,8 +71,9 @@ Add them as follows in the 'head' of your html page:
 
 ```html
 <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" type="text/css" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/furf/jquery-ui-touch-punch@latest/jquery.ui.touch-punch.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" type="text/css" />
 ```
 
 Then add the player:
@@ -241,6 +243,7 @@ Liste des bibliothèques JavaScript nécessaires au bon fonctionnement du lecteu
 * Bibliothèques JavaScript :
     *  JQuery version 3.1.1
     *  JQuery UI Version 1.12
+    *  JQuery UI Touch Punch
 * Générateur de font icon : [icomoon](http://icomoon.io)
 * Pré-processeur CSS : Sass + Compass
 
@@ -269,6 +272,7 @@ Ajoutez-les comme suit dans le `head` de votre page html :
 ```html
 <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/furf/jquery-ui-touch-punch@latest/jquery.ui.touch-punch.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" type="text/css" />
 ```
 
