@@ -10,7 +10,6 @@ var lang = {
     searchBar : "Barre de progression (durée)",
     on : 'de',
     playBackrate : 'Vitesse de lecture',
-    rateDesactive : 'Cette vitesse de lecture n\'est pas supportée dans ce format vidéo',
     close : 'Fermer',
     subtitles : 'Sous-titres',
     nosubtitles : 'Aucun sous-titres',
@@ -52,5 +51,6 @@ var lang = {
     desactivateLiveTranscript: 'Désactiver le transcript temps réel',
     informations:'Informations',
     activate:'Activer',
-    desactivate:'Désactiver'
+    desactivate:'Désactiver',
+    nosupport:'Désolé, le format %s n\'est pas supporté',
 };

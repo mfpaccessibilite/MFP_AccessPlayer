@@ -49,19 +49,23 @@ class VimeoPlayer{
             const playerCode = `<div id="${this.domId}"></div>`;
             const videoContainer = $(this.container).find('.video-container')[0];
             $(videoContainer).html(playerCode);
+            let vimeoID = this.video.src;
+            if(vimeoID == undefined){
+              vimeoID = this.video.id;
+            }
             const width = $(videoContainer).width();
             const videoPlayer = new Vimeo.Player(this.domId, {
-                id: this.video.id,
+                id: vimeoID,
+                width: width,
+                maxwidth: '100%',
+                maxheight: '100%',
                 responsive: true,
                 playsinline: true,
                 byline: false,
-                //width: '100%',
-                //maxwidth: '100%',
-                //maxheight: '100%',
                 speed: true,
                 controls: false,
-                //width: width,
             });
+            
             if(this.video.startAt!==undefined){
                 var time = Math.round(this.video.startAt);
                 videoPlayer.setCurrentTime(time);
@@ -71,6 +75,7 @@ class VimeoPlayer{
                 if(vimeoIframe===undefined){
                     return setTimeout(checkWidth, 300);
                 }
+                $(vimeoIframe).attr('tabindex','-1');
                 $(vimeoIframe).css('width','100%');
                 this.currentWidth = $(vimeoIframe).width();
 
@@ -126,6 +131,8 @@ class VimeoPlayer{
 
   canChangeSpeedRate(){
       return new Promise((resolve, reject)=>{
+          resolve(true);
+          /*
           this.videoPlayer.getPlaybackRate().then((playbackRate)=>{
               this.videoPlayer.setPlaybackRate(playbackRate).then((ret)=>{
                   resolve(true);
@@ -135,6 +142,7 @@ class VimeoPlayer{
           }).catch((error) => {
               resolve(true);
           });
+          */
       });
   }
 
@@ -191,7 +199,7 @@ class VimeoPlayer{
   }
 
   setCurrentTime(time){
-      time = Math.round(time);
+      //time = Math.round(time);
       this.videoPlayer.setCurrentTime(time);
   }
 

@@ -10,7 +10,6 @@ var lang = {
     searchBar : "Search Bar",
     on : 'on',
     playBackrate : 'Playback speed',
-    rateDesactive : 'This playback rate is not available in this video format',
     close : 'Close',
     subtitles : 'Subtitles',
     nosubtitles : 'No Subtitles',
@@ -52,5 +51,6 @@ var lang = {
     desactivateLiveTranscript: 'Desactive live transcript',
     informations:'Informations',
     activate:'Activate',
-    desactivate:'Desactivate'
+    desactivate:'Desactivate',
+    nosupport:'Sorry, the video format %s is not supported',
 };

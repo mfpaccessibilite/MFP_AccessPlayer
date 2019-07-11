@@ -24,7 +24,7 @@ class VideoHtml5{
             }
             let src = this.video.src;
             const playerCode = `
-            <video class="mfp" playsinline>
+            <video class="mfp" playsinline tabindex="-1">
                 <source src="${src}" />
             </video>`;
             $(this.container).find('.video-container').html(playerCode);

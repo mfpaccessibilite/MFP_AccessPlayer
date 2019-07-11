@@ -18,19 +18,39 @@ export default class MFP{
       this.default_options = {
             type: 'html5',
             lang:'',
-            videos:{lowdef:'', audiodesc:'', signed:''},
+            videos:{highdef:'', lowdef:'', audiodesc:'', signed:''},
             transcripts:{txt:'',html:''},
             live:'',
             theme_class:''
       };
       var element = arguments[0];
+      this.startElement = element;
       if(arguments.length > 1){
           var options = arguments[1];
       }else{
           var options = {};
       }
+      // analyse inner tags to populate the default_options
+      var videoSources = $(this.startElement).find('source');
+      videoSources.each(function(index){
+        var source = videoSources[index];
+        // getting video format support of the browser for the video :
+        if(this.startElement[0].canPlayType($(source).attr('type'))){
+          var type = 'html5';
+        }
+        else{
+          var type = $(source).attr('type').split('/')[1].toLowerCase();
+        }
+        var format = $(source).attr('format');
+        var src = $(source).attr('src');
+        if(format==undefined){
+          format = 'highdef';
+        }
+        this.default_options.videos[format] = {src: src, type: type, mime: $(source).attr('type')};
+      }.bind(this));
+      
       this.options = $.extend( {}, this.default_options, options );
-      this.startElement = element;
+      
       this.subtitles=[];
       this.captions=[];
       this.descriptions=[];
@@ -45,24 +65,22 @@ export default class MFP{
 
   init(){
       // Load Video Player
-      this.getMainVideo().then((mainVideo)=>{
-          this.options.videos.highdef = mainVideo;
-          this.loadLang().then(()=>{
-              this.loadTracks().then(()=>{
-                this.loadInterface().then(()=>{
-                    this.initChapters();
-                    this.loadVideo(mainVideo).then(()=>{
-                        this.videoPlayer.setControls(false);
-                        this.videoPlayer.setTabIndex(-1);
-                        this.initEvents();
-                    }, ()=>{
-                        console.log("Error loading video.");
-                    });
+      this.loadLang().then(()=>{
+          this.loadTracks().then(()=>{
+            this.loadInterface().then(()=>{
+                this.initSubtitlesMenu();
+                this.initChapters();
+                this.loadVideo(this.options.videos.highdef).then(()=>{
+                    this.videoPlayer.setControls(false);
+                    this.videoPlayer.setTabIndex(-1);
+                    this.initEvents();
+                }, ()=>{
+                    console.log("Error loading video.");
                 });
-              });
-          }, ()=>{
-              console.log('Error, default lang script can not be loaded.');
+            });
           });
+      }, ()=>{
+          console.log('Error, default lang script can not be loaded.');
       });
       window.addEventListener("resize", () => {
           setTimeout(()=>{
@@ -71,20 +89,6 @@ export default class MFP{
       });
   }
 
-  getMainVideo(){
-      return new Promise((resolve, reject)=>{
-          if(this.options.type==='vimeo'){
-              resolve({
-                  type: this.options.type,
-                  id: this.options.id
-              });
-          }else{
-              const source = $(this.startElement).find('source')[0];
-              const src  = $(source).attr('src');
-              resolve(src);
-          }
-      });
-  }
 
   loadVideo(video){
       return new Promise((resolve, reject)=>{
@@ -101,9 +105,10 @@ export default class MFP{
                         resolve();
                     });
                 }).fail(()=>{
+                    let msg = this.lang.nosupport;
                     this.loadVideo({
                         type: 'error',
-                        msg: `Sorry, ${type} is not supported`
+                        msg: msg.replace(/%s/,type)
                     });
                     resolve();
                 });
@@ -812,6 +817,7 @@ export default class MFP{
 
     initSubtitlesMenu(){
         var toload=true;
+        console.log("on charge le menu sous-titre");
         for(var i=0;i<this.subtitles.length;i++){
             if(this.subtitles[i].track.cues.length==0){
                 toload=false;

@@ -52,19 +52,17 @@
 						 		<div class="cont">
 						 				<div class="container">
 						 						<video data-mfp data-options="{
-														type: 'vimeo',
-													 	id:   '344582363',
-						 								videos:{
-						 										lowdef:{
-																		type: 'vimeo',
-																		id: '344582363'
-																},
-						 										audiodesc: {
-																		type: 'youtube',
-																		id: 2323232
-																},
-						 										signed:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_LDS_480.m4v'
-						 								},
+						 								//videos:{
+						 								//		lowdef:{
+														//				type: 'vimeo',
+														//				id: '344582363'
+														//		},
+						 								//		audiodesc: {
+														//				type: 'youtube',
+														//				id: 2323232
+														//		},
+						 								//		signed:'https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_LDS_480.m4v'
+						 								//},
 						 								transcripts:{
 						 										html:'../transcripts/JamyPlayer.htm',
 						 										txt:'../transcripts/JamyPlayer.txt'
@@ -72,6 +70,10 @@
 						 								live: '#text-target1',
 						 								theme_class: 'blue_theme'
 						 						}">
+						 								<source src="344582363" type="video/vimeo" />
+						 								<source src="https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_FULL2.m4v" type="video/mp4" format="lowdef" />
+						 								<source src="2323232" type="video/youtube" format="audiodesc" />
+						 								<source src="https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_LDS_480.m4v" type="video/mp4" format="signed" />
 						 								<track src="tracks/JamyPlayer.stl" kind="subtitles" label="Français (coloration CSA)" srclang="fr" />
 						 								<track src="tracks/JamyPlayer.srt" kind="subtitles" label="Français (personnalisable)" srclang="fr" />
 						 								<track src="tracks/chapters.vtt" kind="chapters" label="Chapitres" srclang="fr" />
