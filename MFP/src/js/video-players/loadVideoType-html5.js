@@ -85,7 +85,11 @@ class VideoHtml5{
     }
 
     setCurrentTime(time){
-        this.videoPlayer.currentTime = time;
+        return new Promise((resolve,reject)=>{
+            this.videoPlayer.currentTime = time;
+            resolve(this.videoPlayer.currentTime);
+        });
+        
     }
 
     getBuffered(){

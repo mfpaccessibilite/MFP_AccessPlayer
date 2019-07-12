@@ -571,6 +571,7 @@ export default class MFP{
             this.controlBar = $("<div class='control-bar' role='region' aria-label='"+this.lang.video_player+"''></div>");
             $(window).resize(function(){
                 $(this.container).find('.mfp-subtitles-wrapper').css('height','calc(100% - '+(this.controlBar.height()+8)+'px)');
+                $(this.container).find('.video-container').css('height','calc(100% - '+(this.controlBar.height()+8)+'px)');
             }.bind(this));
             $(this.container).append($(this.controlBar));
 
@@ -817,7 +818,6 @@ export default class MFP{
 
     initSubtitlesMenu(){
         var toload=true;
-        console.log("on charge le menu sous-titre");
         for(var i=0;i<this.subtitles.length;i++){
             if(this.subtitles[i].track.cues.length==0){
                 toload=false;
@@ -1256,29 +1256,52 @@ export default class MFP{
         //progress.on('update',function(){this.seekUpdate();}.bind(this));
 
         progress.on('keydown', (e) => {
+
             this.videoPlayer.getCurrentTime().then((time)=>{
+              this.videoPlayer.getDuration().then((duration)=>{
+                var shouldUpdate = false;
+                var targetTime = 0;
                 if(e.which==37 || e.which==40){
                     e.preventDefault();
                     //back 5 seconds;
                     if((time-5)>0){
-                        this.videoPlayer.setCurrentTime(time-5);
+                        shouldUpdate=true;
+                        targetTime=time-5;
+                        //this.videoPlayer.setCurrentTime(time-5);
                     }
                     else{
-                        this.videoPlayer.setCurrentTime(0);
+                        shouldUpdate=true;
+                        targetTime=0;
+                        //this.videoPlayer.setCurrentTime(0);
                     }
                 }else if(e.which==38 || e.which==39){
                     e.preventDefault();
                     //forward 5 seconds ;
-                    this.videoPlayer.getDuration().then((duration)=>{
-                        if((time+5)>duration){
-                            this.videoPlayer.setCurrentTime(duration);
-                        }
-                        else{
-                            this.videoPlayer.setCurrentTime(time+5);
-                        }
+                      if((time+5)>duration){
+                          shouldUpdate=true;
+                          targetTime=duration;
+                          //this.videoPlayer.setCurrentTime(duration);
+                      }
+                      else{
+                          shouldUpdate=true;
+                          targetTime=time+5;
+                          //this.videoPlayer.setCurrentTime(time+5);
+                      }
+                }
+                if(shouldUpdate){
+                  // taking care of changing currentTime :
+                  console.log('changing time to : '+targetTime);
+                  this.videoPlayer.getPaused().then((paused)=>{
+                    this.videoPlayer.pause();
+                    this.videoPlayer.setCurrentTime(targetTime).then((time)=>{
+                      if(!paused){
+                        this.videoPlayer.play();
+                      }
                     });
+                  });
                 }
             });
+          });
         });
     }
 

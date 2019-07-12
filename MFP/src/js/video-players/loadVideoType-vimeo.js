@@ -66,9 +66,14 @@ class VimeoPlayer{
                 controls: false,
             });
             // preload vimeo with play pause
-            videoPlayer.play().then(function() {
-              // the video was played so trigger buffering start
-              videoPlayer.pause();
+            videoPlayer.setMuted(true).then(function(){
+              videoPlayer.play().then(function() {
+                // the video was played so trigger buffering start
+                videoPlayer.pause().then(function(){
+                  videoPlayer.setMuted(false);
+                });
+              });
+
             });
             
 
@@ -203,12 +208,22 @@ class VimeoPlayer{
   }
 
   getCurrentTime(){
-      return this.videoPlayer.getCurrentTime();
+      return new Promise((resolve, reject)=>{
+            resolve(this.videoPlayer.getCurrentTime());
+      });
+      
   }
 
   setCurrentTime(time){
-      //time = Math.round(time);
-      this.videoPlayer.setCurrentTime(time);
+      return new Promise((resolve, reject)=>{
+        this.videoPlayer.setCurrentTime(time).then((time)=>{
+          resolve(time);
+        }).catch(function(error){
+          console.log(error);
+          resolve(error);
+        });
+      });
+      
   }
 
   getBuffered(){
