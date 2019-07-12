@@ -66,11 +66,58 @@ class VimeoPlayer{
                 controls: false,
             });
             // preload vimeo with play pause
+            var self = this;
             videoPlayer.setMuted(true).then(function(){
               videoPlayer.play().then(function() {
                 // the video was played so trigger buffering start
                 videoPlayer.pause().then(function(){
                   videoPlayer.setMuted(false);
+                  if(self.video.startAt!==undefined){
+                      //var time = Math.round(this.video.startAt);
+                      var time = self.video.startAt;
+                      videoPlayer.setCurrentTime(time);
+                  }
+                  let checkWidth = ()=>{
+                      let vimeoIframe = $(videoContainer).find('iframe')[0];
+                      if(vimeoIframe===undefined){
+                          return setTimeout(checkWidth, 300);
+                      }
+                      $(vimeoIframe).attr('tabindex','-1');
+                      $(vimeoIframe).css('width','100%');
+                      self.currentWidth = $(vimeoIframe).width();
+
+                      self.intervalId = setInterval(()=>{
+                          let currentOrientation;
+                          if(window.innerHeight > window.innerWidth){
+                              currentOrientation = 'portrait';
+                          }
+                          if(window.innerWidth > window.innerHeight){
+                              currentOrientation = 'landscape';
+                          }
+                          let vimeoIframe = $(videoContainer).find('iframe')[0];
+                          $(vimeoIframe).css('width','100%');
+                          var width = $(vimeoIframe).width();
+
+                          if((width!==self.currentWidth)||(self.orientation!==currentOrientation)){
+                              self.orientation = currentOrientation;
+                              self.currentWidth = width;
+                              let height = width * 0.56;
+                              let windowHeight = $(window).height();
+                              if((self.fullScreen)||(height>windowHeight)){
+                                  let barHeight = $($(self.container).find('.control-bar')[0]).height();
+                                  height = windowHeight - barHeight;
+                              }
+                              $(vimeoIframe).css('height', height+'px');
+                          }
+                          self.currentWidth = width;
+                      }, 300);
+                  };
+
+                  setTimeout(checkWidth, 100);
+
+                  self.buffered = new VimeoBuffer(videoPlayer);
+                  self.videoPlayer = videoPlayer;
+                  resolve();
                 });
               });
 
@@ -78,52 +125,7 @@ class VimeoPlayer{
             
 
 
-            if(this.video.startAt!==undefined){
-                //var time = Math.round(this.video.startAt);
-                var time = this.video.startAt;
-                videoPlayer.setCurrentTime(time);
-            }
-            let checkWidth = ()=>{
-                let vimeoIframe = $(videoContainer).find('iframe')[0];
-                if(vimeoIframe===undefined){
-                    return setTimeout(checkWidth, 300);
-                }
-                $(vimeoIframe).attr('tabindex','-1');
-                $(vimeoIframe).css('width','100%');
-                this.currentWidth = $(vimeoIframe).width();
-
-                this.intervalId = setInterval(()=>{
-                    let currentOrientation;
-                    if(window.innerHeight > window.innerWidth){
-                        currentOrientation = 'portrait';
-                    }
-                    if(window.innerWidth > window.innerHeight){
-                        currentOrientation = 'landscape';
-                    }
-                    let vimeoIframe = $(videoContainer).find('iframe')[0];
-                    $(vimeoIframe).css('width','100%');
-                    var width = $(vimeoIframe).width();
-
-                    if((width!==this.currentWidth)||(this.orientation!==currentOrientation)){
-                        this.orientation = currentOrientation;
-                        this.currentWidth = width;
-                        let height = width * 0.56;
-                        let windowHeight = $(window).height();
-                        if((this.fullScreen)||(height>windowHeight)){
-                            let barHeight = $($(this.container).find('.control-bar')[0]).height();
-                            height = windowHeight - barHeight;
-                        }
-                        $(vimeoIframe).css('height', height+'px');
-                    }
-                    this.currentWidth = width;
-                }, 300);
-            };
-
-            setTimeout(checkWidth, 100);
-
-            this.buffered = new VimeoBuffer(videoPlayer);
-            this.videoPlayer = videoPlayer;
-            resolve();
+            
         });
       });
   }

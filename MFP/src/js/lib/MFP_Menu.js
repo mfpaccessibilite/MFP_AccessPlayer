@@ -40,7 +40,7 @@ export default class MFP_Menu {
               $(this).find('li:first-child').focus();
           }
       });
-      this.element.find('li').attr('role','menuitem').attr('tabindex','-1');
+      this.element.find('li').attr('role','menuitem').attr('tabindex','0');
       this.element.find('li').on('focus',function(e){
           $(this).addClass('focus');
       });

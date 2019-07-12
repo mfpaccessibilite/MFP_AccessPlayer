@@ -123,15 +123,31 @@ export default class MFP{
 
   changeSource(src){
       return new Promise((resolve, reject) => {
-          this.videoPlayer.destroy();
-          this.loadVideo(src).then(()=>{
+        this.videoPlayer.getCurrentTime().then((time)=>{
+          this.videoPlayer.getPaused().then((paused)=>{
+            console.log('changing video, time : '+time+ ' , paused status : '+paused);
+            this.videoPlayer.pause();
+            this.videoPlayer.destroy();
+            this.loadVideo(src).then(()=>{
               this.bindVideoEvents().then(()=>{
+                var self = this;
+                var canPlay = function(event){
+                  console.log('return of canPlay');
+                  self.videoPlayer.setCurrentTime(time);
+                  if(!paused){
+                    self.videoPlayer.play();
+                  }
+                  self.videoPlayer.off('canplay',canPlay);
                   resolve();
+                };
+                this.videoPlayer.on('canplay', canPlay);
+              },()=>{
+                console.log("Error loading video.");
+                reject();
               });
-          }, ()=>{
-              console.log("Error loading video.");
-              reject();
+            });
           });
+        });
       });
   }
 
@@ -977,7 +993,7 @@ export default class MFP{
             this.videoPlayer.getCurrentTime().then((time)=>{
                   this.videoPlayer.getPaused().then((paused)=>{
                     if(btn.hasClass('off') || (this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
-                        this.videoPlayer.pause();
+                        //this.videoPlayer.pause();
                         let src = null;
                         if(btn.hasClass('off')){
                             btn.removeClass('off');
@@ -1016,6 +1032,10 @@ export default class MFP{
                             };
                         }
                         src.startAt = time;
+                        this.changeSource(src).catch((error) =>{
+                          console.log("There was a problem updating the video source");
+                        });
+                        /*
                         this.changeSource(src).then(()=>{
                             this.videoPlayer.on('canplay', (event)=>{
                                 this.videoPlayer.setCurrentTime(time);
@@ -1027,6 +1047,7 @@ export default class MFP{
                         }, ()=>{
                           console.log("There was a problem updating the video source");
                         });
+                        */
                     }
                 });
             });
@@ -1056,6 +1077,11 @@ export default class MFP{
                 }
                 $(this.container).find('.video_signed').addClass('off');
                 btn.removeClass('off');
+                
+                this.changeSource(this.options.videos.audiodesc).catch((error) =>{
+                  console.log("There was a problem setting the Audio Description Video.");
+                });
+                /*
                 this.videoPlayer.getCurrentTime().then((time)=>{
                     this.videoPlayer.getPaused().then((paused)=>{
                         this.videoPlayer.pause();
@@ -1072,6 +1098,7 @@ export default class MFP{
                         });
                     });
                 });
+                */
             }
             else{
                 $(this.container).find(this.options.last_video).trigger('click');
@@ -1102,6 +1129,10 @@ export default class MFP{
                 }
                 $(this.container).find('.video_audiodesc').addClass('off');
                 btn.removeClass('off');
+                this.changeSource(this.options.videos.signed).catch((error) =>{
+                  console.log("There was a problem setting the Signed Video");
+                });
+                /*
                 this.videoPlayer.getCurrentTime().then((time)=>{
                     this.videoPlayer.getPaused().then((paused)=>{
                         this.videoPlayer.pause();
@@ -1118,6 +1149,7 @@ export default class MFP{
                         });
                     });
                 });
+                */
             }
             else{
                 $(this.container).find(this.options.last_video).trigger('click');
