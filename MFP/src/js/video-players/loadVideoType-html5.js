@@ -23,9 +23,10 @@ class VideoHtml5{
                 this.webkitEnterFullscreen();
             }
             let src = this.video.src;
+            let mime = this.video.mime;
             const playerCode = `
             <video class="mfp" playsinline tabindex="-1">
-                <source src="${src}" />
+                <source src="${src}" type="${mime}" />
             </video>`;
             $(this.container).find('.video-container').html(playerCode);
             this.videoPlayer = $(this.container).find('video')[0];

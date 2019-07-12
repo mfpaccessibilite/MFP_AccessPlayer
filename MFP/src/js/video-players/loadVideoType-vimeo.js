@@ -65,9 +65,17 @@ class VimeoPlayer{
                 speed: true,
                 controls: false,
             });
+            // preload vimeo with play pause
+            videoPlayer.play().then(function() {
+              // the video was played so trigger buffering start
+              videoPlayer.pause();
+            });
             
+
+
             if(this.video.startAt!==undefined){
-                var time = Math.round(this.video.startAt);
+                //var time = Math.round(this.video.startAt);
+                var time = this.video.startAt;
                 videoPlayer.setCurrentTime(time);
             }
             let checkWidth = ()=>{
