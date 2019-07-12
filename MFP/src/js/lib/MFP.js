@@ -51,6 +51,11 @@ export default class MFP{
       
       this.options = $.extend( {}, this.default_options, options );
       this.rate=1;
+      this.paused=true;
+      this.sound=100;
+      this.duration=0;
+      this.currentTime=0;
+      this.fullscreen=false;
       this.subtitles=[];
       this.captions=[];
       this.descriptions=[];
@@ -167,7 +172,7 @@ export default class MFP{
                         console.log(rate+'x is not available for this video');
                         self.videoPlayer.setPlaybackRate(1);
                       });
-                      if(!paused){
+                      if(!getPaused){
                         self.videoPlayer.play();
                       }
                       self.videoPlayer.off('canplay',canPlay);
@@ -197,16 +202,20 @@ export default class MFP{
               $(this.container).find('.play span').html(this.lang.pause);
               $(this.container).find('.play').attr('title',this.lang.pause);
               $(this.container).find('.play').attr('aria-label',this.lang.pause);
+              this.paused=false;
           });
           videoPlayer.on('pause', (e) => {
               $(this.container).find('.play').removeClass('mfp-icon-pause').addClass('mfp-icon-play');
               $(this.container).find('.play span').html(this.lang.play);
               $(this.container).find('.play').attr('title',this.lang.play);
               $(this.container).find('.play').attr('aria-label',this.lang.play);
+              this.paused=true;
           });
           videoPlayer.on('timeupdate', (e)=>{
               videoPlayer.getCurrentTime().then((time)=>{
+                  this.currentTime=time;
                   videoPlayer.getDuration().then((duration)=>{
+                    this.duration=duration;
                     if(!this.seeking){
                         $(this.container).find('.progress-bar').slider('option','value',(time/duration)*100);
                     }
@@ -284,6 +293,7 @@ export default class MFP{
           
 
           videoPlayer.on('volumechange',function(e){
+              this.sound=this.videoPlayer.volume;
               var volume = this.videoPlayer.volume/100;
               $(this.container).find('.sound-range')[0].value=volume;
               this.soundUpdate();
@@ -646,10 +656,10 @@ export default class MFP{
             $(this.controlBar).append(this.progressBar);
             var leftPart = $("<div class='left-part' />");
             $(this.controlBar).append($(leftPart));
-            $(leftPart).append('<button class="mfp-icon-play play" title="'+this.lang.play+'" aria-label="'+this.lang.play+'"><span class="mfp-hidden">'+this.lang.play+'</span></button>');
+            $(leftPart).append('<button class="mfp-icon-play play" title="'+this.lang.play+'" aria-label="'+this.lang.play+'" aria-pressed="true"><span class="mfp-hidden">'+this.lang.play+'</span></button>');
             var soundPart = $("<span class='soundPart'></span>");
             $(leftPart).append($(soundPart));
-            $(soundPart).append('<button class="mfp-icon-volume-up sound" title="'+this.lang.soundOff+'"><span class="mfp-hidden">'+this.lang.soundOff+'</span></button>');
+            $(soundPart).append('<button class="mfp-icon-volume-up sound" title="'+this.lang.soundOff+'" aria-pressed="true"><span class="mfp-hidden">'+this.lang.soundOff+'</span></button>');
             //this.soundBar = $('<div class="sound-range" aria-label="'+this.lang.volume+'" aria-valuetext="100% '+this.lang.volume+'">');
             this.soundBar = $('<div class="sound-range">');
             this.soundBar.slider({'min':0,'max':100,'value':100,'step':10,animate:false,range:'min'});
@@ -670,12 +680,12 @@ export default class MFP{
             $(rightPart).append('<select class="speed" aria-label="'+this.lang.playBackrate+'" title="'+this.lang.playBackrate+'"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>');
             // if having video alternatives, showing the videos buttons
             if((this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined) || (this.options.videos.audiodesc!='' && this.options.videos.audiodesc!=undefined) || (this.options.videos.signed!='' && this.options.videos.signed!=undefined)){
-                $(rightPart).append('<button class="mfp-icon-hd video_hd" title="'+this.lang.desactivate+' '+this.lang.highdef+'"><span class="mfp-hidden">'+this.lang.desactivate+' '+this.lang.highdef+'</span></button>');
+                $(rightPart).append('<button class="mfp-icon-hd video_hd" title="'+this.lang.desactivate+' '+this.lang.highdef+'" aria-pressed="true"><span class="mfp-hidden">'+this.lang.desactivate+' '+this.lang.highdef+'</span></button>');
                 if((this.options.videos.audiodesc!='' && this.options.videos.audiodesc!=undefined)){
-                    $(rightPart).append('<button class="mfp-icon-audio-description video_audiodesc off" title="'+this.lang.activate+' '+this.lang.audiodesc+'"><span class="mfp-hidden">'+this.lang.activate+' '+this.lang.audiodesc+'</span></button>');
+                    $(rightPart).append('<button class="mfp-icon-audio-description video_audiodesc off" title="'+this.lang.activate+' '+this.lang.audiodesc+'" aria-pressed="false"><span class="mfp-hidden">'+this.lang.activate+' '+this.lang.audiodesc+'</span></button>');
                 }
                 if((this.options.videos.signed!='' && this.options.videos.signed!=undefined)){
-                    $(rightPart).append('<button class="mfp-icon-sign-language video_signed off" title="'+this.lang.activate+' '+this.lang.signed+'"><span class="mfp-hidden">'+this.lang.activate+' '+this.lang.signed+'</span></button>');
+                    $(rightPart).append('<button class="mfp-icon-sign-language video_signed off" title="'+this.lang.activate+' '+this.lang.signed+'" aria-pressed="false"><span class="mfp-hidden">'+this.lang.activate+' '+this.lang.signed+'</span></button>');
                 }
                 //$(rightPart).append('<div class="videos-block"><button class="mfp-icon-videos videos" title="'+this.lang.videos+'"><span class="svp-hidden">'+this.lang.videos+'</span></button><ul class="menu" title="'+this.lang.videos+'" /></ul>');
                 this.initVideosAlt();
@@ -685,11 +695,11 @@ export default class MFP{
             $(rightPart).append('<div class="chapters-block"></div>');
             // if having transcripts, display the transcript button
             if((this.options.transcripts.html!='' && typeof this.options.transcripts.html !== "undefined") || (this.options.transcripts.txt!='' && typeof this.options.transcripts.txt !== "undefined") || this.options.live!=''){
-                $(rightPart).append('<div class="transcripts-block"><button class="mfp-icon-download transcripts off" title="'+this.lang.transcripts+'"><span class="mfp-hidden">'+this.lang.transcripts+'</span></button><ul class="menu" title="'+this.lang.transcripts+'" /></ul></div>');
+                $(rightPart).append('<div class="transcripts-block"><button class="mfp-icon-download transcripts off" title="'+this.lang.transcripts+'" aria-pressed="false"><span class="mfp-hidden">'+this.lang.transcripts+'</span></button><ul class="menu" title="'+this.lang.transcripts+'" /></ul></div>');
                 this.initTranscripts();
             }
-            $(rightPart).append('<button class="mfp-icon-info infos" title="'+this.lang.informations+'"><span class="mfp-hidden">'+this.lang.informations+'</span></button>');
-            $(rightPart).append('<button class="mfp-icon-expand expand" title="'+this.lang.expand+'"><span class="mfp-hidden">'+this.lang.expand+'</span></button>');
+            $(rightPart).append('<button class="mfp-icon-info infos" title="'+this.lang.informations+'" aria-pressed="true"><span class="mfp-hidden">'+this.lang.informations+'</span></button>');
+            $(rightPart).append('<button class="mfp-icon-expand expand" title="'+this.lang.expand+'" aria-pressed="true"><span class="mfp-hidden">'+this.lang.expand+'</span></button>');
             this.fontSize();
             resolve();
         });
@@ -879,7 +889,7 @@ export default class MFP{
             }
         }
         if(toload && this.subtitles.length>0){
-            $(this.container).find('.right-part .subtitles-block').append($('<button class="mfp-icon-cc subtitles off" title="'+this.lang.subtitles+'"><span class="mfp-hidden">'+this.lang.subtitles+'</span></button><ul class="menu" title="'+this.lang.subtitles+'" /></ul>'));
+            $(this.container).find('.right-part .subtitles-block').append($('<button class="mfp-icon-cc subtitles off" title="'+this.lang.subtitles+'" aria-pressed="false"><span class="mfp-hidden">'+this.lang.subtitles+'</span></button><ul class="menu" title="'+this.lang.subtitles+'" /></ul>'));
 
             var btn = $(this.container).find('.right-part .subtitles-block .subtitles');
             btn.click(function(){
@@ -911,7 +921,7 @@ export default class MFP{
                        $(this.container).find('.right-part .pref-block .menu').dialog( "open" );
                     }
                     else{
-                        $(this.container).find('.subtitles-block  button.subtitles').addClass('off');
+                        $(this.container).find('.subtitles-block  button.subtitles').addClass('off').attr('aria-pressed','false');
                         $(this.container).find('.subtitles-block  button.subtitles').attr('title',this.lang.activate+' '+this.lang.subtitles);
                         $(this.container).find('.subtitles-block  button.subtitles .mfp-hidden').html(this.lang.activate+' '+this.lang.subtitles);
                         $(elmt).parent().children('li').removeClass('selected');
@@ -933,7 +943,7 @@ export default class MFP{
                             else{
                                 $(elmt).parent().children('li.preferences').css('display','none');
                             }
-                            $(this.container).find('.subtitles-block  button.subtitles').removeClass('off');
+                            $(this.container).find('.subtitles-block  button.subtitles').removeClass('off').attr('aria-pressed',"true");
                             $(this.container).find('.subtitles-block  button.subtitles').attr('title',this.lang.subtitles);
                         $(this.container).find('.subtitles-block  button.subtitles .mfp-hidden').html(this.lang.subtitles);
                             $(this.container).addClass('track-'+this.subtitles[$(elmt).data('id')].track.ext);
@@ -1020,11 +1030,11 @@ export default class MFP{
     initVideosAlt(){
         var btn = $(this.container).find('.video_hd');
         btn.click(()=>{
-            $(this.container).find('.video_audiodesc').addClass('off');
+            $(this.container).find('.video_audiodesc').addClass('off').attr('aria-pressed','false');
             $(this.container).find('.video_audiodesc').attr('title',this.lang.activate+' '+this.lang.audiodesc);
             $(this.container).find('.video_audiodesc .mfp-hidden').html(this.lang.activate+' '+this.lang.audiodesc);
 
-            $(this.container).find('.video_signed').addClass('off');
+            $(this.container).find('.video_signed').addClass('off').attr('aria-pressed','false');
             $(this.container).find('.video_signed').attr('title',this.lang.activate+' '+this.lang.signed);
             $(this.container).find('.video_signed .mfp-hidden').html(this.lang.activate+' '+this.lang.signed);
 
@@ -1035,7 +1045,7 @@ export default class MFP{
                         //this.videoPlayer.pause();
                         let src = null;
                         if(btn.hasClass('off')){
-                            btn.removeClass('off');
+                            btn.removeClass('off').attr('aria-pressed','true');
                             if(btn.hasClass('mfp-icon-hd')){
                                 src = this.options.videos.highdef;
                                 if((this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
@@ -1108,14 +1118,14 @@ export default class MFP{
                   }
                     this.options.last_video='.video_hd';
                 }
-                $(this.container).find('.video_hd').addClass('off');
+                $(this.container).find('.video_hd').addClass('off').attr('aria-pressed','false');
                 if(!$(this.container).find('.video_signed').hasClass('off')){
                     this.options.last_video='.video_signed';
                     $(this.container).find('.video_signed').attr('title',this.lang.activate+' '+this.lang.signed);
                     $(this.container).find('.video_signed span').html(this.lang.activate+' '+this.lang.signed);
                 }
-                $(this.container).find('.video_signed').addClass('off');
-                btn.removeClass('off');
+                $(this.container).find('.video_signed').addClass('off').attr('aria-pressed','false');
+                btn.removeClass('off').attr('aria-pressed','true');
                 
                 this.changeSource(this.options.videos.audiodesc).catch((error) =>{
                   console.log("There was a problem setting the Audio Description Video.");
@@ -1160,14 +1170,14 @@ export default class MFP{
                   }
                     this.options.last_video='.video_hd';
                 }
-                $(this.container).find('.video_hd').addClass('off');
+                $(this.container).find('.video_hd').addClass('off').attr('aria-pressed','false');
                 if(!$(this.container).find('.video_audiodesc').hasClass('off')){
                     this.options.last_video='.video_audiodesc';
                     $(this.container).find('.video_audiodesc').attr('title',this.lang.activate+' '+this.lang.audiodesc);
                     $(this.container).find('.video_audiodesc span').html(this.lang.activate+' '+this.lang.audiodesc);
                 }
-                $(this.container).find('.video_audiodesc').addClass('off');
-                btn.removeClass('off');
+                $(this.container).find('.video_audiodesc').addClass('off').attr('aria-pressed','false');
+                btn.removeClass('off').attr('aria-pressed','true');
                 this.changeSource(this.options.videos.signed).catch((error) =>{
                   console.log("There was a problem setting the Signed Video");
                 });
@@ -1220,12 +1230,12 @@ export default class MFP{
             select:function(elmt){
                 if($(elmt).hasClass('mfp_live')){
                     if($(this.container).find('.right-part .transcripts-block .transcripts').hasClass('off')){
-                        $(this.container).find('.right-part .transcripts-block .transcripts').removeClass('off');
+                        $(this.container).find('.right-part .transcripts-block .transcripts').removeClass('off').attr('aria-pressed','true');
                         $(elmt).find('span').html(this.lang.desactivateLiveTranscript);
                         this.liveOn=true;
                     }
                     else{
-                        $(this.container).find('.right-part .transcripts-block .transcripts').addClass('off');
+                        $(this.container).find('.right-part .transcripts-block .transcripts').addClass('off').attr('aria-pressed','false');
                         $(elmt).find('span').html(this.lang.activateLiveTranscript);
                         this.liveOn=false;
                     }
@@ -1280,9 +1290,9 @@ export default class MFP{
     initPlayEvents(){
         $(this.container).find('.play').click(function(e){
             e.preventDefault();
-            console.log("PLAY");
+            //console.log("PLAY");
             this.videoPlayer.getPaused().then((paused)=>{
-                console.log(paused);
+                //console.log(paused);
                 if(paused){
                     this.videoPlayer.play();
                 }else{
@@ -1431,6 +1441,7 @@ export default class MFP{
 
     initDuration(){
         this.videoPlayer.getDuration().then((duration)=>{
+            this.duration = duration;
             duration = Math.round(duration);
             if(!isNaN(duration)){
                 var tmp = duration;
