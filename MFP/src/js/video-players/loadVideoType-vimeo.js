@@ -261,7 +261,10 @@ class VimeoPlayer{
   }
 
   setPlaybackRate(rate){
-      this.videoPlayer.setPlaybackRate(rate);
+      return this.videoPlayer.setPlaybackRate(rate);
+  }  
+  getPlaybackRate(){
+    return this.videoPlayer.getPlaybackRate();          
   }
 
   getVolume(){

@@ -33,7 +33,7 @@ class VideoHtml5{
             resolve();
         });
     }
-
+    
     canChangeSpeedRate(){
         return new Promise((resolve, reject)=>{
             resolve(true);
@@ -57,10 +57,16 @@ class VideoHtml5{
     }
 
     on(event, callback){
+        if(event=='playbackratechange'){
+            event = 'ratechange';
+        }
         return $(this.videoPlayer).on(event, callback);
     }
 
     off(event, callback=null){
+        if(event=='playbackratechange'){
+            event = 'ratechange';
+        }
         return $(this.videoPlayer).off(event, callback);
     }
 
@@ -129,7 +135,17 @@ class VideoHtml5{
     }
 
     setPlaybackRate(rate){
-        this.videoPlayer.playbackRate = rate;
+        return new Promise((resolve, reject)=>{
+            console.log('changing rate to '+rate);
+            this.videoPlayer.playbackRate = rate;
+            resolve(rate);
+        });
+        
+    }
+    getPlaybackRate(){
+        return new Promise((resolve, reject)=>{
+            resolve(this.videoPlayer.playbackRate);
+        });
     }
 
     getVolume(){

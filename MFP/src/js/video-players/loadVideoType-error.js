@@ -119,7 +119,11 @@ class VideoError{
     setTabIndex(index){
         this.tabindex = index;
     }
-
+    getPlaybackRate(){
+        return new Promise((resolve, reject)=>{
+            resolve(1);
+        });
+    }
     setPlaybackRate(rate){
         this.playbackRate = rate;
     }

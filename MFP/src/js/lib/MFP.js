@@ -50,7 +50,7 @@ export default class MFP{
       }.bind(this));
       
       this.options = $.extend( {}, this.default_options, options );
-      
+      this.rate=1;
       this.subtitles=[];
       this.captions=[];
       this.descriptions=[];
@@ -102,7 +102,9 @@ export default class MFP{
               $.getScript(mfpPath+'video-players/'+name+'.js')
                 .done((script,textStatus)=>{
                     this.loadVideo(video).then(()=>{
-                        resolve();
+                        this.updateSpeedSelector().then(()=>{
+                          resolve();
+                        });
                     });
                 }).fail(()=>{
                     let msg = this.lang.nosupport;
@@ -110,40 +112,73 @@ export default class MFP{
                         type: 'error',
                         msg: msg.replace(/%s/,type)
                     });
-                    resolve();
+                    this.updateSpeedSelector().then(()=>{
+                      resolve();
+                    });
+                    
                 });
           }else{
               this[videoLoader](video).then((videoPlayer)=>{
                   this.videoPlayer = videoPlayer;
-                  resolve();
+                  this.updateSpeedSelector().then(()=>{
+                    resolve();
+                  });
               });
           }
       });
   }
-
+  updateSpeedSelector(){
+    return new Promise((resolve, reject)=>{
+      this.videoPlayer.getPosibleSpeedRates().then((speedRates)=>{
+        this.videoPlayer.getPlaybackRate().then((rate)=>{
+          
+          const speedSelector = $(this.container).find('.speed')[0];
+          $(speedSelector).html('');
+          for(let speedRate of speedRates){
+              let selected = '';
+              if(speedRate==this.rate){
+                  selected = "selected='selected'";
+              }
+              let option = `<option value='${speedRate}' ${selected}>${speedRate}X</option>`;
+              $(speedSelector).append(option);
+          }
+          resolve();
+        });
+      });  
+    });
+    
+  }
   changeSource(src){
       return new Promise((resolve, reject) => {
         this.videoPlayer.getCurrentTime().then((time)=>{
           this.videoPlayer.getPaused().then((paused)=>{
-            console.log('changing video, time : '+time+ ' , paused status : '+paused);
-            this.videoPlayer.pause();
-            this.videoPlayer.destroy();
-            this.loadVideo(src).then(()=>{
-              this.bindVideoEvents().then(()=>{
-                var self = this;
-                var canPlay = function(event){
-                  console.log('return of canPlay');
-                  self.videoPlayer.setCurrentTime(time);
-                  if(!paused){
-                    self.videoPlayer.play();
-                  }
-                  self.videoPlayer.off('canplay',canPlay);
-                  resolve();
-                };
-                this.videoPlayer.on('canplay', canPlay);
-              },()=>{
-                console.log("Error loading video.");
-                reject();
+            this.videoPlayer.getPlaybackRate().then((rate)=>{
+              this.videoPlayer.getVolume().then((volume)=>{
+                this.videoPlayer.pause();
+                this.videoPlayer.destroy();
+                this.loadVideo(src).then(()=>{
+                  this.bindVideoEvents().then(()=>{
+                    var self = this;
+                    var canPlay = function(event){
+                      self.videoPlayer.setCurrentTime(time);
+                      self.videoPlayer.setVolume(volume);
+                      // setSpeed :
+                      self.videoPlayer.setPlaybackRate(self.rate).catch((error)=>{
+                        console.log(rate+'x is not available for this video');
+                        self.videoPlayer.setPlaybackRate(1);
+                      });
+                      if(!paused){
+                        self.videoPlayer.play();
+                      }
+                      self.videoPlayer.off('canplay',canPlay);
+                      resolve();
+                    };
+                    this.videoPlayer.on('canplay', canPlay);
+                  },()=>{
+                    console.log("Error loading video.");
+                    reject();
+                  });
+                });
               });
             });
           });
@@ -225,34 +260,38 @@ export default class MFP{
           for(let track of this.tracks){
               track.setVideoPlayer(videoPlayer);
           }
-          videoPlayer.canChangeSpeedRate().then((canChange)=>{
-              if(canChange){
-                  $(this.container).find('.speed').css('display','inline-block');
-                  videoPlayer.getPosibleSpeedRates().then((speedRates)=>{
-                      const speedSelector = $(this.container).find('.speed')[0];
-                      $(speedSelector).html('');
-                      for(let speedRate of speedRates){
-                          let selected = '';
-                          if(speedRate==1){
-                              selected = "selected='selected'";
-                          }
-                          let option = `<option value='${speedRate}' ${selected}>${speedRate}X</option>`;
-                          $(speedSelector).append(option);
-                      }
-                  });
-              }else{
-                  $(this.container).find('.speed').css('display','none');
-              }
+
+          videoPlayer.on('playbackratechange',(e)=>{
+            // update select with speed
+            
+            this.videoPlayer.getPlaybackRate().then((rate)=>{
+              this.rate=rate;
+              var options = $(this.container).find('.speed option');
+              
+              options.each((index)=>{
+                
+                if($(options[index]).attr('value')==rate){
+
+                  $(this.container).find('.speed')[0].selectIndex=index;
+                }
+              });
+            });
+            
           });
 
+          
+          
+          
 
-          resolve();
-          /*
-          video.on('volumechange',function(e){
+          videoPlayer.on('volumechange',function(e){
               var volume = this.videoPlayer.volume/100;
               $(this.container).find('.sound-range')[0].value=volume;
               this.soundUpdate();
           }.bind(this));
+
+          resolve();
+          /*
+          
           */
       });
   }

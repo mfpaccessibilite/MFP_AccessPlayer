@@ -141,6 +141,8 @@ ul.mfp_list{
   position: absolute;
   left: 0;
   right: 0;
+  top: 0;
+  bottom: 0;
 }
 .mfp-tooltip{
       box-shadow: 0 0 2px black !important;
@@ -152,7 +154,9 @@ ul.mfp_list{
       white-space: pre-wrap;
       text-overflow: initial;
     }
-
+    button{
+      position: relative;
+    }
     video.mfp{
         max-width: 100%;
         width: 100%;
