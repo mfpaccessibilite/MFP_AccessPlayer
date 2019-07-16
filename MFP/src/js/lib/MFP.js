@@ -172,7 +172,7 @@ export default class MFP{
                         console.log(rate+'x is not available for this video');
                         self.videoPlayer.setPlaybackRate(1);
                       });
-                      if(!getPaused){
+                      if(!paused){
                         self.videoPlayer.play();
                       }
                       self.videoPlayer.off('canplay',canPlay);
