@@ -1,0 +1,988 @@
+@import url(https://fonts.googleapis.com/css?family=Alegreya+Sans+SC);
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+.vimeo-fullscreen {
+  width: 100%;
+  height: 100%;
+  position: fixed !important;
+  top: 0px;
+  left: 0px; }
+  .vimeo-fullscreen .video-container {
+    width: 100%; }
+    .vimeo-fullscreen .video-container iframe .player .vp-controls {
+      display: none; }
+
+@font-face {
+  font-family: 'icomoon';
+  src: url(../MFP/fonts/icomoon.eot);
+  src: url(../MFP/fonts/icomoon.eot#iefix) format("embedded-opentype"), url(../MFP/fonts/icomoon.ttf) format("truetype"), url(../MFP/fonts/icomoon.woff) format("woff"), url(../MFP/fonts/icomoon.svg#icomoon) format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+[class^="mfp-icon-"], [class*=" mfp-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.mfp-icon-cc:before {
+  content: "\e907"; }
+
+.mfp-icon-volume-mute:before {
+  content: "\e908"; }
+
+.mfp-icon-download:before {
+  content: "\e900"; }
+
+.mfp-icon-chapters:before {
+  content: "\e901"; }
+
+.mfp-icon-hd:before {
+  content: "\e052"; }
+
+.mfp-icon-airplay:before {
+  content: "\e055"; }
+
+.mfp-icon-html:before {
+  content: "\e902"; }
+
+.mfp-icon-txt:before {
+  content: "\e903"; }
+
+.mfp-icon-ld:before {
+  content: "\e904"; }
+
+.mfp-icon-info:before {
+  content: "\e905"; }
+
+.mfp-icon-live:before {
+  content: "\e906"; }
+
+.mfp-icon-videos:before {
+  content: "\f008"; }
+
+.mfp-icon-pref:before {
+  content: "\f013"; }
+
+.mfp-icon-volume-off:before {
+  content: "\f026"; }
+
+.mfp-icon-volume-down:before {
+  content: "\f027"; }
+
+.mfp-icon-volume-up:before {
+  content: "\f028"; }
+
+.mfp-icon-backward:before {
+  content: "\f04a"; }
+
+.mfp-icon-play:before {
+  content: "\f04b"; }
+
+.mfp-icon-pause:before {
+  content: "\f04c"; }
+
+.mfp-icon-stop:before {
+  content: "\f04d"; }
+
+.mfp-icon-forward:before {
+  content: "\f04e"; }
+
+.mfp-icon-expand:before {
+  content: "\f065"; }
+
+.mfp-icon-compress:before {
+  content: "\f066"; }
+
+.mfp-icon-audio-description:before {
+  content: "\f29e"; }
+
+.mfp-icon-sign-language:before {
+  content: "\f2a3"; }
+
+ul.mfp_list {
+  list-style: none; }
+  ul.mfp_list li {
+    line-height: 20px; }
+    ul.mfp_list li.focus, ul.mfp_list li:hover {
+      background-color: #CCC;
+      cursor: pointer; }
+
+.mfp-hidden {
+  text-indent: -10000px;
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0; }
+
+.mfp-tooltip {
+  box-shadow: 0 0 2px black !important; }
+
+.mfp-wrapper {
+  background-color: #000;
+  position: relative;
+  /*Chrome*/
+  /** FF*/
+  /* IE*/ }
+  .mfp-wrapper .ui-dialog .ui-dialog-title {
+    white-space: pre-wrap;
+    text-overflow: initial; }
+  .mfp-wrapper button {
+    position: relative; }
+  .mfp-wrapper video.mfp {
+    max-width: 100%;
+    width: 100%;
+    max-height: 100%;
+    z-index: 1;
+    position: relative; }
+  .mfp-wrapper.fullscreen {
+    width: 100%;
+    height: 100%; }
+    .mfp-wrapper.fullscreen .video-container.mfp {
+      width: 100%;
+      height: calc(100% - 90px); }
+    .mfp-wrapper.fullscreen .control-bar {
+      padding-bottom: 15px; }
+  .mfp-wrapper .control-bar {
+    z-index: 2;
+    padding-top: 8px;
+    position: relative;
+    width: 100%;
+    display: block;
+    height: auto;
+    background-color: #333; }
+    .mfp-wrapper .control-bar:after {
+      clear: both;
+      content: '';
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 10px; }
+    .mfp-wrapper .control-bar .ui-state-default:focus,
+    .mfp-wrapper .control-bar .ui-widget-content .ui-state-default:focus {
+      outline-color: yellow;
+      outline-style: solid;
+      outline-width: 1px; }
+    .mfp-wrapper .control-bar .progress-buffer {
+      position: absolute;
+      left: 10px;
+      top: 8px;
+      right: 10px;
+      height: 8px;
+      width: calc(100% - 20px);
+      background-color: #CCC;
+      z-index: 1; }
+      .mfp-wrapper .control-bar .progress-buffer .buffer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0%;
+        height: 100%;
+        background-color: #999933; }
+    .mfp-wrapper .control-bar .progress-bar {
+      z-index: 2;
+      position: relative;
+      display: block;
+      margin-bottom: 25px;
+      margin-left: 10px;
+      margin-right: 10px;
+      width: calc(100% - 20px);
+      height: 8px;
+      background-color: transparent; }
+      .mfp-wrapper .control-bar .progress-bar .ui-widget-header {
+        background: #43e5f7; }
+    .mfp-wrapper .control-bar .left-part {
+      position: relative;
+      float: left;
+      padding-left: 3px;
+      padding-bottom: 10px;
+      min-height: 30px; }
+      .mfp-wrapper .control-bar .left-part button {
+        margin: 0;
+        padding: 0 .13em;
+        min-width: 30px;
+        display: inline-block;
+        text-align: center;
+        border: 1px solid transparent;
+        background-color: transparent;
+        color: #FFF;
+        cursor: pointer; }
+      .mfp-wrapper .control-bar .left-part button:focus {
+        outline-color: yellow;
+        outline-style: solid;
+        outline-width: 1px; }
+      .mfp-wrapper .control-bar .left-part button.play, .mfp-wrapper .control-bar .left-part button.pause, .mfp-wrapper .control-bar .left-part button.chapters {
+        margin: 0 5px;
+        padding: 0 5px;
+        line-height: 30px;
+        font-size: 28px; }
+        .mfp-wrapper .control-bar .left-part button.play:hover, .mfp-wrapper .control-bar .left-part button.pause:hover, .mfp-wrapper .control-bar .left-part button.chapters:hover {
+          color: #CCC; }
+      .mfp-wrapper .control-bar .left-part .soundPart {
+        position: relative; }
+        .mfp-wrapper .control-bar .left-part .soundPart button.sound {
+          margin: 0 5px;
+          padding: 0 .13em;
+          line-height: 30px;
+          text-align: left;
+          font-size: 28px; }
+          .mfp-wrapper .control-bar .left-part .soundPart button.sound:hover {
+            color: #CCC; }
+        .mfp-wrapper .control-bar .left-part .soundPart .sound-range {
+          display: inline-block;
+          width: 100px;
+          margin-right: 20px;
+          margin-bottom: 5px;
+          margin-left: 10px;
+          height: 10px; }
+          .mfp-wrapper .control-bar .left-part .soundPart .sound-range .ui-widget-header {
+            background: #43e5f7; }
+          .mfp-wrapper .control-bar .left-part .soundPart .sound-range .ui-slider-handle {
+            height: 16px; }
+        .mfp-wrapper .control-bar .left-part .soundPart input[type='range']:focus {
+          outline-color: yellow;
+          outline-style: solid;
+          outline-width: 1px; }
+      .mfp-wrapper .control-bar .left-part .timer {
+        position: relative;
+        display: inline-block;
+        height: 50px;
+        margin-left: 5px;
+        font-size: 20px;
+        color: #CCC;
+        line-height: 50px; }
+    .mfp-wrapper .control-bar select:focus {
+      outline-color: yellow;
+      outline-style: solid;
+      outline-width: 1px; }
+    .mfp-wrapper .control-bar .right-part {
+      position: relative;
+      float: right;
+      padding-right: 3px;
+      padding-bottom: 10px;
+      min-height: 30px;
+      z-index: 3; }
+      .mfp-wrapper .control-bar .right-part select.speed {
+        margin: 0;
+        text-align: right;
+        line-height: 30px;
+        background-color: #333;
+        border: 0;
+        -webkit-appearance: none;
+        color: #FFF;
+        font-size: 28px;
+        width: 73px;
+        direction: rtl; }
+        .mfp-wrapper .control-bar .right-part select.speed option {
+          text-align: right;
+          direction: ltr; }
+      .mfp-wrapper .control-bar .right-part button {
+        display: inline-block;
+        margin: 0;
+        padding: 0 .13em;
+        border: 1px solid transparent;
+        background-color: transparent;
+        color: #FFF;
+        cursor: pointer;
+        overflow: hidden;
+        font-size: 28px;
+        line-height: 30px; }
+        .mfp-wrapper .control-bar .right-part button.off {
+          color: #888; }
+      .mfp-wrapper .control-bar .right-part .ui-dialog-titlebar button.ui-button {
+        background-attachment: scroll;
+        background-clip: border-box;
+        background-color: white;
+        border: 1px solid #aaaaaa;
+        border-radius: 4px;
+        cursor: pointer;
+        display: block;
+        height: 20px;
+        letter-spacing: normal;
+        line-height: 21px;
+        margin-bottom: 0px;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-top: -10px;
+        overflow: hidden;
+        padding-bottom: 1px;
+        padding-left: 1px;
+        padding-right: 1px;
+        padding-top: 1px;
+        position: absolute;
+        right: 5.28000020980835px;
+        text-align: center;
+        text-decoration: none;
+        text-indent: -9999px;
+        top: 50%;
+        vertical-align: middle;
+        white-space: nowrap;
+        width: 20px; }
+      .mfp-wrapper .control-bar .right-part button:focus {
+        outline-color: yellow;
+        outline-style: solid;
+        outline-width: 1px; }
+      .mfp-wrapper .control-bar .right-part button.expand {
+        margin: 0 5px;
+        padding: 0 .13em;
+        line-height: 30px;
+        font-size: 28px; }
+        .mfp-wrapper .control-bar .right-part button.expand:hover {
+          color: #CCC; }
+      .mfp-wrapper .control-bar .right-part .subtitles-block, .mfp-wrapper .control-bar .right-part .pref-block, .mfp-wrapper .control-bar .right-part .videos-block, .mfp-wrapper .control-bar .right-part .transcripts-block, .mfp-wrapper .control-bar .right-part .chapters-block {
+        display: inline-block;
+        position: relative;
+        height: 100%; }
+        .mfp-wrapper .control-bar .right-part .subtitles-block li.preferences, .mfp-wrapper .control-bar .right-part .pref-block li.preferences, .mfp-wrapper .control-bar .right-part .videos-block li.preferences, .mfp-wrapper .control-bar .right-part .transcripts-block li.preferences, .mfp-wrapper .control-bar .right-part .chapters-block li.preferences {
+          text-align: right;
+          font-size: 80%; }
+          .mfp-wrapper .control-bar .right-part .subtitles-block li.preferences span, .mfp-wrapper .control-bar .right-part .pref-block li.preferences span, .mfp-wrapper .control-bar .right-part .videos-block li.preferences span, .mfp-wrapper .control-bar .right-part .transcripts-block li.preferences span, .mfp-wrapper .control-bar .right-part .chapters-block li.preferences span {
+            font-size: 100%; }
+  .mfp-wrapper .menu {
+    list-style: none;
+    padding-left: 0; }
+    .mfp-wrapper .menu label {
+      font-size: 24px;
+      line-height: 1.5; }
+      .mfp-wrapper .menu label span.mfp-label-name {
+        display: inline-block;
+        text-align: right;
+        width: 270px; }
+        .mfp-wrapper .menu label span.mfp-label-name:after {
+          content: ' : '; }
+    .mfp-wrapper .menu li {
+      line-height: 1.5;
+      margin-left: 0;
+      font-size: 24px;
+      padding: 0 5px; }
+      .mfp-wrapper .menu li [class^="icon-"] {
+        font-size: 24px; }
+      .mfp-wrapper .menu li.selected {
+        background: #999; }
+      .mfp-wrapper .menu li div.ui-state-active {
+        background: #CCC; }
+    .mfp-wrapper .menu.menu-infos {
+      max-height: 70vh !important; }
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .mfp-wrapper input[type='range'] {
+      overflow: hidden;
+      width: 80px;
+      -webkit-appearance: none;
+      background-color: #111; }
+    .mfp-wrapper input[type='range']::-webkit-slider-runnable-track {
+      height: 10px;
+      -webkit-appearance: none;
+      color: #13bba4;
+      margin-top: -1px; }
+    .mfp-wrapper input[type='range']::-webkit-slider-thumb {
+      width: 10px;
+      -webkit-appearance: none;
+      height: 10px;
+      cursor: ew-resize;
+      background: #CCC;
+      box-shadow: -8000px 0 0 8000px #43e5f7; } }
+  .mfp-wrapper input[type="range"]::-moz-range-progress {
+    background-color: #43e5f7; }
+  .mfp-wrapper input[type="range"]::-moz-range-track {
+    background-color: #111; }
+  .mfp-wrapper input[type="range"]::-ms-fill-lower {
+    background-color: #43e5f7; }
+  .mfp-wrapper input[type="range"]::-ms-fill-upper {
+    background-color: #111; }
+
+.ui-dialog .ui-dialog-content.ui-menu {
+  padding: 0; }
+
+[class^="live-"].selected {
+  color: #EE0700; }
+
+.mfp-live {
+  cursor: pointer; }
+
+.mfp-wrapper [class^="sub-"] {
+  box-sizing: border-box;
+  position: absolute; }
+
+.mfp-wrapper .mfp-subtitles-wrapper {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  height: calc(100% - 93px); }
+
+.mfp-wrapper video::cue {
+  font-family: Roboto, 'Arial Unicode Ms', Arial, Helvetica, Verdana, 'PT Sans Caption', sans-serif;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5) !important; }
+
+.mfp-wrapper .mfp-subtitles {
+  padding: 0.35%;
+  border-radius: 5px;
+  font-family: Roboto, 'Arial Unicode Ms', Arial, Helvetica, Verdana, 'PT Sans Caption', sans-serif;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5); }
+
+.mfp-wrapper.font-family-s-mono .mfp-subtitles {
+  font-family: 'Courier New', Courier, 'Nimbus Mono L', 'Cutive Mono', monospace; }
+
+.mfp-wrapper.font-family-s-mono video::cue {
+  font-family: 'Courier New', Courier, 'Nimbus Mono L', 'Cutive Mono', monospace; }
+
+.mfp-wrapper.font-family-s-prop .mfp-subtitles {
+  font-family: 'Times New Roman', Times, Georgia, Cambria, 'PT Serif Caption', serif; }
+
+.mfp-wrapper.font-family-s-prop video::cue {
+  font-family: 'Times New Roman', Times, Georgia, Cambria, 'PT Serif Caption', serif; }
+
+.mfp-wrapper.font-family-ss-mono .mfp-subtitles {
+  font-family: 'Deja Vu Sans Mono', 'Lucida Console', Monaco, Consolas, 'PT Mono', monospace; }
+
+.mfp-wrapper.font-family-ss-mono video::cue {
+  font-family: 'Deja Vu Sans Mono', 'Lucida Console', Monaco, Consolas, 'PT Mono', monospace; }
+
+.mfp-wrapper.font-family-ss-prop .mfp-subtitles {
+  font-family: Roboto, 'Arial Unicode Ms', Arial, Helvetica, Verdana, 'PT Sans Caption', sans-serif; }
+
+.mfp-wrapper.font-family-ss-prop video::cue {
+  font-family: Roboto, 'Arial Unicode Ms', Arial, Helvetica, Verdana, 'PT Sans Caption', sans-serif; }
+
+.mfp-wrapper.font-family-c .mfp-subtitles {
+  font-family: 'Monotype Corsiva', 'URW Chancery L', 'Apple Chancery', 'Dancing Script', cursive; }
+
+.mfp-wrapper.font-family-c video::cue {
+  font-family: 'Monotype Corsiva', 'URW Chancery L', 'Apple Chancery', 'Dancing Script', cursive; }
+
+.mfp-wrapper.font-family-sc .mfp-subtitles {
+  font-family: 'Alegreya Sans SC', sans-serif; }
+
+.mfp-wrapper.font-family-sc video::cue {
+  font-family: 'Alegreya Sans SC', sans-serif; }
+
+.mfp-wrapper.font-color-white .mfp-subtitles {
+  color: white; }
+
+.mfp-wrapper.font-color-white video::cue {
+  color: white; }
+
+.mfp-wrapper.font-color-yellow .mfp-subtitles {
+  color: yellow; }
+
+.mfp-wrapper.font-color-yellow video::cue {
+  color: yellow; }
+
+.mfp-wrapper.font-color-green .mfp-subtitles {
+  color: green; }
+
+.mfp-wrapper.font-color-green video::cue {
+  color: green; }
+
+.mfp-wrapper.font-color-cyan .mfp-subtitles {
+  color: cyan; }
+
+.mfp-wrapper.font-color-cyan video::cue {
+  color: cyan; }
+
+.mfp-wrapper.font-color-blue .mfp-subtitles {
+  color: blue; }
+
+.mfp-wrapper.font-color-blue video::cue {
+  color: blue; }
+
+.mfp-wrapper.font-color-magenta .mfp-subtitles {
+  color: magenta; }
+
+.mfp-wrapper.font-color-magenta video::cue {
+  color: magenta; }
+
+.mfp-wrapper.font-color-red .mfp-subtitles {
+  color: red; }
+
+.mfp-wrapper.font-color-red video::cue {
+  color: red; }
+
+.mfp-wrapper.font-color-black .mfp-subtitles {
+  color: black; }
+
+.mfp-wrapper.font-color-black video::cue {
+  color: black; }
+
+.mfp-wrapper.font-shadow-FFFFFF-0 .mfp-subtitles {
+  text-shadow: -0px -0px 0 #FFFFFF, 0px -0px 0 #FFFFFF, -0px 0px 0 #FFFFFF, 0px 0px 0 #FFFFFF; }
+
+.mfp-wrapper.font-shadow-FFFFFF-0 video::cue {
+  text-shadow: -0px -0px 0 #FFFFFF, 0px -0px 0 #FFFFFF, -0px 0px 0 #FFFFFF, 0px 0px 0 #FFFFFF; }
+
+.mfp-wrapper.font-shadow-FFFFFF-1 .mfp-subtitles {
+  text-shadow: -1px -1px 0 #FFFFFF, 1px -1px 0 #FFFFFF, -1px 1px 0 #FFFFFF, 1px 1px 0 #FFFFFF; }
+
+.mfp-wrapper.font-shadow-FFFFFF-1 video::cue {
+  text-shadow: -1px -1px 0 #FFFFFF, 1px -1px 0 #FFFFFF, -1px 1px 0 #FFFFFF, 1px 1px 0 #FFFFFF; }
+
+.mfp-wrapper.font-shadow-FFFFFF-3 .mfp-subtitles {
+  text-shadow: -3px -3px 0 #FFFFFF, 3px -3px 0 #FFFFFF, -3px 3px 0 #FFFFFF, 3px 3px 0 #FFFFFF; }
+
+.mfp-wrapper.font-shadow-FFFFFF-3 video::cue {
+  text-shadow: -3px -3px 0 #FFFFFF, 3px -3px 0 #FFFFFF, -3px 3px 0 #FFFFFF, 3px 3px 0 #FFFFFF; }
+
+.mfp-wrapper.font-shadow-FFFFFF-5 .mfp-subtitles {
+  text-shadow: -5px -5px 0 #FFFFFF, 5px -5px 0 #FFFFFF, -5px 5px 0 #FFFFFF, 5px 5px 0 #FFFFFF; }
+
+.mfp-wrapper.font-shadow-FFFFFF-5 video::cue {
+  text-shadow: -5px -5px 0 #FFFFFF, 5px -5px 0 #FFFFFF, -5px 5px 0 #FFFFFF, 5px 5px 0 #FFFFFF; }
+
+.mfp-wrapper.font-shadow-FFFF00-0 .mfp-subtitles {
+  text-shadow: -0px -0px 0 #FFFF00, 0px -0px 0 #FFFF00, -0px 0px 0 #FFFF00, 0px 0px 0 #FFFF00; }
+
+.mfp-wrapper.font-shadow-FFFF00-0 video::cue {
+  text-shadow: -0px -0px 0 #FFFF00, 0px -0px 0 #FFFF00, -0px 0px 0 #FFFF00, 0px 0px 0 #FFFF00; }
+
+.mfp-wrapper.font-shadow-FFFF00-1 .mfp-subtitles {
+  text-shadow: -1px -1px 0 #FFFF00, 1px -1px 0 #FFFF00, -1px 1px 0 #FFFF00, 1px 1px 0 #FFFF00; }
+
+.mfp-wrapper.font-shadow-FFFF00-1 video::cue {
+  text-shadow: -1px -1px 0 #FFFF00, 1px -1px 0 #FFFF00, -1px 1px 0 #FFFF00, 1px 1px 0 #FFFF00; }
+
+.mfp-wrapper.font-shadow-FFFF00-3 .mfp-subtitles {
+  text-shadow: -3px -3px 0 #FFFF00, 3px -3px 0 #FFFF00, -3px 3px 0 #FFFF00, 3px 3px 0 #FFFF00; }
+
+.mfp-wrapper.font-shadow-FFFF00-3 video::cue {
+  text-shadow: -3px -3px 0 #FFFF00, 3px -3px 0 #FFFF00, -3px 3px 0 #FFFF00, 3px 3px 0 #FFFF00; }
+
+.mfp-wrapper.font-shadow-FFFF00-5 .mfp-subtitles {
+  text-shadow: -5px -5px 0 #FFFF00, 5px -5px 0 #FFFF00, -5px 5px 0 #FFFF00, 5px 5px 0 #FFFF00; }
+
+.mfp-wrapper.font-shadow-FFFF00-5 video::cue {
+  text-shadow: -5px -5px 0 #FFFF00, 5px -5px 0 #FFFF00, -5px 5px 0 #FFFF00, 5px 5px 0 #FFFF00; }
+
+.mfp-wrapper.font-shadow-008000-0 .mfp-subtitles {
+  text-shadow: -0px -0px 0 #008000, 0px -0px 0 #008000, -0px 0px 0 #008000, 0px 0px 0 #008000; }
+
+.mfp-wrapper.font-shadow-008000-0 video::cue {
+  text-shadow: -0px -0px 0 #008000, 0px -0px 0 #008000, -0px 0px 0 #008000, 0px 0px 0 #008000; }
+
+.mfp-wrapper.font-shadow-008000-1 .mfp-subtitles {
+  text-shadow: -1px -1px 0 #008000, 1px -1px 0 #008000, -1px 1px 0 #008000, 1px 1px 0 #008000; }
+
+.mfp-wrapper.font-shadow-008000-1 video::cue {
+  text-shadow: -1px -1px 0 #008000, 1px -1px 0 #008000, -1px 1px 0 #008000, 1px 1px 0 #008000; }
+
+.mfp-wrapper.font-shadow-008000-3 .mfp-subtitles {
+  text-shadow: -3px -3px 0 #008000, 3px -3px 0 #008000, -3px 3px 0 #008000, 3px 3px 0 #008000; }
+
+.mfp-wrapper.font-shadow-008000-3 video::cue {
+  text-shadow: -3px -3px 0 #008000, 3px -3px 0 #008000, -3px 3px 0 #008000, 3px 3px 0 #008000; }
+
+.mfp-wrapper.font-shadow-008000-5 .mfp-subtitles {
+  text-shadow: -5px -5px 0 #008000, 5px -5px 0 #008000, -5px 5px 0 #008000, 5px 5px 0 #008000; }
+
+.mfp-wrapper.font-shadow-008000-5 video::cue {
+  text-shadow: -5px -5px 0 #008000, 5px -5px 0 #008000, -5px 5px 0 #008000, 5px 5px 0 #008000; }
+
+.mfp-wrapper.font-shadow-00FFFF-0 .mfp-subtitles {
+  text-shadow: -0px -0px 0 #00FFFF, 0px -0px 0 #00FFFF, -0px 0px 0 #00FFFF, 0px 0px 0 #00FFFF; }
+
+.mfp-wrapper.font-shadow-00FFFF-0 video::cue {
+  text-shadow: -0px -0px 0 #00FFFF, 0px -0px 0 #00FFFF, -0px 0px 0 #00FFFF, 0px 0px 0 #00FFFF; }
+
+.mfp-wrapper.font-shadow-00FFFF-1 .mfp-subtitles {
+  text-shadow: -1px -1px 0 #00FFFF, 1px -1px 0 #00FFFF, -1px 1px 0 #00FFFF, 1px 1px 0 #00FFFF; }
+
+.mfp-wrapper.font-shadow-00FFFF-1 video::cue {
+  text-shadow: -1px -1px 0 #00FFFF, 1px -1px 0 #00FFFF, -1px 1px 0 #00FFFF, 1px 1px 0 #00FFFF; }
+
+.mfp-wrapper.font-shadow-00FFFF-3 .mfp-subtitles {
+  text-shadow: -3px -3px 0 #00FFFF, 3px -3px 0 #00FFFF, -3px 3px 0 #00FFFF, 3px 3px 0 #00FFFF; }
+
+.mfp-wrapper.font-shadow-00FFFF-3 video::cue {
+  text-shadow: -3px -3px 0 #00FFFF, 3px -3px 0 #00FFFF, -3px 3px 0 #00FFFF, 3px 3px 0 #00FFFF; }
+
+.mfp-wrapper.font-shadow-00FFFF-5 .mfp-subtitles {
+  text-shadow: -5px -5px 0 #00FFFF, 5px -5px 0 #00FFFF, -5px 5px 0 #00FFFF, 5px 5px 0 #00FFFF; }
+
+.mfp-wrapper.font-shadow-00FFFF-5 video::cue {
+  text-shadow: -5px -5px 0 #00FFFF, 5px -5px 0 #00FFFF, -5px 5px 0 #00FFFF, 5px 5px 0 #00FFFF; }
+
+.mfp-wrapper.font-shadow-0000FF-0 .mfp-subtitles {
+  text-shadow: -0px -0px 0 #0000FF, 0px -0px 0 #0000FF, -0px 0px 0 #0000FF, 0px 0px 0 #0000FF; }
+
+.mfp-wrapper.font-shadow-0000FF-0 video::cue {
+  text-shadow: -0px -0px 0 #0000FF, 0px -0px 0 #0000FF, -0px 0px 0 #0000FF, 0px 0px 0 #0000FF; }
+
+.mfp-wrapper.font-shadow-0000FF-1 .mfp-subtitles {
+  text-shadow: -1px -1px 0 #0000FF, 1px -1px 0 #0000FF, -1px 1px 0 #0000FF, 1px 1px 0 #0000FF; }
+
+.mfp-wrapper.font-shadow-0000FF-1 video::cue {
+  text-shadow: -1px -1px 0 #0000FF, 1px -1px 0 #0000FF, -1px 1px 0 #0000FF, 1px 1px 0 #0000FF; }
+
+.mfp-wrapper.font-shadow-0000FF-3 .mfp-subtitles {
+  text-shadow: -3px -3px 0 #0000FF, 3px -3px 0 #0000FF, -3px 3px 0 #0000FF, 3px 3px 0 #0000FF; }
+
+.mfp-wrapper.font-shadow-0000FF-3 video::cue {
+  text-shadow: -3px -3px 0 #0000FF, 3px -3px 0 #0000FF, -3px 3px 0 #0000FF, 3px 3px 0 #0000FF; }
+
+.mfp-wrapper.font-shadow-0000FF-5 .mfp-subtitles {
+  text-shadow: -5px -5px 0 #0000FF, 5px -5px 0 #0000FF, -5px 5px 0 #0000FF, 5px 5px 0 #0000FF; }
+
+.mfp-wrapper.font-shadow-0000FF-5 video::cue {
+  text-shadow: -5px -5px 0 #0000FF, 5px -5px 0 #0000FF, -5px 5px 0 #0000FF, 5px 5px 0 #0000FF; }
+
+.mfp-wrapper.font-shadow-FF00FF-0 .mfp-subtitles {
+  text-shadow: -0px -0px 0 #FF00FF, 0px -0px 0 #FF00FF, -0px 0px 0 #FF00FF, 0px 0px 0 #FF00FF; }
+
+.mfp-wrapper.font-shadow-FF00FF-0 video::cue {
+  text-shadow: -0px -0px 0 #FF00FF, 0px -0px 0 #FF00FF, -0px 0px 0 #FF00FF, 0px 0px 0 #FF00FF; }
+
+.mfp-wrapper.font-shadow-FF00FF-1 .mfp-subtitles {
+  text-shadow: -1px -1px 0 #FF00FF, 1px -1px 0 #FF00FF, -1px 1px 0 #FF00FF, 1px 1px 0 #FF00FF; }
+
+.mfp-wrapper.font-shadow-FF00FF-1 video::cue {
+  text-shadow: -1px -1px 0 #FF00FF, 1px -1px 0 #FF00FF, -1px 1px 0 #FF00FF, 1px 1px 0 #FF00FF; }
+
+.mfp-wrapper.font-shadow-FF00FF-3 .mfp-subtitles {
+  text-shadow: -3px -3px 0 #FF00FF, 3px -3px 0 #FF00FF, -3px 3px 0 #FF00FF, 3px 3px 0 #FF00FF; }
+
+.mfp-wrapper.font-shadow-FF00FF-3 video::cue {
+  text-shadow: -3px -3px 0 #FF00FF, 3px -3px 0 #FF00FF, -3px 3px 0 #FF00FF, 3px 3px 0 #FF00FF; }
+
+.mfp-wrapper.font-shadow-FF00FF-5 .mfp-subtitles {
+  text-shadow: -5px -5px 0 #FF00FF, 5px -5px 0 #FF00FF, -5px 5px 0 #FF00FF, 5px 5px 0 #FF00FF; }
+
+.mfp-wrapper.font-shadow-FF00FF-5 video::cue {
+  text-shadow: -5px -5px 0 #FF00FF, 5px -5px 0 #FF00FF, -5px 5px 0 #FF00FF, 5px 5px 0 #FF00FF; }
+
+.mfp-wrapper.font-shadow-FF0000-0 .mfp-subtitles {
+  text-shadow: -0px -0px 0 #FF0000, 0px -0px 0 #FF0000, -0px 0px 0 #FF0000, 0px 0px 0 #FF0000; }
+
+.mfp-wrapper.font-shadow-FF0000-0 video::cue {
+  text-shadow: -0px -0px 0 #FF0000, 0px -0px 0 #FF0000, -0px 0px 0 #FF0000, 0px 0px 0 #FF0000; }
+
+.mfp-wrapper.font-shadow-FF0000-1 .mfp-subtitles {
+  text-shadow: -1px -1px 0 #FF0000, 1px -1px 0 #FF0000, -1px 1px 0 #FF0000, 1px 1px 0 #FF0000; }
+
+.mfp-wrapper.font-shadow-FF0000-1 video::cue {
+  text-shadow: -1px -1px 0 #FF0000, 1px -1px 0 #FF0000, -1px 1px 0 #FF0000, 1px 1px 0 #FF0000; }
+
+.mfp-wrapper.font-shadow-FF0000-3 .mfp-subtitles {
+  text-shadow: -3px -3px 0 #FF0000, 3px -3px 0 #FF0000, -3px 3px 0 #FF0000, 3px 3px 0 #FF0000; }
+
+.mfp-wrapper.font-shadow-FF0000-3 video::cue {
+  text-shadow: -3px -3px 0 #FF0000, 3px -3px 0 #FF0000, -3px 3px 0 #FF0000, 3px 3px 0 #FF0000; }
+
+.mfp-wrapper.font-shadow-FF0000-5 .mfp-subtitles {
+  text-shadow: -5px -5px 0 #FF0000, 5px -5px 0 #FF0000, -5px 5px 0 #FF0000, 5px 5px 0 #FF0000; }
+
+.mfp-wrapper.font-shadow-FF0000-5 video::cue {
+  text-shadow: -5px -5px 0 #FF0000, 5px -5px 0 #FF0000, -5px 5px 0 #FF0000, 5px 5px 0 #FF0000; }
+
+.mfp-wrapper.font-shadow-000000-0 .mfp-subtitles {
+  text-shadow: -0px -0px 0 #000000, 0px -0px 0 #000000, -0px 0px 0 #000000, 0px 0px 0 #000000; }
+
+.mfp-wrapper.font-shadow-000000-0 video::cue {
+  text-shadow: -0px -0px 0 #000000, 0px -0px 0 #000000, -0px 0px 0 #000000, 0px 0px 0 #000000; }
+
+.mfp-wrapper.font-shadow-000000-1 .mfp-subtitles {
+  text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000; }
+
+.mfp-wrapper.font-shadow-000000-1 video::cue {
+  text-shadow: -1px -1px 0 #000000, 1px -1px 0 #000000, -1px 1px 0 #000000, 1px 1px 0 #000000; }
+
+.mfp-wrapper.font-shadow-000000-3 .mfp-subtitles {
+  text-shadow: -3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000; }
+
+.mfp-wrapper.font-shadow-000000-3 video::cue {
+  text-shadow: -3px -3px 0 #000000, 3px -3px 0 #000000, -3px 3px 0 #000000, 3px 3px 0 #000000; }
+
+.mfp-wrapper.font-shadow-000000-5 .mfp-subtitles {
+  text-shadow: -5px -5px 0 #000000, 5px -5px 0 #000000, -5px 5px 0 #000000, 5px 5px 0 #000000; }
+
+.mfp-wrapper.font-shadow-000000-5 video::cue {
+  text-shadow: -5px -5px 0 #000000, 5px -5px 0 #000000, -5px 5px 0 #000000, 5px 5px 0 #000000; }
+
+.mfp-wrapper.background-white-0 .mfp-subtitles {
+  background-color: rgba(255, 255, 255, 0) !important; }
+
+.mfp-wrapper.background-white-0 video::cue {
+  background-color: rgba(255, 255, 255, 0) !important; }
+
+.mfp-wrapper.background-yellow-0 .mfp-subtitles {
+  background-color: rgba(255, 255, 0, 0) !important; }
+
+.mfp-wrapper.background-yellow-0 video::cue {
+  background-color: rgba(255, 255, 0, 0) !important; }
+
+.mfp-wrapper.background-green-0 .mfp-subtitles {
+  background-color: rgba(0, 128, 0, 0) !important; }
+
+.mfp-wrapper.background-green-0 video::cue {
+  background-color: rgba(0, 128, 0, 0) !important; }
+
+.mfp-wrapper.background-cyan-0 .mfp-subtitles {
+  background-color: rgba(0, 255, 255, 0) !important; }
+
+.mfp-wrapper.background-cyan-0 video::cue {
+  background-color: rgba(0, 255, 255, 0) !important; }
+
+.mfp-wrapper.background-blue-0 .mfp-subtitles {
+  background-color: rgba(0, 0, 255, 0) !important; }
+
+.mfp-wrapper.background-blue-0 video::cue {
+  background-color: rgba(0, 0, 255, 0) !important; }
+
+.mfp-wrapper.background-magenta-0 .mfp-subtitles {
+  background-color: rgba(255, 0, 255, 0) !important; }
+
+.mfp-wrapper.background-magenta-0 video::cue {
+  background-color: rgba(255, 0, 255, 0) !important; }
+
+.mfp-wrapper.background-red-0 .mfp-subtitles {
+  background-color: rgba(255, 0, 0, 0) !important; }
+
+.mfp-wrapper.background-red-0 video::cue {
+  background-color: rgba(255, 0, 0, 0) !important; }
+
+.mfp-wrapper.background-black-0 .mfp-subtitles {
+  background-color: rgba(0, 0, 0, 0) !important; }
+
+.mfp-wrapper.background-black-0 video::cue {
+  background-color: rgba(0, 0, 0, 0) !important; }
+
+.mfp-wrapper.background-white-25 .mfp-subtitles {
+  background-color: rgba(255, 255, 255, 0.25) !important; }
+
+.mfp-wrapper.background-white-25 video::cue {
+  background-color: rgba(255, 255, 255, 0.25) !important; }
+
+.mfp-wrapper.background-yellow-25 .mfp-subtitles {
+  background-color: rgba(255, 255, 0, 0.25) !important; }
+
+.mfp-wrapper.background-yellow-25 video::cue {
+  background-color: rgba(255, 255, 0, 0.25) !important; }
+
+.mfp-wrapper.background-green-25 .mfp-subtitles {
+  background-color: rgba(0, 128, 0, 0.25) !important; }
+
+.mfp-wrapper.background-green-25 video::cue {
+  background-color: rgba(0, 128, 0, 0.25) !important; }
+
+.mfp-wrapper.background-cyan-25 .mfp-subtitles {
+  background-color: rgba(0, 255, 255, 0.25) !important; }
+
+.mfp-wrapper.background-cyan-25 video::cue {
+  background-color: rgba(0, 255, 255, 0.25) !important; }
+
+.mfp-wrapper.background-blue-25 .mfp-subtitles {
+  background-color: rgba(0, 0, 255, 0.25) !important; }
+
+.mfp-wrapper.background-blue-25 video::cue {
+  background-color: rgba(0, 0, 255, 0.25) !important; }
+
+.mfp-wrapper.background-magenta-25 .mfp-subtitles {
+  background-color: rgba(255, 0, 255, 0.25) !important; }
+
+.mfp-wrapper.background-magenta-25 video::cue {
+  background-color: rgba(255, 0, 255, 0.25) !important; }
+
+.mfp-wrapper.background-red-25 .mfp-subtitles {
+  background-color: rgba(255, 0, 0, 0.25) !important; }
+
+.mfp-wrapper.background-red-25 video::cue {
+  background-color: rgba(255, 0, 0, 0.25) !important; }
+
+.mfp-wrapper.background-black-25 .mfp-subtitles {
+  background-color: rgba(0, 0, 0, 0.25) !important; }
+
+.mfp-wrapper.background-black-25 video::cue {
+  background-color: rgba(0, 0, 0, 0.25) !important; }
+
+.mfp-wrapper.background-white-50 .mfp-subtitles {
+  background-color: rgba(255, 255, 255, 0.5) !important; }
+
+.mfp-wrapper.background-white-50 video::cue {
+  background-color: rgba(255, 255, 255, 0.5) !important; }
+
+.mfp-wrapper.background-yellow-50 .mfp-subtitles {
+  background-color: rgba(255, 255, 0, 0.5) !important; }
+
+.mfp-wrapper.background-yellow-50 video::cue {
+  background-color: rgba(255, 255, 0, 0.5) !important; }
+
+.mfp-wrapper.background-green-50 .mfp-subtitles {
+  background-color: rgba(0, 128, 0, 0.5) !important; }
+
+.mfp-wrapper.background-green-50 video::cue {
+  background-color: rgba(0, 128, 0, 0.5) !important; }
+
+.mfp-wrapper.background-cyan-50 .mfp-subtitles {
+  background-color: rgba(0, 255, 255, 0.5) !important; }
+
+.mfp-wrapper.background-cyan-50 video::cue {
+  background-color: rgba(0, 255, 255, 0.5) !important; }
+
+.mfp-wrapper.background-blue-50 .mfp-subtitles {
+  background-color: rgba(0, 0, 255, 0.5) !important; }
+
+.mfp-wrapper.background-blue-50 video::cue {
+  background-color: rgba(0, 0, 255, 0.5) !important; }
+
+.mfp-wrapper.background-magenta-50 .mfp-subtitles {
+  background-color: rgba(255, 0, 255, 0.5) !important; }
+
+.mfp-wrapper.background-magenta-50 video::cue {
+  background-color: rgba(255, 0, 255, 0.5) !important; }
+
+.mfp-wrapper.background-red-50 .mfp-subtitles {
+  background-color: rgba(255, 0, 0, 0.5) !important; }
+
+.mfp-wrapper.background-red-50 video::cue {
+  background-color: rgba(255, 0, 0, 0.5) !important; }
+
+.mfp-wrapper.background-black-50 .mfp-subtitles {
+  background-color: rgba(0, 0, 0, 0.5) !important; }
+
+.mfp-wrapper.background-black-50 video::cue {
+  background-color: rgba(0, 0, 0, 0.5) !important; }
+
+.mfp-wrapper.background-white-75 .mfp-subtitles {
+  background-color: rgba(255, 255, 255, 0.75) !important; }
+
+.mfp-wrapper.background-white-75 video::cue {
+  background-color: rgba(255, 255, 255, 0.75) !important; }
+
+.mfp-wrapper.background-yellow-75 .mfp-subtitles {
+  background-color: rgba(255, 255, 0, 0.75) !important; }
+
+.mfp-wrapper.background-yellow-75 video::cue {
+  background-color: rgba(255, 255, 0, 0.75) !important; }
+
+.mfp-wrapper.background-green-75 .mfp-subtitles {
+  background-color: rgba(0, 128, 0, 0.75) !important; }
+
+.mfp-wrapper.background-green-75 video::cue {
+  background-color: rgba(0, 128, 0, 0.75) !important; }
+
+.mfp-wrapper.background-cyan-75 .mfp-subtitles {
+  background-color: rgba(0, 255, 255, 0.75) !important; }
+
+.mfp-wrapper.background-cyan-75 video::cue {
+  background-color: rgba(0, 255, 255, 0.75) !important; }
+
+.mfp-wrapper.background-blue-75 .mfp-subtitles {
+  background-color: rgba(0, 0, 255, 0.75) !important; }
+
+.mfp-wrapper.background-blue-75 video::cue {
+  background-color: rgba(0, 0, 255, 0.75) !important; }
+
+.mfp-wrapper.background-magenta-75 .mfp-subtitles {
+  background-color: rgba(255, 0, 255, 0.75) !important; }
+
+.mfp-wrapper.background-magenta-75 video::cue {
+  background-color: rgba(255, 0, 255, 0.75) !important; }
+
+.mfp-wrapper.background-red-75 .mfp-subtitles {
+  background-color: rgba(255, 0, 0, 0.75) !important; }
+
+.mfp-wrapper.background-red-75 video::cue {
+  background-color: rgba(255, 0, 0, 0.75) !important; }
+
+.mfp-wrapper.background-black-75 .mfp-subtitles {
+  background-color: rgba(0, 0, 0, 0.75) !important; }
+
+.mfp-wrapper.background-black-75 video::cue {
+  background-color: rgba(0, 0, 0, 0.75) !important; }
+
+.mfp-wrapper.background-white-100 .mfp-subtitles {
+  background-color: white !important; }
+
+.mfp-wrapper.background-white-100 video::cue {
+  background-color: white !important; }
+
+.mfp-wrapper.background-yellow-100 .mfp-subtitles {
+  background-color: yellow !important; }
+
+.mfp-wrapper.background-yellow-100 video::cue {
+  background-color: yellow !important; }
+
+.mfp-wrapper.background-green-100 .mfp-subtitles {
+  background-color: green !important; }
+
+.mfp-wrapper.background-green-100 video::cue {
+  background-color: green !important; }
+
+.mfp-wrapper.background-cyan-100 .mfp-subtitles {
+  background-color: cyan !important; }
+
+.mfp-wrapper.background-cyan-100 video::cue {
+  background-color: cyan !important; }
+
+.mfp-wrapper.background-blue-100 .mfp-subtitles {
+  background-color: blue !important; }
+
+.mfp-wrapper.background-blue-100 video::cue {
+  background-color: blue !important; }
+
+.mfp-wrapper.background-magenta-100 .mfp-subtitles {
+  background-color: magenta !important; }
+
+.mfp-wrapper.background-magenta-100 video::cue {
+  background-color: magenta !important; }
+
+.mfp-wrapper.background-red-100 .mfp-subtitles {
+  background-color: red !important; }
+
+.mfp-wrapper.background-red-100 video::cue {
+  background-color: red !important; }
+
+.mfp-wrapper.background-black-100 .mfp-subtitles {
+  background-color: black !important; }
+
+.mfp-wrapper.background-black-100 video::cue {
+  background-color: black !important; }
+
+.mfp-wrapper.font-size-100 .mfp-subtitles {
+  font-size: 100%; }
+
+.mfp-wrapper.font-size-100 video::cue {
+  font-size: 100%; }
+
+.mfp-wrapper.font-size-50 .mfp-subtitles {
+  font-size: 50%; }
+
+.mfp-wrapper.font-size-50 video::cue {
+  font-size: 50%; }
+
+.mfp-wrapper.font-size-150 .mfp-subtitles {
+  font-size: 150%; }
+
+.mfp-wrapper.font-size-150 video::cue {
+  font-size: 150%; }
+
+.mfp-wrapper.font-size-200 .mfp-subtitles {
+  font-size: 200%; }
+
+.mfp-wrapper.font-size-200 video::cue {
+  font-size: 200%; }
+
+.mfp-wrapper.font-size-300 .mfp-subtitles {
+  font-size: 300%; }
+
+.mfp-wrapper.font-size-300 video::cue {
+  font-size: 300%; }
+
+.mfp-wrapper.font-size-400 .mfp-subtitles {
+  font-size: 400%; }
+
+.mfp-wrapper.font-size-400 video::cue {
+  font-size: 400%; }
+

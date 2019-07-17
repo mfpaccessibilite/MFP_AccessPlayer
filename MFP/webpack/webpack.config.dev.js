@@ -12,7 +12,8 @@ module.exports = merge(common, {
   },
   devServer: {
     host: '0.0.0.0',
-    open: 'firefox',
+    //open: 'firefox',
+    openPage: 'demo/index.html',
     inline: true
   },
   plugins: [

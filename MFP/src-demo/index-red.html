@@ -9,8 +9,10 @@
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/furf/jquery-ui-touch-punch@latest/jquery.ui.touch-punch.min.js"></script>
 		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" type="text/css">
-		<link rel="stylesheet" href="stylesheets/demo-blue.css" type="text/css" />
-		<link rel="stylesheet" href="stylesheets/player-blue.css" type="text/css" />
+		 <!-- demo page css -->
+		<link rel="stylesheet" href="stylesheets/demo-red.css" type="text/css" />
+		<!-- custom css for the player -->
+		<link rel="stylesheet" href="../MFP/stylesheets/player-red.css" type="text/css" />
 	</head>
 	<body>
 		<!-- lien d'évitement (tab navigation?)-->
@@ -41,6 +43,8 @@
 		        <ul>
 		            <li><a href="#video"> Vidéo </a></li>
 		            <li><a href="#mde"> Mode d'emploi </a></li>
+		            <li><a href="index.html" aria-hidden="true">Demo thème Blue</a></li>
+            		<li><a href="index-green.html" aria-hidden="true">Demo thème green</a></li>
 		        </ul>
 		    </nav>
 
@@ -53,11 +57,11 @@
 						 				<div class="container">
 						 						<video data-mfp data-options="{
 						 								transcripts:{
-						 										html:'../transcripts/JamyPlayer.htm',
-						 										txt:'../transcripts/JamyPlayer.txt'
+						 										html:'transcripts/JamyPlayer.htm',
+						 										txt:'transcripts/JamyPlayer.txt'
 						 								},
 						 								live: '#text-target1',
-						 								theme_class: 'blue_theme'
+						 								theme_class: 'red_theme'
 						 						}">
 						 								<source src="344582363" type="video/vimeo" />
 						 								<source src="https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_FULL2.m4v" type="video/mp4" format="lowdef" />
@@ -74,7 +78,7 @@
 								 <h2>À propos de cette démonstration</h2>
 								 <p>Exemple d'une vidéo utilisant toutes les fonctionnalités du lecteur.</p>
 								 <ul>
-								 	<li>Video HD => Chargé depuis vimeo</li>
+								 	<li>Video HD => Chargée depuis vimeo</li>
 								 	<li>Vidéo LD => format MP4 hébergé</li>
 								 	<li>Video AD => format MP4 hébergé</li>
 									<li>Vidéo signé => format MP4 hébergé</li>
@@ -114,6 +118,6 @@ Le selecteur de vitesse de lecture de video dépend du compte Vimeo auquel appar
 		    <footer role="contentinfo" id="footer">
 		        <p>Pour télécharger le code et contribuer, rendez-vous sur le <a href="https://github.com/mfpaccessibilite/MFP_AccessPlayer">compte Github du lecteur vidéo MFP AccessPlayer</a>&nbsp;!</p>
 		    </footer>
-	<script src="mfp.js"></script>
+	<script src="../MFP/mfp.js"></script>
 	</body>
 </html>

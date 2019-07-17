@@ -6,31 +6,39 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
-    mfp: Path.resolve(__dirname, '../src/js/mfp.js'),
-    'stylesheets/screen': Path.resolve(__dirname, '../src/sass/screen.scss'),
-    'stylesheets/demo-blue':  Path.resolve(__dirname, '../src/sass/demo-blue.scss'),
-    'stylesheets/player-blue':  Path.resolve(__dirname, '../src/sass/player-blue.scss'),
-    'stylesheets/player-green':  Path.resolve(__dirname, '../src/sass/player-green.scss'),
-    'stylesheets/player-red':  Path.resolve(__dirname, '../src/sass/player-red.scss'),
-    'trackreader/loadTrackType-srt': Path.resolve(__dirname, '../src/js/trackreader/loadTrackType-srt.js'),
-    'trackreader/loadTrackType-stl': Path.resolve(__dirname, '../src/js/trackreader/loadTrackType-stl.js'),
-    'trackreader/stl': Path.resolve(__dirname, '../src/js/trackreader/stl.scss'),
-    'video-players/loadVideoPlayer-html5': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-html5.js'),
-    'video-players/loadVideoPlayer-vimeo': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-vimeo.js'),
-    'video-players/loadVideoPlayer-error': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-error.js')
+    'MFP/mfp': Path.resolve(__dirname, '../src/js/mfp.js'),
+    'MFP/stylesheets/screen': Path.resolve(__dirname, '../src/sass/screen.scss'),
+    'demo/stylesheets/demo-blue':  Path.resolve(__dirname, '../src-demo/sass/demo-blue.scss'),
+    'demo/stylesheets/demo-green':  Path.resolve(__dirname, '../src-demo/sass/demo-green.scss'),
+    'demo/stylesheets/demo-red':  Path.resolve(__dirname, '../src-demo/sass/demo-red.scss'),
+    'MFP/stylesheets/player-blue':  Path.resolve(__dirname, '../src/sass/player-blue.scss'),
+    'MFP/stylesheets/player-green':  Path.resolve(__dirname, '../src/sass/player-green.scss'),
+    'MFP/stylesheets/player-red':  Path.resolve(__dirname, '../src/sass/player-red.scss'),
+    'MFP/trackreader/loadTrackType-srt': Path.resolve(__dirname, '../src/js/trackreader/loadTrackType-srt.js'),
+    'MFP/trackreader/loadTrackType-stl': Path.resolve(__dirname, '../src/js/trackreader/loadTrackType-stl.js'),
+    'MFP/trackreader/stl': Path.resolve(__dirname, '../src/js/trackreader/stl.scss'),
+    'MFP/video-players/loadVideoPlayer-html5': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-html5.js'),
+    'MFP/video-players/loadVideoPlayer-vimeo': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-vimeo.js'),
+    'MFP/video-players/loadVideoPlayer-error': Path.resolve(__dirname, '../src/js/video-players/loadVideoType-error.js')
   },
   output: {
     path: Path.join(__dirname, '../dist'),
     filename: '[name].js'
   },
   plugins: [
+
     new CopyWebpackPlugin([
       { from: Path.resolve(__dirname, '../public'), to: '.' }
     ]),
+    new CopyWebpackPlugin([
+      { from: Path.resolve(__dirname, '../src-demo/*.html'), to: 'demo/' }
+    ]),
+    /*
     new HtmlWebpackPlugin({
       template: Path.resolve(__dirname, '../src/index.html'),
       inject: false
     }),
+    */
     new MiniCssExtractPlugin({
       filename: '[name].css'
     })
@@ -59,11 +67,27 @@ module.exports = {
       },
       {
           test: /\.(eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+          include: [
+            Path.resolve(__dirname, "../src/fonts")
+          ],
           use: [{
               loader: 'file-loader',
               options: {
                   name: '[name].[ext]',
-                  outputPath: 'fonts/'
+                  outputPath: 'MFP/fonts/'
+              }
+          }]
+      },
+      {
+          test: /\.(eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
+          include: [
+            Path.resolve(__dirname, "../src-demo/fonts")
+          ],
+          use: [{
+              loader: 'file-loader',
+              options: {
+                  name: '[name].[ext]',
+                  outputPath: 'demo/fonts/'
               }
           }]
       },
