@@ -23,7 +23,6 @@ This project is a web video player that complies with the WCAG and RGAA accessib
 * Support Vimeo hosted video (a bug in Vimeo API avoid the playback speed with Vimeo)
 * Skins supports to customize the player layout (the player come with 3 differents skins, blue, red and green, feel free to make your own and to contribute it)
 * Multilinguale (we provide translation in French and English, please contribute to add new translation)
-* We provide right now plugins of the player, one for WordPress the other one for ResourceSpace. Today they use old version of the plugin (V 1.0.2). They will be updated soon.
 
 ## Browser compatibility
 
@@ -255,7 +254,6 @@ Ce projet est un lecteur vidéo web conforme aux règles d'accessibilité (WCAG,
 - Support de vidéos hébergées sur la plateforme Vimeo (un bug dans l'API de Vimeo bloque la possibilité de choisir la vitesse de lecture avec Vimeo)
 - Support de thèmes (skins) pour le lecteur vidéo (nous fournissons le lecteur avec 3 thèmes, bleu, rouge et vert. Vous pouvez créer vos propres thème et vous pouvez contribuer au projet en les partageant)
 - Multilingue (nous fournissons des traductions en Français et Anglais, merci de contribuer afin d'ajouter de nouvelles langues)
-- Nous fournissons pour le moment des plugin du lecteur vidéo. L'un pour WordPress, l'autre pour ReourceSpace. Ils fonctionnent actuellement avec l'ancienne version du lecteur (V 1.0.2). Les plugins seront mis à jour prochainement.
 
 ## Compatibilité navigateurs
 
