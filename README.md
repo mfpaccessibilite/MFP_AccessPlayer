@@ -20,6 +20,10 @@ This project is a web video player that complies with the WCAG and RGAA accessib
 * Management of playback speed
 * Management of chaptering files in 'WebVTT' format
 * Possibility of creating an interactive transcript from the selected subtitle file with automatic text highlighting
+* Support Vimeo hosted video (a bug in Vimeo API avoid the playback speed with Vimeo)
+* Skins supports to customize the player layout (the player come with 3 differents skins, blue, red and green, feel free to make your own and to contribute it)
+* Multilinguale (we provide translation in French and English, please contribute to add new translation)
+* We provide right now plugins of the player, one for WordPress the other one for ResourceSpace. Today they use old version of the plugin (V 1.0.2). They will be updated soon.
 
 ## Browser compatibility
 
@@ -39,14 +43,21 @@ List of browsers for which MFP AccessPlayer video player compatibility has been 
 
 ## Technical dependencies
 
-List of JavaScript libraries required to run MFP AccessPlayer video player:
+List of JavaScript libraries required to run MFP AccessPlayer video player on your webpage :
 
 * JavaScript libraries:
     *  JQuery version 3.1.1
     *  JQuery UI Version 1.12.1
     *  JQuery UI Touch punch
+
+For development we used the following software/librairies
 * Icon font generator: [icomoon] (http://icomoon.io)
-* CSS pre-processor: Sass + Compass
+* Node + npm (list of package can be found in the package.json file)
+* WebPack to run a local webserver
+
+To test localy the player, please use npm as CORS restriction won't allow you to use the player directly from any of the demo html page.
+To do so run `npm run start` to launch the local web server and use the player in dev mode.
+If you want to build the player run `npm run build`. You will find in the dist folder the buid of the player in the MFP folder.
 
 ## Contribution
 
@@ -65,7 +76,7 @@ The video player sources are hosted on the [Github repository dedicated to MFP A
 
 ## Installation
 
-The video player depends on JQuery and JQuery UI libraries.
+The video player depends on JQuery and JQuery UI libraries and for touch support on Smartphone Jquery UI Touch Punch.
 
 Add them as follows in the 'head' of your html page:
 
@@ -106,11 +117,33 @@ new MFP(player,options);
 - `videos`      :   in a JS object, you can set the following video variants: low definition, with audio description, with sign language overlay. These variants will be automatically proposed by the player
 ```javascript
 {
+    highdef:   'PathToMyHighDefVideo.mp4', 
     lowdef:     'pathToMyLowDefVideo.mp4',
     audiodesc:  'pathToMyAudioDesctiptionVideo.mp4',
     signed:     'PathToMySignedVideo.mp4'
 }
 ```
+
+You can also load a video from youtube, to do so :
+```
+{
+    highdef: {
+        src: 'VIMEO-ID',
+        type: 'vimeo'
+    }
+}
+```
+
+If you want you can also declare your videos as sources inside the video tag. Keep in mind in case you defin inside the tage and in the options, that the options will be the kepts videos :
+```
+<video data-mfp>
+    <source src="VIMEO-ID" type="video/vimeo" />
+    <source src="pathToMyLowDefVideo.mp4" type="video/mp4" format="lowdef" />
+    <source src="pathToMyAudioDesctiptionVideo.mp4" type="video/mp4" format="audiodesc" />
+    <source src="PathToMySignedVideo.mp4" type="video/mp4" format="signed" />
+</video>
+```
+
 - `transcript`  :   the player can propose text versions (transcripts) of the videos in html and txt formats, which will open in an external window. You can reference these files in a JS object:
 ```javascript
 {
@@ -123,9 +156,9 @@ new MFP(player,options);
 
 ## Customization and translations
 
-To change the text of the information window, go to the MFP > infos folder. You can change the contents of the window to the desired language, or create new versions.
+To change the text of the information window, go to the src > infos folder. You can change the contents of the window to the desired language, or create new versions.
 
-To edit an existing translation or add one, go to the MFP > lang folder.
+To edit an existing translation or add one, go to the src > js > lang folder.
 
 ## Conversion of STL files to WebVTT
 
@@ -145,7 +178,7 @@ The scripts contained in the MFP > trackreader folder are used to convert the ST
         txt:'/transcripts/fr.txt'
     },
     live: '#text-target1',
-    theme_class: 'ftva_theme'
+    theme_class: 'blue_theme'
 }">
     <source src="/videos/video_vo.mp4" type="video/mp4" />
     <track src="/subtitles/fr.srt" kind="subtitles" label="Français (SRT)" srclang="fr" />
