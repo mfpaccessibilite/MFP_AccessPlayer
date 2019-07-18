@@ -1,6 +1,6 @@
 Version en français ci-dessous.
 
-# MFP AccessPlayer (English version)
+# MFP AccessPlayer (English version) Version 2 with Vimeo Support
 
 This project is a web video player that complies with the WCAG and RGAA accessibility guidelines and implements the WAI-ARIA specification. It is driven by MFP's determination to adapt France Télévisions's video accessibility requirements to the web.
 
@@ -117,14 +117,14 @@ new MFP(player,options);
 - `videos`      :   in a JS object, you can set the following video variants: low definition, with audio description, with sign language overlay. These variants will be automatically proposed by the player
 ```javascript
 {
-    highdef:   'PathToMyHighDefVideo.mp4', 
+    highdef:    'PathToMyHighDefVideo.mp4',
     lowdef:     'pathToMyLowDefVideo.mp4',
     audiodesc:  'pathToMyAudioDesctiptionVideo.mp4',
     signed:     'PathToMySignedVideo.mp4'
 }
 ```
 
-You can also load a video from youtube, to do so :
+You can also load a video from Vimeo, to do so :
 ```
 {
     highdef: {
@@ -134,7 +134,7 @@ You can also load a video from youtube, to do so :
 }
 ```
 
-If you want you can also declare your videos as sources inside the video tag. Keep in mind in case you defin inside the tage and in the options, that the options will be the kepts videos :
+If you want you can also declare your videos as sources inside the video tag. Keep in mind in case you define inside the tag and in the options, that the options will be the kepts videos :
 ```
 <video data-mfp>
     <source src="VIMEO-ID" type="video/vimeo" />
@@ -206,7 +206,7 @@ var options = {
         txt:'/transcripts/fr.txt'
     },
     live: 'text-target1',
-    theme_class: 'ftva_theme'
+    theme_class: 'blue_theme'
 };
 new MFP(player,options);
 </script>
@@ -232,7 +232,7 @@ Beyond disability, the **MFP AccessPlayer** benefits all users around the world 
 MFP AccessPlayer was developed by Multimedia France Productions with the help of Projektiles and [Koena](https://koena.net/lang/en/index.php).
 
 
-# MFP AccessPlayer (version en français)
+# MFP AccessPlayer (version en français) Version 2 avec support de Vimeo
 
 Ce projet est un lecteur vidéo web conforme aux règles d'accessibilité (WCAG, RGAA) et intégrant la spécification WAI-ARIA. Il repose sur la volonté de MFP d'adapter leur exigence d'accessibilité des vidéos pour France Télévisions sur le Web.
 
@@ -252,6 +252,10 @@ Ce projet est un lecteur vidéo web conforme aux règles d'accessibilité (WCAG,
 - Gestion de la vitesse de lecture
 - Gestion des fichiers de Chapitrage au format `WebVTT`
 - Possibilité de création d'un transcript interactif depuis le fichier de sous-titre choisi avec suivi de lecture
+- Support de vidéos hébergées sur la plateforme Vimeo (un bug dans l'API de Vimeo bloque la possibilité de choisir la vitesse de lecture avec Vimeo)
+- Support de thèmes (skins) pour le lecteur vidéo (nous fournissons le lecteur avec 3 thèmes, bleu, rouge et vert. Vous pouvez créer vos propres thème et vous pouvez contribuer au projet en les partageant)
+- Multilingue (nous fournissons des traductions en Français et Anglais, merci de contribuer afin d'ajouter de nouvelles langues)
+- Nous fournissons pour le moment des plugin du lecteur vidéo. L'un pour WordPress, l'autre pour ReourceSpace. Ils fonctionnent actuellement avec l'ancienne version du lecteur (V 1.0.2). Les plugins seront mis à jour prochainement.
 
 ## Compatibilité navigateurs
 
@@ -277,8 +281,11 @@ Liste des bibliothèques JavaScript nécessaires au bon fonctionnement du lecteu
     *  JQuery version 3.1.1
     *  JQuery UI Version 1.12
     *  JQuery UI Touch Punch
+
+Pour le developement, nous utilisons les logiciels/librairies suivantes :
 * Générateur de font icon : [icomoon](http://icomoon.io)
-* Pré-processeur CSS : Sass + Compass
+* Node + npm (la liste des paquets utilisés peut e^tre trouvé dans le fichier package.json)
+* WebPack pour lancer un serveur web local.
 
 ## Contribution
 
@@ -339,11 +346,32 @@ new MFP(player,options);
 - `videos`      :   dans un objet JS, vous pouvez définir les variantes vidéos suivantes : basse définition, avec audio-description, avec incrustration de la langue des signes. Ces variantes seront automatiquement proposées par le lecteur
 ```javascript
 {
+    highdef:   'PathToMyHighDefVideo.mp4',
     lowdef:     'pathToMyLowDefVideo.mp4',
     audiodesc:  'pathToMyAudioDesctiptionVideo.mp4',
     signed:     'pathToMySignedVideo.mp4'
 }
 ```
+
+Vous pouvez aussi charger des vidéos depuis Vimeo :
+```javascript
+{
+    highdef: {
+        src: 'VIMEO-ID',
+        type: 'vimeo'
+    }
+}
+```
+Si vous le souhaitez vous pouvez aussi déclarer directement les videos comme source dans le tag video. Gardez bien en mémoire que si vous utilisez conjointement la déclaration dans le tag video et via options que la déclaration options sera prioritaire.
+```html
+<video data-mfp>
+    <source src="VIMEO-ID" type="video/vimeo" />
+    <source src="pathToMyLowDefVideo.mp4" type="video/mp4" format="lowdef" />
+    <source src="pathToMyAudioDesctiptionVideo.mp4" type="video/mp4" format="audiodesc" />
+    <source src="PathToMySignedVideo.mp4" type="video/mp4" format="signed" />
+</video>
+```
+
 - `transcript`  :   le lecteur peut proposer des versions textes des vidéos (transcriptions) aux formats html et txt, qui s'ouvriront dans une fenêtre extérieure. Vous pouvez référencer ces fichiers dans un objet JS :
 ```javascript
 {
@@ -378,7 +406,7 @@ Les scripts contenus dans le dossier MFP > trackreader permettent une conversion
         txt:'/transcripts/fr.txt'
     },
     live: '#text-target1',
-    theme_class: 'ftva_theme'
+    theme_class: 'blue_theme'
 }">
     <source src="/videos/video_vo.mp4" type="video/mp4" />
     <track src="/subtitles/fr.srt" kind="subtitles" label="Français (SRT)" srclang="fr" />
@@ -406,7 +434,7 @@ var options = {
         txt:'/transcripts/fr.txt'
     },
     live: 'text-target1',
-    theme_class: 'ftva_theme'
+    theme_class: 'blue_theme'
 };
 new MFP(player,options);
 </script>
