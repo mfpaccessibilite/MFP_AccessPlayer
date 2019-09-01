@@ -696,11 +696,11 @@ export default class MFP{
             $(rightPart).append('<div class="chapters-block"></div>');
             // if having transcripts, display the transcript button
             if((this.options.transcripts.html!='' && typeof this.options.transcripts.html !== "undefined") || (this.options.transcripts.txt!='' && typeof this.options.transcripts.txt !== "undefined") || this.options.live!=''){
-                $(rightPart).append('<div class="transcripts-block"><button class="mfp-icon-download transcripts off" title="'+this.lang.transcripts+'" aria-pressed="false"><span class="mfp-hidden">'+this.lang.transcripts+'</span></button><ul class="menu" title="'+this.lang.transcripts+'" /></ul></div>');
+                $(rightPart).append('<div class="transcripts-block"><button class="mfp-icon-download transcripts off" title="'+this.lang.transcripts+'"><span class="mfp-hidden">'+this.lang.transcripts+'</span></button><ul class="menu" title="'+this.lang.transcripts+'" /></ul></div>');
                 this.initTranscripts();
             }
-            $(rightPart).append('<button class="mfp-icon-info infos" title="'+this.lang.informations+'" aria-pressed="true"><span class="mfp-hidden">'+this.lang.informations+'</span></button>');
-            $(rightPart).append('<button class="mfp-icon-expand expand" title="'+this.lang.expand+'" aria-pressed="true"><span class="mfp-hidden">'+this.lang.expand+'</span></button>');
+            $(rightPart).append('<button class="mfp-icon-info infos" title="'+this.lang.informations+'"><span class="mfp-hidden">'+this.lang.informations+'</span></button>');
+            $(rightPart).append('<button class="mfp-icon-expand expand" title="'+this.lang.expand+'"><span class="mfp-hidden">'+this.lang.expand+'</span></button>');
             this.fontSize();
             resolve();
         });
@@ -890,7 +890,7 @@ export default class MFP{
             }
         }
         if(toload && this.subtitles.length>0){
-            $(this.container).find('.right-part .subtitles-block').append($('<button class="mfp-icon-cc subtitles off" title="'+this.lang.subtitles+'" aria-pressed="false"><span class="mfp-hidden">'+this.lang.subtitles+'</span></button><ul class="menu" title="'+this.lang.subtitles+'" /></ul>'));
+            $(this.container).find('.right-part .subtitles-block').append($('<button class="mfp-icon-cc subtitles off" title="'+this.lang.subtitles+'"><span class="mfp-hidden">'+this.lang.subtitles+'</span></button><ul class="menu" title="'+this.lang.subtitles+'" /></ul>'));
 
             var btn = $(this.container).find('.right-part .subtitles-block .subtitles');
             btn.click(function(){
@@ -922,7 +922,7 @@ export default class MFP{
                        $(this.container).find('.right-part .pref-block .menu').dialog( "open" );
                     }
                     else{
-                        $(this.container).find('.subtitles-block  button.subtitles').addClass('off').attr('aria-pressed','false');
+                        $(this.container).find('.subtitles-block  button.subtitles').addClass('off');
                         $(this.container).find('.subtitles-block  button.subtitles').attr('title',this.lang.activate+' '+this.lang.subtitles);
                         $(this.container).find('.subtitles-block  button.subtitles .mfp-hidden').html(this.lang.activate+' '+this.lang.subtitles);
                         $(elmt).parent().children('li').removeClass('selected');
@@ -944,7 +944,7 @@ export default class MFP{
                             else{
                                 $(elmt).parent().children('li.preferences').css('display','none');
                             }
-                            $(this.container).find('.subtitles-block  button.subtitles').removeClass('off').attr('aria-pressed',"true");
+                            $(this.container).find('.subtitles-block  button.subtitles').removeClass('off');
                             $(this.container).find('.subtitles-block  button.subtitles').attr('title',this.lang.subtitles);
                         $(this.container).find('.subtitles-block  button.subtitles .mfp-hidden').html(this.lang.subtitles);
                             $(this.container).addClass('track-'+this.subtitles[$(elmt).data('id')].track.ext);
@@ -1231,12 +1231,12 @@ export default class MFP{
             select:function(elmt){
                 if($(elmt).hasClass('mfp_live')){
                     if($(this.container).find('.right-part .transcripts-block .transcripts').hasClass('off')){
-                        $(this.container).find('.right-part .transcripts-block .transcripts').removeClass('off').attr('aria-pressed','true');
+                        $(this.container).find('.right-part .transcripts-block .transcripts').removeClass('off');
                         $(elmt).find('span').html(this.lang.desactivateLiveTranscript);
                         this.liveOn=true;
                     }
                     else{
-                        $(this.container).find('.right-part .transcripts-block .transcripts').addClass('off').attr('aria-pressed','false');
+                        $(this.container).find('.right-part .transcripts-block .transcripts').addClass('off');
                         $(elmt).find('span').html(this.lang.activateLiveTranscript);
                         this.liveOn=false;
                     }
@@ -1526,12 +1526,13 @@ export default class MFP{
       //standard event
       var container = this.container;
       $(this.container).find('.expand').click(function(){
+          
           if($(this.container).find('.expand').hasClass('mfp-icon-expand')){
+            console.log('expand');
               if ($(this.container)[0].requestFullscreen) {
-                  $(this.container)[0].requestFullscreen();
                   document.addEventListener("fullscreenchange",function(e){
                       if(document.fullscreen){
-                          $(this.container).find('expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
+                          $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
                           $(this.container).addClass('fullscreen');
                           this.fontSize();
                       }
@@ -1541,8 +1542,9 @@ export default class MFP{
                           $(this.container).removeClass('fullscreen');
                       }
                   }.bind(this));
+                  $(this.container)[0].requestFullscreen();
               } else if ($(this.container)[0].webkitRequestFullscreen) {
-                  $(this.container)[0].webkitRequestFullscreen();
+                console.log('webkitRequestFullscreen');
                   document.addEventListener("webkitfullscreenchange",function(e){
                       if(document.webkitIsFullScreen){
                           $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
@@ -1556,8 +1558,9 @@ export default class MFP{
                       }
 
                   }.bind(this));
+                  $(this.container)[0].webkitRequestFullscreen();
               } else if ($(this.container)[0].mozRequestFullScreen) {
-                  $(this.container)[0].mozRequestFullScreen();
+                console.log('mozRequestFullScreen');
                   document.addEventListener("mozfullscreenchange",function(e){
                        if(document.mozFullScreen){
                           $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
@@ -1570,8 +1573,9 @@ export default class MFP{
                           $(this.container).removeClass('fullscreen');
                       }
                   }.bind(this));
+                  $(this.container)[0].mozRequestFullScreen();
               } else if ($(this.container)[0].msRequestFullscreen) {
-                  $(this.container)[0].msRequestFullscreen();
+                console.log('msRequestFullscreen');
                   document.addEventListener("MSFullscreenChange",function(e){
                        if(document.msFullScreen){
                           $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
@@ -1584,6 +1588,7 @@ export default class MFP{
                           $(this.container).removeClass('fullscreen');
                       }
                   }.bind(this));
+                  $(this.container)[0].msRequestFullscreen();
               }
               else{
                   // none of the events work so we are on mobile or tablet, so asking fullscreen on the video directly
