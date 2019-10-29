@@ -437,6 +437,26 @@ ul.mfp_list{
             }
           }
         }
+        &>a{
+            color: #FFF !important;
+            display: block;
+            color: inherit;
+            text-decoration: inherit;
+            line-height: 1.5;
+            margin-left: 0;
+            font-size: 24px;
+            padding: 0 5px;
+            [class^="icon-"]{
+                font-size: 24px;
+                color: inherit;
+            }
+            &.selected{
+              background: #999;
+            }
+            div.ui-state-active{
+              background: #CCC;
+            }
+        }
         li{
             line-height: 1.5;
             margin-left: 0;
