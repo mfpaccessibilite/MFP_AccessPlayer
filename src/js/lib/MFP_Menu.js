@@ -33,36 +33,38 @@ export default class MFP_Menu {
   prepareContent(){
       this.element.attr('role','menu').addClass('mfp_list').attr('tabindex','0');
       this.element.on('focus',function(){
-          if($(this).find('li.selected').length>0){
-              $(this).find('li.selected').focus();
+          if($(this).find('li.selected, a.selected').length>0){
+              $(this).find('li.selected, a.selected').focus();
           }
           else{
-              $(this).find('li:first-child').focus();
+              $(this).find('li:first-child, a:first-child').focus();
           }
       });
-      this.element.find('li').attr('role','menuitem').attr('tabindex','0');
-      this.element.find('li').on('focus',function(e){
+      this.element.find('li, a').attr('role','menuitem').attr('tabindex','0');
+      this.element.find('li, a').on('focus',function(e){
           $(this).addClass('focus');
       });
-      this.element.find('li').on('blur',function(e){
+      this.element.find('li, a').on('blur',function(e){
           $(this).removeClass('focus');
       });
-      this.element.find('li').click(function(e){
+      this.element.find('li, a').click(function(e){
           var that = e.currentTarget;
-          $(that).parent().find('li').removeAttr('aria-selected');
-          $(that).parent().find('li').removeClass('selected');
-          $(that).addClass('selected');
-          $(that).attr('aria-selected','true');
+          if(!$(that).hasClass('mfp-link')){
+              $(that).parent().find('li, a').removeAttr('aria-selected');
+              $(that).parent().find('li, a').removeClass('selected');
+              $(that).addClass('selected');
+              $(that).attr('aria-selected','true');
+          }
           this.options.select(that);
       }.bind(this));
-      this.element.find('li').on('keydown',function(e){
+      this.element.find('li, a').on('keydown',function(e){
           var that = e.currentTarget;
           if(e.which==38){ //up
               if($(that).prev().length>0){
                   $(that).prev().focus();
               }
               else{
-                  $(that).parent().find('li:last-child').focus();
+                  $(that).parent().find('li:last-child, a:last-child').focus();
               }
 
           }
@@ -71,7 +73,7 @@ export default class MFP_Menu {
                   $(that).next().focus();
               }
               else{
-                  $(that).parent().find('li:first-child').focus();
+                  $(that).parent().find('li:first-child, a:first-child').focus();
               }
           }
           else if(e.which == 9){ // tab
@@ -79,12 +81,14 @@ export default class MFP_Menu {
               $(that).parent().parent().find('.ui-dialog-titlebar button').focus();
           }
           else if(e.which == 13){ // enter
-              e.preventDefault();
-              $(that).parent().find('li').removeAttr('aria-selected');
-              $(that).parent().find('li').removeClass('selected');
-              $(that).addClass('selected');
-              $(that).attr('aria-selected','true');
-              this.options.select(that);
+                if(!$(e.currentTarget).hasClass('mfp-link')){
+                    e.preventDefault();
+                    $(that).parent().find('li, a').removeAttr('aria-selected');
+                    $(that).parent().find('li, a').removeClass('selected');
+                    $(that).addClass('selected');
+                    $(that).attr('aria-selected','true');
+                    this.options.select(that);
+                }
 
           }
 

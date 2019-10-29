@@ -241,10 +241,31 @@ export default class MFP{
                     }
                     dura=dura+min+':'+sec;
 
+                    var tmp = Math.round(this.duration);
+                    var hr = 0;
+                    var min = 0;
+                    var minute = 0;
+                    var sec = 0;
+                    var duration2 = '';
+                    sec = tmp%60;
+                    min = ((tmp - sec) / 60)%60;
+                    minute = ((tmp - sec) / 60);
+                    hr = (tmp - sec - 60 * min) / 3600;
+                    if(hr > 0){
+                        duration2=hr+':';
+                    }
+                    if(sec < 10 ){
+                        sec = '0' + sec;
+                    }
+                    if(min < 10 && hr > 0){
+                        min = '0' + min;
+                    }
+                    duration2=duration2+min+':'+sec;
+
                     $(this.container).find('.timer-current').html(dura);
                     var h = this.progressBar.find('.ui-slider-handle');
                     //$(this.controlBar).find('.progress-bar').attr('aria-valuetext',min+':'+sec+' '+this.lang.on+' '+this.duration);
-                    h.attr('aria-valuetext',dura+' '+this.lang.on+' '+this.duration);
+                    h.attr('aria-valuetext',dura+' '+this.lang.on+' '+duration2);
                     h.attr('aria-valuenow',(time/duration)*100);
                   });
               });
@@ -649,7 +670,7 @@ export default class MFP{
             var h = this.progressBar.find('.ui-slider-handle');
             h.attr('role','slider');
             h.attr('aria-valuemin','0');
-            h.attr('aria-valuemax','0');
+            h.attr('aria-valuemax','100');
             h.attr('aria-valuenow','100');
             h.attr('aria-valuetext','');
             h.attr('aria-label',this.lang.searchBar);
@@ -657,10 +678,10 @@ export default class MFP{
             $(this.controlBar).append(this.progressBar);
             var leftPart = $("<div class='left-part' />");
             $(this.controlBar).append($(leftPart));
-            $(leftPart).append('<button class="mfp-icon-play play" title="'+this.lang.play+'" aria-label="'+this.lang.play+'" aria-pressed="true"><span class="mfp-hidden">'+this.lang.play+'</span></button>');
+            $(leftPart).append('<button class="mfp-icon-play play" title="'+this.lang.play+'" aria-label="'+this.lang.play+'"><span class="mfp-hidden">'+this.lang.play+'</span></button>');
             var soundPart = $("<span class='soundPart'></span>");
             $(leftPart).append($(soundPart));
-            $(soundPart).append('<button class="mfp-icon-volume-up sound" title="'+this.lang.soundOff+'" aria-pressed="true"><span class="mfp-hidden">'+this.lang.soundOff+'</span></button>');
+            $(soundPart).append('<button class="mfp-icon-volume-up sound" title="'+this.lang.soundOff+'"><span class="mfp-hidden">'+this.lang.soundOff+'</span></button>');
             //this.soundBar = $('<div class="sound-range" aria-label="'+this.lang.volume+'" aria-valuetext="100% '+this.lang.volume+'">');
             this.soundBar = $('<div class="sound-range">');
             this.soundBar.slider({'min':0,'max':100,'value':100,'step':10,animate:false,range:'min'});
@@ -696,7 +717,7 @@ export default class MFP{
             $(rightPart).append('<div class="chapters-block"></div>');
             // if having transcripts, display the transcript button
             if((this.options.transcripts.html!='' && typeof this.options.transcripts.html !== "undefined") || (this.options.transcripts.txt!='' && typeof this.options.transcripts.txt !== "undefined") || this.options.live!=''){
-                $(rightPart).append('<div class="transcripts-block"><button class="mfp-icon-download transcripts off" title="'+this.lang.transcripts+'"><span class="mfp-hidden">'+this.lang.transcripts+'</span></button><ul class="menu" title="'+this.lang.transcripts+'" /></ul></div>');
+                $(rightPart).append('<div class="transcripts-block"><button class="mfp-icon-download transcripts off" title="'+this.lang.transcripts+'"><span class="mfp-hidden">'+this.lang.transcripts+'</span></button><div class="menu" title="'+this.lang.transcripts+'" /></div></div>');
                 this.initTranscripts();
             }
             $(rightPart).append('<button class="mfp-icon-info infos" title="'+this.lang.informations+'"><span class="mfp-hidden">'+this.lang.informations+'</span></button>');
@@ -1216,15 +1237,16 @@ export default class MFP{
         var menu = $(this.container).find('.right-part .transcripts-block .menu');
         $(menu[0]).append(men);
         if(this.options.live!=''){
-            var men = $('<li class="mfp_live" ><span class="mfp-icon-live">'+this.lang.activateLiveTranscript+'</span></li>');
+            var men = $('<a class="mfp_live" ><span class="mfp-icon-live">'+this.lang.activateLiveTranscript+'</span></a>');
             $(menu[0]).append(men);
         }
         if(this.options.transcripts.html!='' && typeof this.options.transcripts.html !== "undefined"){
-            var men = $('<li class="" data-src="'+this.options.transcripts.html+'"><span class="mfp-icon-html">'+this.lang.transcript+' HTML</span></li>');
+            //var men = $('<li class="" data-src="'+this.options.transcripts.html+'"><span class="mfp-icon-html">'+this.lang.transcript+' HTML</span></li>');
+            var men = $('<a class="mfp-link" href="'+this.options.transcripts.html+'" target="_blank"><span class="mfp-icon-html">'+this.lang.transcript+' HTML</span></a>');
             $(menu[0]).append(men);
         }
         if(this.options.transcripts.txt!='' && typeof this.options.transcripts.txt !== "undefined"){
-            var men = $('<li class="" data-src="'+this.options.transcripts.txt+'"><span class="mfp-icon-txt">'+this.lang.transcript+' TXT</span></li>');
+            var men = $('<a class="mfp-link" href="'+this.options.transcripts.txt+'" target="_blank"><span class="mfp-icon-txt">'+this.lang.transcript+' TXT</span></a>');
             $(menu[0]).append(men);
         }
         var m = new MFP_Menu($(menu[0]),{
@@ -1243,9 +1265,10 @@ export default class MFP{
                     this.updateLive();
                 }
                 else{
-                    var vsrc = $(elmt).data('src');
-                    window.open(vsrc);
-                    $(this.container).find('.right-part .transcripts-block .menu').dialog( "close" );
+                    
+                    //var vsrc = $(elmt).data('src');
+                    //window.open(vsrc);
+                    //$(this.container).find('.right-part .transcripts-block .menu').dialog( "close" );
                 }
             }.bind(this)
         });
@@ -1528,17 +1551,16 @@ export default class MFP{
       $(this.container).find('.expand').click(function(){
           
           if($(this.container).find('.expand').hasClass('mfp-icon-expand')){
-            console.log('expand');
               if ($(this.container)[0].requestFullscreen) {
                   document.addEventListener("fullscreenchange",function(e){
                       if(document.fullscreen){
-                          $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
+                          $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress).find('span').html(this.lang.compress);
                           $(this.container).addClass('fullscreen');
                           this.fontSize();
                       }
                       else{
-                          document.removeEventListener('fullscreenchange',arguments.callee);
-                          $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                          document.removeEventListener('fullscreenchange',arguments);
+                          $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand).find('span').html(this.lang.expand);
                           $(this.container).removeClass('fullscreen');
                       }
                   }.bind(this));
@@ -1547,13 +1569,13 @@ export default class MFP{
                 console.log('webkitRequestFullscreen');
                   document.addEventListener("webkitfullscreenchange",function(e){
                       if(document.webkitIsFullScreen){
-                          $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
+                          $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress).find('span').html(this.lang.compress);
                           $(this.container).addClass('fullscreen');
                           this.fontSize();
                       }
                       else{
-                          $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
-                          document.removeEventListener('webkitfullscreenchange',arguments.callee);
+                          $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand).find('span').html(this.lang.expand);
+                          document.removeEventListener('webkitfullscreenchange',arguments);
                           $(this.container).removeClass('fullscreen');
                       }
 
@@ -1563,13 +1585,13 @@ export default class MFP{
                 console.log('mozRequestFullScreen');
                   document.addEventListener("mozfullscreenchange",function(e){
                        if(document.mozFullScreen){
-                          $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
+                          $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress).find('span').html(this.lang.compress);
                           $(this.container).addClass('fullscreen');
                           this.fontSize();
                       }
                       else{
-                          document.removeEventListener('mozfullscreenchange',arguments.callee);
-                          $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                          document.removeEventListener('mozfullscreenchange',arguments);
+                          $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand).find('span').html(this.lang.expand);
                           $(this.container).removeClass('fullscreen');
                       }
                   }.bind(this));
@@ -1578,13 +1600,13 @@ export default class MFP{
                 console.log('msRequestFullscreen');
                   document.addEventListener("MSFullscreenChange",function(e){
                        if(document.msFullScreen){
-                          $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
+                          $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress).find('span').html(this.lang.compress);
                           $(this.container).addClass('fullscreen');
                           this.fontSize();
                       }
                       else{
-                          document.removeEventListener('MSFullscreenChange',arguments.callee);
-                          $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                          document.removeEventListener('MSFullscreenChange',arguments);
+                          $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand).find('span').html(this.lang.expand);
                           $(this.container).removeClass('fullscreen');
                       }
                   }.bind(this));
@@ -1592,7 +1614,7 @@ export default class MFP{
               }
               else{
                   // none of the events work so we are on mobile or tablet, so asking fullscreen on the video directly
-                  $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress);
+                  $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress).find('span').html(this.lang.compress);
                   this.videoPlayer.webkitEnterFullscreen();
                   this.notSupportedStandarFullScreen = true;
               }
@@ -1601,19 +1623,19 @@ export default class MFP{
           else{
               $(this.container).removeClass('showcue');
               if (document.exitFullscreen) {
-                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand).find('span').html(this.lang.expand);
                   document.exitFullscreen();
               } else if (document.webkitExitFullscreen) {
-                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand).find('span').html(this.lang.expand);
                   document.webkitExitFullscreen();
               } else if (document.mozCancelFullScreen) {
-                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand).find('span').html(this.lang.expand);
                   document.mozCancelFullScreen();
               } else if (document.msExitFullscreen) {
-                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand).find('span').html(this.lang.expand);
                   document.msExitFullscreen();
               }else{
-                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand);
+                  $(this.container).find('.expand').removeClass('mfp-icon-compress').addClass('mfp-icon-expand').attr('aria-label',this.lang.expand).find('span').html(this.lang.expand);
                   this.videoPlayer.webkitExitFullscreen();
                   this.notSupportedStandarFullScreen = false;
               }

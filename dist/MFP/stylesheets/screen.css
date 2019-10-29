@@ -361,6 +361,22 @@ ul.mfp_list {
         width: 270px; }
         .mfp-wrapper .menu label span.mfp-label-name:after {
           content: ' : '; }
+    .mfp-wrapper .menu > a {
+      color: #FFF !important;
+      display: block;
+      color: inherit;
+      text-decoration: inherit;
+      line-height: 1.5;
+      margin-left: 0;
+      font-size: 24px;
+      padding: 0 5px; }
+      .mfp-wrapper .menu > a [class^="icon-"] {
+        font-size: 24px;
+        color: inherit; }
+      .mfp-wrapper .menu > a.selected {
+        background: #999; }
+      .mfp-wrapper .menu > a div.ui-state-active {
+        background: #CCC; }
     .mfp-wrapper .menu li {
       line-height: 1.5;
       margin-left: 0;
