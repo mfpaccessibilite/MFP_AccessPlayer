@@ -467,21 +467,21 @@ export default class MFP{
                 for(var i=0; i<track.cues.length;i++){
                     var cue = track.cues[i];
                     cue.on('enter', (cue) =>{
+                        if(this.options.live!=''){
+                            $(this.options.live).find('.live-'+cue.track.subid+'-'+cue.id).addClass('selected');
+                            $(this.options.live).find('.live-'+cue.track.subid+'-'+cue.id).wrap('<mark>');
+                        }
                         if(cue.track.mode2=='showing'){
-                            this.displayCue(cue);
-                            if(this.options.live!=''){
-                                $(this.options.live).find('.live-'+cue.track.subid+'-'+cue.id).addClass('selected');
-                                $(this.options.live).find('.live-'+cue.track.subid+'-'+cue.id).wrap('<mark>');
-                            }
+                            this.displayCue(cue); 
                         }
                     });
                     cue.on('exit', (cue)=>{
+                        if(this.options.live!=''){
+                            $(this.options.live).find('.live-'+cue.track.subid+'-'+cue.id).removeClass('selected');
+                            $(this.options.live).find('.live-'+cue.track.subid+'-'+cue.id).unwrap('mark');
+                        }
                         if(cue.track.mode2=='showing'){
                             $(this.container).find('.mfp-subtitles-wrapper .sub-'+cue.track.subid+'-'+cue.id).remove();
-                            if(this.options.live!=''){
-                                $(this.options.live).find('.live-'+cue.track.subid+'-'+cue.id).removeClass('selected');
-                                $(this.options.live).find('.live-'+cue.track.subid+'-'+cue.id).unwrap('mark');
-                            }
                         }
                     });
                 }
@@ -566,7 +566,34 @@ export default class MFP{
         }
 
     }
-
+    
+    makeLiveContent(id){
+        var target = $(this.options.live+' .live_content');
+        target.empty();
+        var cues = this.subtitles[id].track.cues;
+        for(var j=0; j < cues.length; j++){
+            var l = $("<div tabindex='0' class='live-"+id+"-"+cues[j].id+" mfp-live cue' data-tcin='"+cues[j].startTime+"' data-tcout='"+cues[j].endTime+"'>"+cues[j].text.replace(/<[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}>/g,"").replace(/\n/g,'<br />')+"</div>");
+            l.click(function(e){
+              if(MFPDebug){
+                  console.log(e);
+              }
+              var tcin = $(e.currentTarget).data('tcin');
+              if(MFPDebug){
+                  console.log('setting video currentTime to : '+tcin);
+              }
+              this.redrawCues();
+              this.videoPlayer.setCurrentTime(tcin);
+              this.redrawCues();
+            }.bind(this));
+            l.keypress(function(event){
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if(keycode == '13'){
+                    this.click();
+                }
+            });
+            target.append(l);
+        }
+    }
     updateLive(){
         if(MFPDebug){
             console.log('update live');
@@ -576,39 +603,25 @@ export default class MFP{
             if(target.length>0){
                 target.empty();
                 if(this.liveOn){
-                    for(var i=0;i<this.subtitles.length;i++){
+                    // creating select menu :
+                    var selectTranscriptBlock = $('<div>'+this.lang.selectTranscript+' : </div>');
+                    target.append(selectTranscriptBlock);
+                    var select = $('<select />');
+                    for(var i=0; i<this.subtitles.length;i++){
+                        // check if actual subtitles so we put selected;
                         if(this.subtitles[i].track.mode2=='showing'){
-                            if(MFPDebug){
-                                console.log(this.subtitles[i]);
-                            }
-                            var cues = this.subtitles[i].track.cues;
-                            if(MFPDebug){
-                                console.log(cues);
-                            }
-                            for(var j=0; j < cues.length; j++){
-                                var l = $("<div tabindex='0' class='live-"+i+"-"+cues[j].id+" mfp-live' data-tcin='"+cues[j].startTime+"' data-tcout='"+cues[j].endTime+"'>"+cues[j].text.replace(/<[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}>/g,"").replace(/\n/g,'<br />')+"</div>");
-                                l.click(function(e){
-                                  if(MFPDebug){
-                                      console.log(e);
-                                  }
-                                  var tcin = $(e.currentTarget).data('tcin');
-                                  if(MFPDebug){
-                                      console.log('setting video currentTime to : '+tcin);
-                                  }
-                                  this.redrawCues();
-                                  this.videoPlayer.setCurrentTime(tcin);
-                                  this.redrawCues();
-                                }.bind(this));
-                                l.keypress(function(event){
-                                    var keycode = (event.keyCode ? event.keyCode : event.which);
-                                    if(keycode == '13'){
-                                        this.click();
-                                    }
-                                });
-                                target.append(l);
-                            }
+                            select.append($('<option value="'+i+'" selected>'+this.subtitles[i].track.label+'</option>'));
+                        }
+                        else{
+                            select.append($('<option value="'+i+'">'+this.subtitles[i].track.label+'</option>'));
                         }
                     }
+                    selectTranscriptBlock.append(select);
+                    target.append($('<div class="live_content"/>'));
+                    select.on('change',function(e){
+                        this.makeLiveContent($(e.delegateTarget).val());
+                    }.bind(this));
+                    this.makeLiveContent(select.val());
                 }
             }
         }
@@ -974,7 +987,7 @@ export default class MFP{
                             $(elmt).parent().children('li.preferences').css('display','none');
                         }
                         this.redrawCues();
-                        this.updateLive();
+                        //this.updateLive();
                         this.fontSize();
                     }
                     //this.videoPlayer.currentTime=$(elmt).data('start');
@@ -1338,7 +1351,7 @@ export default class MFP{
                 this.current_play=paused;
                 this.videoPlayer.pause();
                 this.redrawCues();
-                this.updateLive();
+                //this.updateLive();
                 this.seeking=true;
                 if(MFPDebug){
                   console.log('pausing video');
@@ -1351,7 +1364,7 @@ export default class MFP{
             if(!this.current_play){
                 this.videoPlayer.play();
                 this.redrawCues();
-                this.updateLive();
+                //this.updateLive();
                 if(MFPDebug){
                   console.log('playing video');
               }

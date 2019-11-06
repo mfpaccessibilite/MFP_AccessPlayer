@@ -103,13 +103,13 @@ export default class MFP_Track{
     }
 
     check(){
-        if(this.mode2==='showing'){
+        //if(this.mode2==='showing'){
             this.player.getCurrentTime().then((currentTime)=>{
                 for(let cue of this.cues){
                     cue.check(currentTime);
                 }
             });
-        }
+        //}
         return;
     }
 
