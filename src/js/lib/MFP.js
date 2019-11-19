@@ -10,6 +10,7 @@
  
  import MFP_Menu from './MFP_Menu';
  import MFP_Track from './MFP_Track';
+import { throwStatement } from 'babel-types';
 
 const _ = require('lodash');
 
@@ -51,6 +52,7 @@ export default class MFP{
       }.bind(this));
       
       this.options = $.extend( {}, this.default_options, options );
+      this.buffering=0;
       this.rate=1;
       this.paused=true;
       this.sound=100;
@@ -65,6 +67,8 @@ export default class MFP{
       this.lang={};
       this.liveOn=false;
       this.seeking=false;
+      this.isPaused=true;
+      this.tempPaused=false;
       this.tracks = [];
       this.notSupportedStandarFullScreen = false;
   }
@@ -88,6 +92,7 @@ export default class MFP{
       }, ()=>{
           console.log('Error, default lang script can not be loaded.');
       });
+      
       window.addEventListener("resize", () => {
           setTimeout(()=>{
               this.fontSize();
@@ -156,6 +161,7 @@ export default class MFP{
   }
   changeSource(src){
       return new Promise((resolve, reject) => {
+        this.showBuffering();
         this.videoPlayer.getCurrentTime().then((time)=>{
           this.videoPlayer.getPaused().then((paused)=>{
             this.videoPlayer.getPlaybackRate().then((rate)=>{
@@ -177,6 +183,7 @@ export default class MFP{
                         self.videoPlayer.play();
                       }
                       self.videoPlayer.off('canplay',canPlay);
+                      self.hideBuffering();
                       resolve();
                     };
                     this.videoPlayer.on('canplay', canPlay);
@@ -197,6 +204,23 @@ export default class MFP{
           const videoPlayer = this.videoPlayer;
           videoPlayer.on('loadedmetadata', ()=>{
               this.fontSize();
+          });
+          videoPlayer.on('bufferstart',(e)=>{
+            //console.log('buffer start');
+          });
+          videoPlayer.on('bufferend',(e)=>{
+            //console.log('buffer end');
+          });
+          
+          videoPlayer.on('seeking',(e)=>{
+            //console.log('seeking');
+          });
+          videoPlayer.on('seeked',(e)=>{
+            //console.log('seeked to '+e.seconds);
+          });
+          videoPlayer.on('waiting',(e)=>{
+            //console.log('waiting');
+            //console.log(e);
           });
           videoPlayer.on('play', (e)=>{
               $(this.container).find('.play').removeClass('mfp-icon-play').addClass('mfp-icon-pause');
@@ -650,7 +674,33 @@ export default class MFP{
           subwrapper.css('height', subWrapperHeight+'px');
         },100);
     }
-
+    showBuffering(){
+        this.buffering++;
+        if(this.buffering==1){
+            // checking the pause status : 
+            this.videoPlayer.getPaused().then((paused)=>{
+                this.isPaused = paused;
+                //console.log('We show buffer and pause is : '+this.isPaused);
+                this.videoPlayer.pause();
+                var buff = $('<div class="mfp_buffering"><div class="mfp_buff_text">'+this.lang.buffering+'</div></div>');
+                $(this.container).append(buff);
+                $(this.container).attr('aria-busy',true);
+            });
+        }
+    }
+    hideBuffering(){
+        this.buffering--;
+        if(this.buffering==0){
+            $(this.container).find('.mfp_buffering').remove();
+            $(this.container).attr('aria-busy',false);
+            if(!this.isPaused){
+                this.videoPlayer.play();
+            }
+            else{
+                this.videoPlayer.pause();
+            }
+        }
+    }
     loadInterface(){
         // load the interface of the player
         return new Promise((resolve, reject)=>{
@@ -658,6 +708,13 @@ export default class MFP{
             $(videoObj).addClass('mfp');
             $(videoObj).wrap($("<div class='mfp-wrapper "+this.options.theme_class+"'><div class='video-container mfp'></div></div>"));
             this.container = $(videoObj).parent().parent();
+            // adding buffering event for temp message on screen, usefule for vimeo :
+            $(this.container).on('bufferingstart',(e)=>{
+                //this.showBuffering();
+            });
+            $(this.container).on('bufferingend',(e)=>{
+                //this.hideBuffering();
+            });
             // adding control-bar
             this.container.append($('<div class="mfp-subtitles-wrapper" />'));
             var subwrapper = $(this.container).find('.mfp-subtitles-wrapper');
@@ -805,7 +862,7 @@ export default class MFP{
                 return (css.match (/(^|\s)font-family-\S+/g) || []).join(' ');
             });
             $(this.container).addClass('font-family-'+family);
-            console.log('changing font-family to '+family);
+            //console.log('changing font-family to '+family);
         }.bind(this));
         $(menu[0]).append($('<label><span class="mfp-label-name">'+this.lang.fontColor+'</span><select name="font-color">\
             <option value="white" selected>'+this.lang.white+'</option>\
@@ -825,7 +882,7 @@ export default class MFP{
                 return (css.match (/(^|\s)font-color-\S+/g) || []).join(' ');
             });
             $(this.container).addClass('font-color-'+color);
-            console.log('changing font-color to '+color);
+            //console.log('changing font-color to '+color);
         }.bind(this));
 
         $(menu[0]).append($('<label><span class="mfp-label-name">'+this.lang.fontShadowColor+'</span><select name="font-shadow-color">\
@@ -1038,7 +1095,7 @@ export default class MFP{
             //$(menu[0]).menu({role:'listbox',items:'li'});
             var m = new MFP_Menu($(menu[0]),{
                 select:function(elmt){
-                    console.log('chapter selected');
+                    //console.log('chapter selected');
                     this.videoPlayer.setCurrentTime($(elmt).data('start'));
                     $(this.container).find('.right-part .chapters-block .menu').dialog('close');
                 }.bind(this)
@@ -1342,33 +1399,34 @@ export default class MFP{
     progressEvents(){
         var progress = $(this.controlBar).find('.progress-bar');
         progress.on('slide', ()=>{
-            this.seekUpdate();
+            //console.log('slide');
+            //this.seekUpdate();
         });
-        //progress.on('click',function(){console.log('click');});
-        //progress.on('slidestart',function(){console.log('start');});
+        progress.on('click',()=>{
+            //console.log('click on progress');
+            //this.seekUpdate();
+        });
         progress.on('slidestart', ()=>{
+            //console.log('slide start');
             this.videoPlayer.getPaused().then((paused)=>{
-                this.current_play=paused;
-                this.videoPlayer.pause();
-                this.redrawCues();
-                //this.updateLive();
-                this.seeking=true;
-                if(MFPDebug){
-                  console.log('pausing video');
+                if(paused){
+                    this.tempPaused=true;
+                }
+                else{
+                    this.tempPaused=false;
+                    this.videoPlayer.pause();
                 }
                 this.seekUpdate();
             });
+            
         });
         progress.on('slidestop', ()=>{
-            this.seekUpdate();
-            if(!this.current_play){
+            //console.log('slide stop');
+            if(!this.tempPaused){
                 this.videoPlayer.play();
-                this.redrawCues();
-                //this.updateLive();
-                if(MFPDebug){
-                  console.log('playing video');
-              }
             }
+            this.seekUpdate();
+            
             this.seeking=false;
         });
         //progress.on('update',function(){this.seekUpdate();}.bind(this));
@@ -1408,15 +1466,25 @@ export default class MFP{
                 }
                 if(shouldUpdate){
                   // taking care of changing currentTime :
-                  console.log('changing time to : '+targetTime);
-                  this.videoPlayer.getPaused().then((paused)=>{
-                    this.videoPlayer.pause();
-                    this.videoPlayer.setCurrentTime(targetTime).then((time)=>{
-                      if(!paused){
-                        this.videoPlayer.play();
-                      }
+                  //console.log('changing time to : '+targetTime);
+                  //this.videoPlayer.getPaused().then((paused)=>{
+                    //this.videoPlayer.pause();
+                    this.videoPlayer.getDuration().then((duration)=>{
+                    // update slider so visual first :
+                        let value = (targetTime * 100)/duration;
+                        //$(this.controlBar).find('.progress-bar').trigger('slidestart');
+                        $(this.controlBar).find('.progress-bar').slider('value',value);
+                        //$(this.controlBar).find('.progress-bar').trigger('slidestop');
+                        this.seekUpdate();
+                        /*
+                        this.videoPlayer.setCurrentTime(targetTime).then((time)=>{
+                            if(!paused){
+                                this.videoPlayer.play();
+                            }
+                        });
+                        */
                     });
-                  });
+                  //});
                 }
             });
           });
@@ -1427,8 +1495,11 @@ export default class MFP{
         return new Promise((resolve, reject)=>{
             this.videoPlayer.getDuration().then((duration)=>{
                 let currentTime = (duration * $(this.controlBar).find('.progress-bar').slider('option',"value"))/100;
-                this.videoPlayer.setCurrentTime(currentTime);
-                resolve();
+                this.showBuffering();
+                this.videoPlayer.setCurrentTime(currentTime).then((time)=>{
+                    this.hideBuffering();
+                    resolve();
+                });
             });
         });
     }
@@ -1579,7 +1650,7 @@ export default class MFP{
                   }.bind(this));
                   $(this.container)[0].requestFullscreen();
               } else if ($(this.container)[0].webkitRequestFullscreen) {
-                console.log('webkitRequestFullscreen');
+                //console.log('webkitRequestFullscreen');
                   document.addEventListener("webkitfullscreenchange",function(e){
                       if(document.webkitIsFullScreen){
                           $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress).find('span').html(this.lang.compress);
@@ -1595,7 +1666,7 @@ export default class MFP{
                   }.bind(this));
                   $(this.container)[0].webkitRequestFullscreen();
               } else if ($(this.container)[0].mozRequestFullScreen) {
-                console.log('mozRequestFullScreen');
+                //console.log('mozRequestFullScreen');
                   document.addEventListener("mozfullscreenchange",function(e){
                        if(document.mozFullScreen){
                           $(this.container).find('.expand').removeClass('mfp-icon-expand').addClass('mfp-icon-compress').attr('aria-label',this.lang.compress).find('span').html(this.lang.compress);

@@ -54,4 +54,5 @@ var lang = {
     desactivate:'Desactivate',
     nosupport:'Sorry, the video format %s is not supported',
     selectTranscript:'Select the live transcript to display',
+    buffering:'Buffering...'
 };

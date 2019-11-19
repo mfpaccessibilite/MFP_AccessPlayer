@@ -150,6 +150,22 @@ ul.mfp_list{
 .mfp-wrapper{
     background-color: #000;
     position: relative;
+    .mfp_buffering{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background-color: rgba(0,0,0,.5);
+      .mfp_buff_text{
+        text-align: center;
+        color: #FFF;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
     .ui-dialog .ui-dialog-title{
       white-space: pre-wrap;
       text-overflow: initial;
@@ -163,6 +179,10 @@ ul.mfp_list{
         max-height:100%;
         z-index: 1;
         position: relative;
+    }
+    .video-container.mfp{
+      position: relative;
+      
     }
     &.fullscreen{
         width: 100%;

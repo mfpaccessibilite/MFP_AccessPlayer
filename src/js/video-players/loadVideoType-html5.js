@@ -13,6 +13,7 @@ class VideoHtml5{
     constructor(video, element){
         this.video = video;
         this.container = element;
+        this.seeking = false;
     }
 
     destroy(){}
@@ -136,7 +137,7 @@ class VideoHtml5{
 
     setPlaybackRate(rate){
         return new Promise((resolve, reject)=>{
-            console.log('changing rate to '+rate);
+            //console.log('changing rate to '+rate);
             this.videoPlayer.playbackRate = rate;
             resolve(rate);
         });

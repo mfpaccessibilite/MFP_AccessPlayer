@@ -135,6 +135,20 @@ ul.mfp_list {
   /*Chrome*/
   /** FF*/
   /* IE*/ }
+  .mfp-wrapper .mfp_buffering {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5); }
+    .mfp-wrapper .mfp_buffering .mfp_buff_text {
+      text-align: center;
+      color: #FFF;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%); }
   .mfp-wrapper .ui-dialog .ui-dialog-title {
     white-space: pre-wrap;
     text-overflow: initial; }
@@ -145,6 +159,8 @@ ul.mfp_list {
     width: 100%;
     max-height: 100%;
     z-index: 1;
+    position: relative; }
+  .mfp-wrapper .video-container.mfp {
     position: relative; }
   .mfp-wrapper.fullscreen {
     width: 100%;
