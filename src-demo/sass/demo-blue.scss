@@ -85,6 +85,13 @@ a.evitement:focus {
 header{
     background-image: linear-gradient(to right, $header-gradient-color1,$header-gradient-color2,$header-gradient-color3,$header-gradient-color4,$header-gradient-color5);
     color: $header-text-color;
+    a, img{
+        display: inline-block;
+        z-index:2;
+        &:focus{
+            outline: 1px solid #fff;
+        }
+    }
 
 }
 
@@ -99,6 +106,7 @@ header{
         width: 70%;
         max-height: 100%;
         background-color: $logo-background-color;
+        
     }
 
     div.triangle1 div.triangle2{
@@ -183,6 +191,8 @@ header{
         _border-color: #000000 #000000 #000000 $logo-background-color;
         _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
         margin:0 $triangle-spacing;
+        position: relative;
+        z-index: 1;
     }
 
     h1{
