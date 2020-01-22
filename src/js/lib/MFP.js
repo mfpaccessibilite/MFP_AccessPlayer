@@ -1001,7 +1001,8 @@ export default class MFP{
                 var track = this.subtitles[i].track;
                 var t = $('<li data-id="'+i+'">'+track.label+'</li>');
                 if(track.ext=='srt'){
-                  t.attr('aria-owns',pref_id);
+                  //t.attr('aria-owns',pref_id);
+                  t.attr('aria-haspopup',true);
                 }
                 $(menu[0]).append(t);
             }
