@@ -52,6 +52,11 @@ a.evitement:focus {
 header {
   background-image: linear-gradient(to right, #0094c8, #0094c8, #0094c8, #0094c8, #0094c8);
   color: #fff; }
+  header a, header img {
+    display: inline-block;
+    z-index: 2; }
+    header a:focus, header img:focus {
+      outline: 1px solid #fff; }
 
 /* ---------------------------------------------------
  * Media queries smalls screens, less than 641 px*/
@@ -89,7 +94,7 @@ header {
     display: inline-block;
     border-right: 2px solid #fff;
     padding: 10px 0;
-    width: 49%;
+    width: 100%;
     text-align: center; }
   nav#navbar ul li a {
     text-decoration: none;
@@ -119,7 +124,9 @@ header {
     border-color: #057EB6 #057EB6 #057EB6 #000;
     _border-color: #000000 #000000 #000000 #000;
     _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
-    margin: 0 -0.35rem; }
+    margin: 0 -0.35rem;
+    position: relative;
+    z-index: 1; }
   h1 {
     font-style: italic;
     font-size: 1.5rem;

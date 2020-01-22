@@ -8,9 +8,9 @@
  * Date : 2019-07-18T02:10Z
  */
  
- import MFP_Menu from './MFP_Menu';
- import MFP_Track from './MFP_Track';
-import { throwStatement } from 'babel-types';
+import MFP_Menu from './MFP_Menu';
+import MFP_Track from './MFP_Track';
+//import { throwStatement } from 'babel-types';
 
 const _ = require('lodash');
 
@@ -772,7 +772,7 @@ export default class MFP{
             $(rightPart).append('<select class="speed" aria-label="'+this.lang.playBackrate+'" title="'+this.lang.playBackrate+'"><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>');
             // if having video alternatives, showing the videos buttons
             if((this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined) || (this.options.videos.audiodesc!='' && this.options.videos.audiodesc!=undefined) || (this.options.videos.signed!='' && this.options.videos.signed!=undefined)){
-                $(rightPart).append('<button class="mfp-icon-hd video_hd" title="'+this.lang.desactivate+' '+this.lang.highdef+'" aria-pressed="true"><span class="mfp-hidden">'+this.lang.desactivate+' '+this.lang.highdef+'</span></button>');
+                $(rightPart).append('<button class="mfp-icon-hd video_hd" title="'+this.lang.desactivate+' '+this.lang.highdef+'"><span class="mfp-hidden">'+this.lang.desactivate+' '+this.lang.highdef+'</span></button>');
                 if((this.options.videos.audiodesc!='' && this.options.videos.audiodesc!=undefined)){
                     $(rightPart).append('<button class="mfp-icon-audio-description video_audiodesc off" title="'+this.lang.activate+' '+this.lang.audiodesc+'" aria-pressed="false"><span class="mfp-hidden">'+this.lang.activate+' '+this.lang.audiodesc+'</span></button>');
                 }
@@ -1137,7 +1137,7 @@ export default class MFP{
                         //this.videoPlayer.pause();
                         let src = null;
                         if(btn.hasClass('off')){
-                            btn.removeClass('off').attr('aria-pressed','true');
+                            btn.removeClass('off');
                             if(btn.hasClass('mfp-icon-hd')){
                                 src = this.options.videos.highdef;
                                 if((this.options.videos.lowdef!='' && this.options.videos.lowdef!=undefined)){
@@ -1210,7 +1210,7 @@ export default class MFP{
                   }
                     this.options.last_video='.video_hd';
                 }
-                $(this.container).find('.video_hd').addClass('off').attr('aria-pressed','false');
+                $(this.container).find('.video_hd').addClass('off');
                 if(!$(this.container).find('.video_signed').hasClass('off')){
                     this.options.last_video='.video_signed';
                     $(this.container).find('.video_signed').attr('title',this.lang.activate+' '+this.lang.signed);
@@ -1262,7 +1262,7 @@ export default class MFP{
                   }
                     this.options.last_video='.video_hd';
                 }
-                $(this.container).find('.video_hd').addClass('off').attr('aria-pressed','false');
+                $(this.container).find('.video_hd').addClass('off');
                 if(!$(this.container).find('.video_audiodesc').hasClass('off')){
                     this.options.last_video='.video_audiodesc';
                     $(this.container).find('.video_audiodesc').attr('title',this.lang.activate+' '+this.lang.audiodesc);

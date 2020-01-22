@@ -52,6 +52,11 @@ a.evitement:focus {
 header {
   background-image: linear-gradient(to right, #f2500c, #f45f23, #f56d35, #f67a46, #f78656);
   color: #fff; }
+  header a, header img {
+    display: inline-block;
+    z-index: 2; }
+    header a:focus, header img:focus {
+      outline: 1px solid #fff; }
 
 /* ---------------------------------------------------
  * Media queries smalls screens, less than 641 px*/
@@ -89,7 +94,7 @@ header {
     display: inline-block;
     border-right: 2px solid #6E7881;
     padding: 10px 0;
-    width: 49%;
+    width: 100%;
     text-align: center; }
   nav#navbar ul li a {
     text-decoration: none;
