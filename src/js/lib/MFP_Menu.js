@@ -32,6 +32,7 @@ export default class MFP_Menu {
 
   prepareContent(){
       this.element.attr('role','menu').addClass('mfp_list').attr('tabindex','0');
+      
       this.element.on('focus',function(){
           if($(this).find('li.selected, a.selected').length>0){
               $(this).find('li.selected, a.selected').focus();
@@ -40,6 +41,7 @@ export default class MFP_Menu {
               $(this).find('li:first-child, a:first-child').focus();
           }
       });
+      
       this.element.find('li, a').attr('role','menuitem').attr('tabindex','0');
       this.element.find('li, a').on('focus',function(e){
           $(this).addClass('focus');

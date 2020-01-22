@@ -986,6 +986,8 @@ export default class MFP{
             var btn = $(this.container).find('.right-part .subtitles-block .subtitles');
             btn.click(function(){
                 $(this.container).find('.right-part .subtitles-block .menu').dialog( "open" );
+                $(this.container).find('.right-part .subtitles-block .ui-dialog').focus();
+                
             }.bind(this));
 
             var menu = $(this.container).find('.right-part .subtitles-block .menu');
@@ -1012,6 +1014,7 @@ export default class MFP{
                 select:function(elmt){
                     if($(elmt).hasClass('preferences')){
                        $(this.container).find('.right-part .pref-block .menu').dialog( "open" );
+                       $(this.container).find('.right-part .pref-block .ui-dialog').focus();
                     }
                     else{
                         $(this.container).find('.subtitles-block  button.subtitles').addClass('off');
@@ -1073,6 +1076,7 @@ export default class MFP{
             var btn = $(this.container).find('.right-part .chapters-block .chapters');
             btn.click(function(){
                 $(this.container).find('.right-part .chapters-block .menu').dialog( "open" );
+                $(this.container).find('.right-part .chapters-block .ui-dialog').focus();
             }.bind(this));
             var menu = $(this.container).find('.right-part .chapters-block .menu');
             var cues = this.chapters[0].track.cues;
@@ -1304,6 +1308,7 @@ export default class MFP{
         var btn = $(this.container).find('.right-part .transcripts-block .transcripts');
         btn.click(function(){
             $(this.container).find('.right-part .transcripts-block .menu').dialog( "open" );
+            $(this.container).find('.right-part .transcripts-block .ui-dialog').focus();
         }.bind(this));
         var menu = $(this.container).find('.right-part .transcripts-block .menu');
         $(menu[0]).append(men);
