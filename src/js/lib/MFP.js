@@ -250,19 +250,41 @@ export default class MFP{
                     var minute = 0;
                     var sec = 0;
                     var dura = '';
+                    var dura2 = '';
                     sec = tmp%60;
                     min = ((tmp - sec) / 60)%60;
                     minute = ((tmp - sec) / 60);
                     hr = (tmp - sec - 60 * min) / 3600;
                     if(hr > 0){
                         dura=hr+':';
+                        if(hr<2){
+                            dura2 = hr+' '+this.lang.hour+' ';
+                        }
+                        else{
+                            dura2 = hr+' '+this.lang.hours+' ';
+                        }
                     }
-                    if(sec < 10 ){
-                        sec = '0' + sec;
+                    if(dura2!='' || min > 0){
+                        if(min<2){
+                            dura2 = dura2 + min + ' ' + this.lang.minute + ' ';
+                        }
+                        else{
+                            dura2 = dura2 + min + ' ' + this.lang.minutes + ' ';
+                        }
                     }
                     if(min < 10 && hr > 0){
                         min = '0' + min;
                     }
+                    if(sec<2){
+                        dura2 = dura2 + sec + ' ' + this.lang.second;
+                    }
+                    else{
+                        dura2 = dura2 + sec + ' ' + this.lang.seconds;
+                    }
+                    if(sec < 10 ){
+                        sec = '0' + sec;
+                    }
+                    
                     dura=dura+min+':'+sec;
 
                     var tmp = Math.round(this.duration);
@@ -271,25 +293,46 @@ export default class MFP{
                     var minute = 0;
                     var sec = 0;
                     var duration2 = '';
+                    
                     sec = tmp%60;
                     min = ((tmp - sec) / 60)%60;
                     minute = ((tmp - sec) / 60);
                     hr = (tmp - sec - 60 * min) / 3600;
                     if(hr > 0){
-                        duration2=hr+':';
+                        if(hr<2){
+                            duration2 = hr+' '+this.lang.hour+' ';
+                        }
+                        else{
+                            duration2 = hr+' '+this.lang.hours+' ';
+                        }
                     }
-                    if(sec < 10 ){
-                        sec = '0' + sec;
+                    if(duration2!='' || min > 0){
+                        if(min<2){
+                            duration2 = duration2 + min + ' ' + this.lang.minute + ' ';
+                        }
+                        else{
+                            duration2 = duration2 + min + ' ' + this.lang.minutes + ' ';
+                        }
                     }
                     if(min < 10 && hr > 0){
                         min = '0' + min;
                     }
-                    duration2=duration2+min+':'+sec;
+                    if(sec<2){
+                        duration2 = duration2 + sec + ' ' + this.lang.second;
+                    }
+                    else{
+                        duration2 = duration2 + sec + ' ' + this.lang.seconds;
+                    }
+                    if(sec < 10 ){
+                        sec = '0' + sec;
+                    }
+                    
+                    //duration2=duration2+min+':'+sec;
 
                     $(this.container).find('.timer-current').html(dura);
                     var h = this.progressBar.find('.ui-slider-handle');
                     //$(this.controlBar).find('.progress-bar').attr('aria-valuetext',min+':'+sec+' '+this.lang.on+' '+this.duration);
-                    h.attr('aria-valuetext',dura+' '+this.lang.on+' '+duration2);
+                    h.attr('aria-valuetext',dura2+' '+this.lang.on+' '+duration2);
                     h.attr('aria-valuenow',(time/duration)*100);
                   });
               });
@@ -339,10 +382,14 @@ export default class MFP{
           
 
           videoPlayer.on('volumechange',function(e){
-              this.sound=this.videoPlayer.volume;
-              var volume = this.videoPlayer.volume/100;
-              $(this.container).find('.sound-range')[0].value=volume;
-              this.soundUpdate();
+              
+              this.videoPlayer.getVolume().then((vol)=>{
+                this.sound = vol;
+                var volume = vol/100;
+                $(this.container).find('.sound-range')[0].value=volume;
+                this.soundUpdate();
+              });
+             
           }.bind(this));
 
           resolve();
@@ -758,7 +805,7 @@ export default class MFP{
             var h = this.soundBar.find('.ui-slider-handle');
             h.attr('role','slider');
             h.attr('aria-valuemin','0');
-            h.attr('aria-valuemax','0');
+            h.attr('aria-valuemax','100');
             h.attr('aria-valuenow','100');
             h.attr('aria-valuetext','100% '+this.lang.volume);
             h.attr('aria-label',this.lang.volume);
@@ -1512,21 +1559,26 @@ export default class MFP{
 
     soundUpdate(e){
         const videoPlayer = this.videoPlayer;
-        videoPlayer.setVolume($(this.container).find('.sound-range').slider('option','value') / 100);
-        var h = this.soundBar.find('.ui-slider-handle');
-        videoPlayer.getVolume().then((volume)=>{
-            h.attr('aria-valuenow', volume * 100);
-            h.attr('aria-valuetext', Math.round(volume *100)+'% '+this.lang.volume);
+        videoPlayer.getVolume().then((vol)=>{
+            if(vol != $(this.container).find('.sound-range').slider('option','value') / 100){
+                videoPlayer.setVolume($(this.container).find('.sound-range').slider('option','value') / 100);
+                var h = this.soundBar.find('.ui-slider-handle');
+                videoPlayer.getVolume().then((volume)=>{
+                    h.attr('aria-valuenow', volume * 100);
+                    h.attr('aria-valuetext', Math.round(volume *100)+'% '+this.lang.volume);
 
-            if(volume >= 0.5){
-                $(this.container).find('.sound').removeClass('mfp-icon-volume-mute').removeClass('mfp-icon-volume-down').addClass('mfp-icon-volume-up');
-            }
-            else if(volume > 0){
-                $(this.container).find('.sound').removeClass('mfp-icon-volume-mute').removeClass('mfp-icon-volume-up').addClass('mfp-icon-volume-down');
-            }else{
-                $(this.container).find('.sound').removeClass('mfp-icon-volume-down').removeClass('mfp-icon-volume-up').addClass('mfp-icon-volume-mute');
+                    if(volume >= 0.5){
+                        $(this.container).find('.sound').removeClass('mfp-icon-volume-mute').removeClass('mfp-icon-volume-down').addClass('mfp-icon-volume-up');
+                    }
+                    else if(volume > 0){
+                        $(this.container).find('.sound').removeClass('mfp-icon-volume-mute').removeClass('mfp-icon-volume-up').addClass('mfp-icon-volume-down');
+                    }else{
+                        $(this.container).find('.sound').removeClass('mfp-icon-volume-down').removeClass('mfp-icon-volume-up').addClass('mfp-icon-volume-mute');
+                    }
+                });
             }
         });
+        
     }
 
     initSoundEvents(){
