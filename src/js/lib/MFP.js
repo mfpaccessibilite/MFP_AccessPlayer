@@ -97,6 +97,9 @@ export default class MFP{
                         //
                         this.videoPlayer.setMuted(true);
                     }
+                    if(this.options.st_show){
+                        this.selectSubTitle($(this.container).find(('.right-part .subtitles-block .ui-dialog .mfp_list ul[data-id="'+this.options.st_track+'"]'))[0]).bind(this);
+                    }
                     if(this.options.autoplay){
                         this.videoPlayer.play();
                     }
@@ -459,12 +462,6 @@ export default class MFP{
           var cont = tt.length;
           for(var i=0; i < tt.length; i++){
               var track = new MFP_Track(tt[i]);
-              if($(tt[i]).data('live')==true){
-                  this.options.live_track=i;
-              }
-              if($(tt[i]).data('st')==true){
-                  this.options.st_track=i;
-              }
               if(MFPDebug){
                   console.log('track');
                   console.log(tt[i]);
@@ -474,6 +471,12 @@ export default class MFP{
               if(track.kind==='subtitles'){
                   track.subid = this.subtitles.length;
                   track.pos   = this.subtitles.length;
+                  if($(tt[i]).data('live')==true){
+                    this.options.live_track=track.subid;
+                  }
+                  if($(tt[i]).data('st')==true){
+                    this.options.st_track=track.subid;
+                  }
                   this.subtitles.push({'id':i,'track':track});
               }
               else if(track.kind==='captions'){
@@ -1083,51 +1086,11 @@ export default class MFP{
             $(menu[0]).append(men);
             var m = new MFP_Menu($(menu[0]),{
                 select:function(elmt){
-                    if($(elmt).hasClass('preferences')){
-                       $(this.container).find('.right-part .pref-block .menu').dialog( "open" );
-                       $(this.container).find('.right-part .pref-block .ui-dialog').attr('aria-modal',true);
-                       $(this.container).find('.right-part .pref-block .ui-dialog').focus();
-                    }
-                    else{
-                        $(this.container).find('.subtitles-block  button.subtitles').addClass('off');
-                        $(this.container).find('.subtitles-block  button.subtitles').attr('title',this.lang.activate+' '+this.lang.subtitles);
-                        $(this.container).find('.subtitles-block  button.subtitles .mfp-hidden').html(this.lang.activate+' '+this.lang.subtitles);
-                        $(elmt).parent().children('li').removeClass('selected');
-                        $(elmt).addClass('selected');
-                        $(this.container).removeClass (function (index, css) {
-                            return (css.match (/(^|\s)track-\S+/g) || []).join(' ');
-                        });
-                        for(var j=0;j<this.subtitles.length;j++){
-                            this.subtitles[j].track.mode='hidden';
-                            this.subtitles[j].track.mode2='hidden';
-                            //console.log(this.subtitles[j].track);
-                        }
-                        if(!$(elmt).hasClass('no-subtitles')){
-                            this.subtitles[$(elmt).data('id')].track.mode='hidden';
-                            this.subtitles[$(elmt).data('id')].track.mode2='showing';
-                            if(this.subtitles[$(elmt).data('id')].track.ext=='srt'){
-                                $(elmt).parent().children('li.preferences').css('display','block');
-                            }
-                            else{
-                                $(elmt).parent().children('li.preferences').css('display','none');
-                            }
-                            $(this.container).find('.subtitles-block  button.subtitles').removeClass('off');
-                            $(this.container).find('.subtitles-block  button.subtitles').attr('title',this.lang.subtitles);
-                        $(this.container).find('.subtitles-block  button.subtitles .mfp-hidden').html(this.lang.subtitles);
-                            $(this.container).addClass('track-'+this.subtitles[$(elmt).data('id')].track.ext);
-                        }
-                        else{
-                            $(elmt).parent().children('li.preferences').css('display','none');
-                        }
-                        this.redrawCues();
-                        //this.updateLive();
-                        this.fontSize();
-                    }
-                    //this.videoPlayer.currentTime=$(elmt).data('start');
-                    //$(this.container).find('.right-part .chapters-block .menu').dialog('close');
+                    this.selectSubTitle(elmt);
                 }.bind(this)
             });
             m.init();
+            
 
             $(menu[0]).dialog({ autoOpen: false, resizable: false,closeText: this.lang.close, position: { my: "right+30 bottom", at: "left top", of: btn } });
             $(menu[0]).dialog({
@@ -1136,7 +1099,48 @@ export default class MFP{
             this.initPrefMenu();
         }
     }
-
+    selectSubTitle(elmt){
+        if($(elmt).hasClass('preferences')){
+            $(this.container).find('.right-part .pref-block .menu').dialog( "open" );
+            $(this.container).find('.right-part .pref-block .ui-dialog').attr('aria-modal',true);
+            $(this.container).find('.right-part .pref-block .ui-dialog').focus();
+         }
+         else{
+             $(this.container).find('.subtitles-block  button.subtitles').addClass('off');
+             $(this.container).find('.subtitles-block  button.subtitles').attr('title',this.lang.activate+' '+this.lang.subtitles);
+             $(this.container).find('.subtitles-block  button.subtitles .mfp-hidden').html(this.lang.activate+' '+this.lang.subtitles);
+             $(elmt).parent().children('li').removeClass('selected');
+             $(elmt).addClass('selected');
+             $(this.container).removeClass (function (index, css) {
+                 return (css.match (/(^|\s)track-\S+/g) || []).join(' ');
+             });
+             for(var j=0;j<this.subtitles.length;j++){
+                 this.subtitles[j].track.mode='hidden';
+                 this.subtitles[j].track.mode2='hidden';
+                 //console.log(this.subtitles[j].track);
+             }
+             if(!$(elmt).hasClass('no-subtitles')){
+                 this.subtitles[$(elmt).data('id')].track.mode='hidden';
+                 this.subtitles[$(elmt).data('id')].track.mode2='showing';
+                 if(this.subtitles[$(elmt).data('id')].track.ext=='srt'){
+                     $(elmt).parent().children('li.preferences').css('display','block');
+                 }
+                 else{
+                     $(elmt).parent().children('li.preferences').css('display','none');
+                 }
+                 $(this.container).find('.subtitles-block  button.subtitles').removeClass('off');
+                 $(this.container).find('.subtitles-block  button.subtitles').attr('title',this.lang.subtitles);
+             $(this.container).find('.subtitles-block  button.subtitles .mfp-hidden').html(this.lang.subtitles);
+                 $(this.container).addClass('track-'+this.subtitles[$(elmt).data('id')].track.ext);
+             }
+             else{
+                 $(elmt).parent().children('li.preferences').css('display','none');
+             }
+             this.redrawCues();
+             //this.updateLive();
+             this.fontSize();
+         }
+    }
     initChapters(){
       if(MFPDebug){
           console.log('Loading chapters');
