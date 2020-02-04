@@ -56,12 +56,14 @@
 						 		<h2>Démonstration avec source principale VIMEO</h2>
 						 		<div class="cont">
 						 				<div class="container">
-						 						<video data-mfp data-options="{
+						 						<video autoplay muted data-mfp data-options="{
 						 								transcripts:{
 						 										html:'transcripts/JamyPlayer.htm',
 						 										txt:'transcripts/JamyPlayer.txt'
 						 								},
-						 								live: '#text-target1',
+														live: '#text-target1',
+														live_show: true,
+														start_ts: 10.45, 
 						 								theme_class: 'blue_theme'
 						 						}">
 						 								<source src="344582363" type="video/vimeo" />

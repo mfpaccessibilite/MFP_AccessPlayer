@@ -282,6 +282,10 @@ class VimeoPlayer{
       this.videoPlayer.setVolume(volume);
   }
 
+  setMuted(bol){
+    this.videoPlayer.setMuted(bol);
+}
+
 }
 
 MFP.prototype.loadVideoVimeo = function(videoOps){

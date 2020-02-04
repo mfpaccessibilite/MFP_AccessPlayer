@@ -25,16 +25,26 @@ import MFP from './lib/MFP';
     var videos = $('*[data-mfp]');
     for(var i=0; i<videos.length; i++){
         var opt = $(videos[i]).data('options');
+        var ap = $(videos[i]).attr('autoplay');
+        var mu = $(videos[i]).attr('muted');
         if(typeof opt === "undefined"){
-            var vid = new MFP($(videos[i]),{});
+            opt = {};
         }
         else{
-        	if(typeof opt !== 'object'){
-             opt = 'opt = '+opt;
-             eval(opt);
-          }
-          var vid = new MFP($(videos[i]),opt);
+            if(typeof opt !== 'object'){
+                opt = 'opt = '+opt;
+                eval(opt);
+            }
         }
+
+        if(typeof ap !== "undefined"){
+            opt.autoplay=true;
+        }
+        if(typeof mu!== "undefined"){
+            opt.muted=true;
+        }
+        
+        var vid = new MFP($(videos[i]),opt);
         vid.init();
     }
 }());

@@ -150,7 +150,12 @@ If you want you can also declare your videos as sources inside the video tag. Ke
     txt:'pathToMyTXTTranscript.txt'
 }
 ```
-- `live`        :   the player can display the contents of the subtitles in a block outside the video. We call this feature "live transcript". The texts will be highlighted in real time as they are spoken in the video. You can indicate in the `live` option the identifier of the element of your page where the live transcript will be displayed.  #myLiveTranscript`
+- `live`        : the player can display the contents of the subtitles in a block outside the video. We call this feature "live transcript". The texts will be highlighted in real time as they are spoken in the video. You can indicate in the `live` option the identifier of the element of your page where the live transcript will be displayed.  #myLiveTranscript`
+- `live_show`   : can be set to true or falsa, default is false. If set to true then transcript live will be displayed at loading. Default live transcript is first one otherwise the last track with data-live set to true.
+- `st_show`     : can be set to true or false, default is false. If set to true then subtitle are displayed on top of the video. Default subtiltle is first one otherwise the last track with data-st set to true.
+- `start_ts`    : define the start time of the video in seconds. Default is 0.
+- `autoplay`    : can be set to true or false, default is false. If set to true then the video will start player on loading. Please note that some Browser can block this behavior.
+- `muted`       : can be set to true or false, default is false. If set to true, then the video will be muted at loading. This can help to unblock autoplay on some browser. 
 - `theme_class` : you can add a custom class to the player to customize the layout. See our examples on the DemoPage. You will have to manually load the custom css in your html page.
 
 ## Customization and translations
@@ -177,20 +182,23 @@ The scripts contained in the MFP > trackreader folder are used to convert the ST
         txt:'/transcripts/fr.txt'
     },
     live: '#text-target1',
+    live_show: true,
+    start_ts: 10.45,
     theme_class: 'blue_theme'
 }">
     <source src="/videos/video_vo.mp4" type="video/mp4" />
-    <track src="/subtitles/fr.srt" kind="subtitles" label="Français (SRT)" srclang="fr" />
+    <track src="/subtitles/fr.srt" kind="subtitles" label="Français (SRT)" srclang="fr" data-live="true" data-st="true" />
 </video>
 <div id="text-target1">Live Transcript ici</div>
 ```
+
 
 ### Creation with JavaScript invocation
 
 ```html
 <video id="myPlayer">
     <source src="/videos/video_vo.mp4" type="video/mp4" />
-    <track src="/subtitles/fr.srt" kind="subtitles" label="Français (SRT)" srclang="fr" />
+    <track src="/subtitles/fr.srt" kind="subtitles" label="Français (SRT)" srclang="fr" data-live="true" data-st="true" />
 </video>
 <div id="text-target1">Live Transcript ici</div>
 <script>
@@ -205,6 +213,8 @@ var options = {
         txt:'/transcripts/fr.txt'
     },
     live: 'text-target1',
+    live_show: true,
+    start_ts: 10.45,
     theme_class: 'blue_theme'
 };
 new MFP(player,options);

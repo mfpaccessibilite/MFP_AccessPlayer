@@ -23,7 +23,14 @@ export default class MFP{
             videos:{highdef:'', lowdef:'', audiodesc:'', signed:''},
             transcripts:{txt:'',html:''},
             live:'',
-            theme_class:''
+            theme_class:'',
+            st_show: false,
+            live_show: false,
+            autoplay: false,
+            start_ts: 0,
+            live_track: 0,
+            st_track: 0,
+            muted: false
       };
       var element = arguments[0];
       this.startElement = element;
@@ -52,6 +59,7 @@ export default class MFP{
       }.bind(this));
       
       this.options = $.extend( {}, this.default_options, options );
+      
       this.buffering=0;
       this.rate=1;
       this.paused=true;
@@ -84,6 +92,15 @@ export default class MFP{
                     this.videoPlayer.setControls(false);
                     this.videoPlayer.setTabIndex(-1);
                     this.initEvents();
+                    this.videoPlayer.setCurrentTime(this.options.start_ts);
+                    if(this.options.muted){
+                        //
+                        this.videoPlayer.setMuted(true);
+                    }
+                    if(this.options.autoplay){
+                        this.videoPlayer.play();
+                    }
+                    
                 }, ()=>{
                     console.log("Error loading video.");
                 });
@@ -442,6 +459,12 @@ export default class MFP{
           var cont = tt.length;
           for(var i=0; i < tt.length; i++){
               var track = new MFP_Track(tt[i]);
+              if($(tt[i]).data('live')==true){
+                  this.options.live_track=i;
+              }
+              if($(tt[i]).data('st')==true){
+                  this.options.st_track=i;
+              }
               if(MFPDebug){
                   console.log('track');
                   console.log(tt[i]);
@@ -1607,6 +1630,9 @@ export default class MFP{
               }
             });
         });
+        if(this.options.muted){
+            $(this.container).find('.sound').trigger('click');
+        }
     }
 
     initDuration(){
