@@ -1033,6 +1033,7 @@ export default class MFP{
             var btn = $(this.container).find('.right-part .subtitles-block .subtitles');
             btn.click(function(){
                 $(this.container).find('.right-part .subtitles-block .menu').dialog( "open" );
+                $(this.container).find('.right-part .subtitles-block .ui-dialog').attr('aria-modal',true);
                 $(this.container).find('.right-part .subtitles-block .ui-dialog').focus();
                 
             }.bind(this));
@@ -1061,6 +1062,7 @@ export default class MFP{
                 select:function(elmt){
                     if($(elmt).hasClass('preferences')){
                        $(this.container).find('.right-part .pref-block .menu').dialog( "open" );
+                       $(this.container).find('.right-part .pref-block .ui-dialog').attr('aria-modal',true);
                        $(this.container).find('.right-part .pref-block .ui-dialog').focus();
                     }
                     else{
@@ -1123,6 +1125,7 @@ export default class MFP{
             var btn = $(this.container).find('.right-part .chapters-block .chapters');
             btn.click(function(){
                 $(this.container).find('.right-part .chapters-block .menu').dialog( "open" );
+                $(this.container).find('.right-part .chapters-block .ui-dialog').attr('aria-modal',true);
                 $(this.container).find('.right-part .chapters-block .ui-dialog').focus();
             }.bind(this));
             var menu = $(this.container).find('.right-part .chapters-block .menu');
@@ -1355,6 +1358,7 @@ export default class MFP{
         var btn = $(this.container).find('.right-part .transcripts-block .transcripts');
         btn.click(function(){
             $(this.container).find('.right-part .transcripts-block .menu').dialog( "open" );
+            $(this.container).find('.right-part .transcripts-block .ui-dialog').attr('aria-modal',true);
             $(this.container).find('.right-part .transcripts-block .ui-dialog').focus();
         }.bind(this));
         var menu = $(this.container).find('.right-part .transcripts-block .menu');
