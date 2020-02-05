@@ -279,7 +279,7 @@ class VimeoPlayer{
   }
 
   setVolume(volume){
-      this.videoPlayer.setVolume(volume);
+      return this.videoPlayer.setVolume(volume);
   }
 
   setMuted(bol){

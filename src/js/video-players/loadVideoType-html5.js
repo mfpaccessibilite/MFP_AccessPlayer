@@ -156,7 +156,10 @@ class VideoHtml5{
     }
 
     setVolume(volume){
-        this.videoPlayer.volume = volume;
+        return new Promise((resolve, reject)=>{
+            this.videoPlayer.volume = volume;
+            resolve(this.videoPlayer.volume);
+        });
     }
     setMuted(bool){
         return new Promise((resolve, reject)=>{

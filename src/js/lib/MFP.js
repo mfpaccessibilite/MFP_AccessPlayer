@@ -1595,21 +1595,22 @@ export default class MFP{
     soundUpdate(e){
         const videoPlayer = this.videoPlayer;
         videoPlayer.getVolume().then((vol)=>{
-            if(vol != $(this.container).find('.sound-range').slider('option','value') / 100){
-                videoPlayer.setVolume($(this.container).find('.sound-range').slider('option','value') / 100);
-                var h = this.soundBar.find('.ui-slider-handle');
-                videoPlayer.getVolume().then((volume)=>{
-                    h.attr('aria-valuenow', volume * 100);
-                    h.attr('aria-valuetext', Math.round(volume *100)+'% '+this.lang.volume);
 
-                    if(volume >= 0.5){
-                        $(this.container).find('.sound').removeClass('mfp-icon-volume-mute').removeClass('mfp-icon-volume-down').addClass('mfp-icon-volume-up');
-                    }
-                    else if(volume > 0){
-                        $(this.container).find('.sound').removeClass('mfp-icon-volume-mute').removeClass('mfp-icon-volume-up').addClass('mfp-icon-volume-down');
-                    }else{
-                        $(this.container).find('.sound').removeClass('mfp-icon-volume-down').removeClass('mfp-icon-volume-up').addClass('mfp-icon-volume-mute');
-                    }
+            if(vol != $(this.container).find('.sound-range').slider('option','value') / 100){
+                videoPlayer.setVolume($(this.container).find('.sound-range').slider('option','value') / 100).then((volume)=>{
+                    var h = this.soundBar.find('.ui-slider-handle');
+                    videoPlayer.getVolume().then((volume)=>{
+                        h.attr('aria-valuenow', volume * 100);
+                        h.attr('aria-valuetext', Math.round(volume *100)+'% '+this.lang.volume);
+                        if(volume >= 0.5){
+                            $(this.container).find('.sound').removeClass('mfp-icon-volume-mute').removeClass('mfp-icon-volume-down').addClass('mfp-icon-volume-up');
+                        }
+                        else if(volume > 0){
+                            $(this.container).find('.sound').removeClass('mfp-icon-volume-mute').removeClass('mfp-icon-volume-up').addClass('mfp-icon-volume-down');
+                        }else{
+                            $(this.container).find('.sound').removeClass('mfp-icon-volume-down').removeClass('mfp-icon-volume-up').addClass('mfp-icon-volume-mute');
+                        }
+                    });
                 });
             }
         });
@@ -1630,11 +1631,10 @@ export default class MFP{
                   this.soundUpdate();
               }
               else{
-                  this.videoPlayer.setVolume(sound_btn.attr('old_snd'));
-                  $(this.container).find('.sound-range').slider('option','value',sound_btn.attr('old_snd')*100);
-                  sound_btn.find('span').html(this.lang.soundOff);
-                  sound_btn.attr('title',this.lang.soundOff);
-                  this.soundUpdate();
+                    $(this.container).find('.sound-range').slider('option','value',sound_btn.attr('old_snd')*100);
+                    sound_btn.find('span').html(this.lang.soundOff);
+                    sound_btn.attr('title',this.lang.soundOff);
+                    this.soundUpdate();
               }
             });
         });
