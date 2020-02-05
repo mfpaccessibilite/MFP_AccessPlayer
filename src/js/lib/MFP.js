@@ -97,11 +97,13 @@ export default class MFP{
                         //
                         this.videoPlayer.setMuted(true);
                     }
-                    if(this.options.st_show){
+                    if(this.options.st_show && this.subtitles.length>0){
                         var opt = $(this.container).find('.right-part .subtitles-block .ui-dialog .mfp_list li[data-id="'+this.options.st_track+'"]');
-                        console.log('start track');
-                        console.log('.right-part .subtitles-block .ui-dialog .mfp_list li[data-id="'+this.options.st_track+'"]');
-                        this.selectSubTitle($(this.container).find('.right-part .subtitles-block .ui-dialog .mfp_list li[data-id="'+this.options.st_track+'"]')[0]);
+                        this.selectSubTitle(opt[0]);
+                    }
+                    if(this.options.live_show && this.subtitles.length>0){
+                        var opt = $(this.container).find('.right-part .transcripts-block .ui-dialog .mfp_list a.mfp_live');
+                        this.selectTranscript(opt[0]);
                     }
                     if(this.options.autoplay){
                         this.videoPlayer.play();
@@ -709,7 +711,8 @@ export default class MFP{
                     var select = $('<select />');
                     for(var i=0; i<this.subtitles.length;i++){
                         // check if actual subtitles so we put selected;
-                        if(this.subtitles[i].track.mode2=='showing'){
+                        //if(this.subtitles[i].track.mode2=='showing'){
+                        if(i==this.options.live_track){
                             select.append($('<option value="'+i+'" selected>'+this.subtitles[i].track.label+'</option>'));
                         }
                         else{
@@ -719,6 +722,7 @@ export default class MFP{
                     selectTranscriptBlock.append(select);
                     target.append($('<div class="live_content"/>'));
                     select.on('change',function(e){
+                        this.options.live_track=$(e.delegateTarget).val();
                         this.makeLiveContent($(e.delegateTarget).val());
                     }.bind(this));
                     this.makeLiveContent(select.val());
@@ -1408,25 +1412,8 @@ export default class MFP{
         }
         var m = new MFP_Menu($(menu[0]),{
             select:function(elmt){
-                if($(elmt).hasClass('mfp_live')){
-                    if($(this.container).find('.right-part .transcripts-block .transcripts').hasClass('off')){
-                        $(this.container).find('.right-part .transcripts-block .transcripts').removeClass('off');
-                        $(elmt).find('span').html(this.lang.desactivateLiveTranscript);
-                        this.liveOn=true;
-                    }
-                    else{
-                        $(this.container).find('.right-part .transcripts-block .transcripts').addClass('off');
-                        $(elmt).find('span').html(this.lang.activateLiveTranscript);
-                        this.liveOn=false;
-                    }
-                    this.updateLive();
-                }
-                else{
-                    
-                    //var vsrc = $(elmt).data('src');
-                    //window.open(vsrc);
-                    //$(this.container).find('.right-part .transcripts-block .menu').dialog( "close" );
-                }
+                this.selectTranscript(elmt).bind(this);
+                
             }.bind(this)
         });
         m.init();
@@ -1460,7 +1447,21 @@ export default class MFP{
         });
 
     }
-
+    selectTranscript(elmt){
+        if($(elmt).hasClass('mfp_live')){
+            if($(this.container).find('.right-part .transcripts-block .transcripts').hasClass('off')){
+                $(this.container).find('.right-part .transcripts-block .transcripts').removeClass('off');
+                $(elmt).find('span').html(this.lang.desactivateLiveTranscript);
+                this.liveOn=true;
+            }
+            else{
+                $(this.container).find('.right-part .transcripts-block .transcripts').addClass('off');
+                $(elmt).find('span').html(this.lang.activateLiveTranscript);
+                this.liveOn=false;
+            }
+            this.updateLive();
+        }
+    }
     initPlayBackSpeedEvents(){
         $(this.container).find('.speed').on('change',function(e){
             var speed = $(this.container).find('.speed')[0].value;
