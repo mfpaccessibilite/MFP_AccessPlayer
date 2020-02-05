@@ -98,7 +98,10 @@ export default class MFP{
                         this.videoPlayer.setMuted(true);
                     }
                     if(this.options.st_show){
-                        this.selectSubTitle($(this.container).find(('.right-part .subtitles-block .ui-dialog .mfp_list ul[data-id="'+this.options.st_track+'"]'))[0]).bind(this);
+                        var opt = $(this.container).find('.right-part .subtitles-block .ui-dialog .mfp_list li[data-id="'+this.options.st_track+'"]');
+                        console.log('start track');
+                        console.log('.right-part .subtitles-block .ui-dialog .mfp_list li[data-id="'+this.options.st_track+'"]');
+                        this.selectSubTitle($(this.container).find('.right-part .subtitles-block .ui-dialog .mfp_list li[data-id="'+this.options.st_track+'"]')[0]);
                     }
                     if(this.options.autoplay){
                         this.videoPlayer.play();
