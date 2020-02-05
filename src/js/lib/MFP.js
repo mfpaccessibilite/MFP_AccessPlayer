@@ -79,6 +79,7 @@ export default class MFP{
       this.tempPaused=false;
       this.tracks = [];
       this.notSupportedStandarFullScreen = false;
+      this.events = {};
   }
 
   init(){
@@ -125,7 +126,24 @@ export default class MFP{
       });
   }
 
+    on(event, callback){
+        if(typeof this.events[event] == 'undefined'){
+            this.events[event]=[];
+        }
+        this.videoPlayer.on(event,callback);
+        this.events[event].push(callback);
+        console.log('events list is :');
+        console.log(this.events);
+        return $(this.videoPlayer).on(event, callback);
+    }
 
+    off(event, callback=null){
+        this.videoPlayer.off(event,callback);
+        if(callback==null){
+            delete this.events[event];
+        }
+        return $(this.videoPlayer).off(event, callback);
+    }
   loadVideo(video){
       return new Promise((resolve, reject)=>{
           let type = 'html5';
