@@ -433,7 +433,7 @@ player.setLive(true).then(function(show) {
     // live transcript was set
 }).catch(function(error) {
     
-    // an other error occurred
+    // an error occurred
 });
 ```
 
@@ -454,13 +454,65 @@ player.getLiveTrack().then(function(track) {
 Set the live transcript track
 
 ```js
-player.setLiveTranscript(track).then(function(track) {
+player.setLiveTrack(track).then(function(track) {
     // live transcript track was set
 }).catch(function(error) {
     
-    // an other error occurred
+    // an error occurred
 });
 ```
+
+### getSt(): Promise&lt;bool, Error&gt;
+
+Get the current subtitles status of the player, `true` for active and `false` for inactive.
+
+```js
+player.getSt().then(function(show) {
+    // show = true | false, true for show
+}).catch(function(error) {
+    // an error occurred
+});
+```
+
+### setSt(show: bool): Promise&lt;bool, Error&gt;
+
+Set the subtitles on or off.
+
+```js
+player.setSt(true).then(function(show) {
+    // subtitles was set
+}).catch(function(error) {
+    
+    // an error occurred
+});
+```
+
+### getStTrack(): Promise&lt;number, Error&gt;
+
+Get the current subtitles track number.
+
+```js
+player.getStTrack().then(function(track) {
+    // track = active suvbtitles track
+}).catch(function(error) {
+    // an error occurred
+});
+```
+
+### setStTrack(track: number): Promise&lt;number, Error&gt;
+
+Set the subtitles track
+
+```js
+player.setStTrack(track).then(function(track) {
+    // live transcript track was set
+}).catch(function(error) {
+    
+    // an error occurred
+});
+```
+
+
 
 ## Events
 

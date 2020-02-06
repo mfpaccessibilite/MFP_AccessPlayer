@@ -1174,6 +1174,7 @@ export default class MFP{
              if(!$(elmt).hasClass('no-subtitles')){
                  this.subtitles[$(elmt).data('id')].track.mode='hidden';
                  this.subtitles[$(elmt).data('id')].track.mode2='showing';
+                 this.options.st_track=$(elmt).data('id');
                  if(this.subtitles[$(elmt).data('id')].track.ext=='srt'){
                      $(elmt).parent().children('li.preferences').css('display','block');
                  }
@@ -1930,6 +1931,48 @@ export default class MFP{
         return new Promise((resolve,reject)=>{
             this.options.live_track=track;
             this.updateLive();
+            resolve(track);
+        });
+    }
+    getSt(){
+        return new Promise((resolve,reject)=>{
+            resolve(!$(this.container).find('.subtitles-block  button.subtitles').hasClass('off'));
+        });
+    }
+    setSt(b){
+        return new Promise((resolve,reject)=>{
+            if(this.subtitles.length>0){
+                if(!b){
+                    var opt = $(this.container).find('.right-part .subtitles-block .ui-dialog .mfp_list li:first-child');
+                    this.selectSubTitle(opt[0]);
+                    resolve(false);
+                }
+                else{
+                    var opt = $(this.container).find('.right-part .subtitles-block .ui-dialog .mfp_list li[data-id="'+this.options.st_track+'"]');
+                    this.selectSubTitle(opt[0]);
+                    resolve(true);                    
+                }
+            }
+            else{
+                reject(new Error('There is no track'));
+            }
+        });
+    }
+    getStTrack(){
+        return new Promise((resolve,reject)=>{
+            resolve(this.options.st_track);
+        });
+    }
+    setStTrack(track){
+        return new Promise((resolve,reject)=>{
+            if($(this.container).find('.subtitles-block  button.subtitles').hasClass('off')){
+                this.options.st_track=track;
+            }
+            else{
+                console.log('we change to track '+track);
+                var opt = $(this.container).find('.right-part .subtitles-block .ui-dialog .mfp_list li[data-id="'+track+'"]');
+                this.selectSubTitle(opt[0]);
+            }
             resolve(track);
         });
     }

@@ -60,9 +60,10 @@
 								| <a href="javascript:window.vid.setCurrentTime(15.24);">setCurrentTime(15.24)</a>
 								| <a href="javascript:window.vid.getVolume().then(function(val){alert(val);});">getVolume</a>
 								| <a href="javascript:window.vid.setVolume(0.5);">setVolume(0.5)</a>
-								| <a href="javascript:window.vid.setLive(false);">HideLive</a>
-								| <a href="javascript:window.vid.setLive(true);">ShowLive</a>
-								| <a href="javascript:window.vid.setLiveTrack(0);">SetLiveTrack(0)</a>
+								| <a href="javascript:window.vid.setLive(false);">hideLive</a>
+								| <a href="javascript:window.vid.setLive(true);">showLive</a>
+								| <a href="javascript:window.vid.setLiveTrack(0);">setLiveTrack(0)</a>
+								| <a href="javascript:window.vid.setStTrack(0);">setStTrack(0)</a>
 								 <br />
 						 		<div class="cont">
 						 				<div class="container">
@@ -133,5 +134,11 @@ Le sélecteur de vitesse de lecture vidéo dépend du compte Vimeo auquel appart
 		        <p>Pour télécharger le code et contribuer, rendez-vous sur le <a href="https://github.com/mfpaccessibilite/MFP_AccessPlayer">compte Github du lecteur vidéo MFP AccessPlayer</a>&nbsp;!</p>
 		    </footer>
 	<script src="../MFP/mfp.js"></script>
+	<script>
+	window.setTimeout(function(){
+		window.vid = $('.mfpaccessplayer').data('player');
+		console.log(window.vid);
+	},1500);
+	</script>
 	</body>
 </html>
