@@ -505,7 +505,32 @@ Set the subtitles track
 
 ```js
 player.setStTrack(track).then(function(track) {
-    // live transcript track was set
+    // subtitles track was set
+}).catch(function(error) {
+    
+    // an error occurred
+});
+```
+
+### getVideo(): Promise&lt;string, Error&gt;
+
+Get the current video type, can be hd|ld|audiodesc|signed.
+
+```js
+player.getVideo().then(function(video) {
+    // video = Current video on screen
+}).catch(function(error) {
+    // an error occurred
+});
+```
+
+### setSVideo: string): Promise&lt;string, Error&gt;
+
+Set the current video on screen
+
+```js
+player.setVideo(video).then(function(video) {
+    // video on screen been change to the given one
 }).catch(function(error) {
     
     // an error occurred

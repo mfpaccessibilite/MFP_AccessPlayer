@@ -1976,4 +1976,74 @@ export default class MFP{
             resolve(track);
         });
     }
+    getVideo(){
+        return new Promise((resolve,reject)=>{
+            var btn = $(this.container).find('.video_hd');
+            if(!btn.hasClass('off')){
+                if(btn.hasClass('mfp-icon-hd')){
+                    resolve('hd');
+                }
+                else{
+                    resolve('ld');
+                }
+            }
+            btn = $(this.container).find('.video_audiodesc');
+            if(!btn.hasClass('off')){
+                resolve('audiodesc');
+            }
+            btn = $(this.container).find('.video_signed');
+            if(!btn.hasClass('off')){
+                resolve('signed');
+            }
+        });
+    }
+    setVideo(video){
+        return new Promise((resolve,reject)=>{
+            if(video == 'hd'){
+                var btn = $(this.container).find('.video_hd');
+                if(btn.hasClass('off')){
+                    btn.removeClass('mfp-icon-ld');
+                    btn.addClass('mfp-icon-hd');
+                    btn.trigger('click');
+                }
+                else{
+                    if(btn.hasClass('mfp-icon-ld')){
+                        btn.trigger('click');
+                    }
+                }
+                resolve(video);
+            }
+            else if(video == 'ld'){
+                var btn = $(this.container).find('.video_hd');
+                if(btn.hasClass('off')){
+                    btn.removeClass('mfp-icon-hd');
+                    btn.addClass('mfp-icon-ld');
+                    btn.trigger('click');
+                }
+                else{
+                    if(btn.hasClass('mfp-icon-hd')){
+                        btn.trigger('click');
+                    }
+                }
+                resolve(video);
+            }
+            else if(video=='audiodesc'){
+                var btn = $(this.container).find('.video_audiodesc');
+                if(btn.hasClass('off')){
+                    btn.trigger('click');
+                }
+                resolve(video);
+            }
+            else if(video=='signed'){
+                var btn = $(this.container).find('.video_signed');
+                if(btn.hasClass('off')){
+                    btn.trigger('click');
+                }
+                resolve(video);
+            }
+            else{
+                reject(new Error("Video quality doesn't existes"));
+            }
+        });
+    }
 }
