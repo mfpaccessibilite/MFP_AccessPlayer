@@ -46,5 +46,6 @@ import MFP from './lib/MFP';
         
         var vid = new MFP($(videos[i]),opt);
         vid.init();
+        window.vid = vid;
     }
 }());

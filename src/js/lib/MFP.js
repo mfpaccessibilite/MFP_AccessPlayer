@@ -95,8 +95,10 @@ export default class MFP{
                     this.initEvents();
                     this.videoPlayer.setCurrentTime(this.options.start_ts);
                     if(this.options.muted){
-                        //
+                        $(this.container).find('.sound-range').slider('option','value',0);
+                        $(this.container).find('.sound').attr('old_snd', 1);
                         this.videoPlayer.setMuted(true);
+                        this.soundUpdate();
                     }
                     if(this.options.st_show && this.subtitles.length>0){
                         var opt = $(this.container).find('.right-part .subtitles-block .ui-dialog .mfp_list li[data-id="'+this.options.st_track+'"]');
@@ -130,19 +132,31 @@ export default class MFP{
         if(typeof this.events[event] == 'undefined'){
             this.events[event]=[];
         }
-        this.videoPlayer.on(event,callback);
+        $(this.videoPlayer).on(event,callback);
         this.events[event].push(callback);
-        console.log('events list is :');
-        console.log(this.events);
-        return $(this.videoPlayer).on(event, callback);
+        return callback;
     }
 
     off(event, callback=null){
-        this.videoPlayer.off(event,callback);
+        
         if(callback==null){
+            // making one by one to not remove player internal event
+            for(var i = 0; i<this.events[event].length;i++){
+                $(this.videoPlayer).off(event,this.events[event][i]);
+            }
             delete this.events[event];
         }
-        return $(this.videoPlayer).off(event, callback);
+        else{
+            //remove the right function
+            var to_del=[];
+            for(var i = 0; i < this.events[event].length;i++){
+                if(this.events[event][i]==callback){
+                    this.events[event].splice(i,1);
+                    i--;
+                }
+            }
+        }
+        return true;
     }
   loadVideo(video){
       return new Promise((resolve, reject)=>{
@@ -174,12 +188,21 @@ export default class MFP{
           }else{
               this[videoLoader](video).then((videoPlayer)=>{
                   this.videoPlayer = videoPlayer;
+                  this.attachedVideoEvent();
                   this.updateSpeedSelector().then(()=>{
                     resolve();
                   });
               });
           }
       });
+  }
+  attachedVideoEvent(){
+    // registering all video event
+    for(const event_type in this.events){
+        for(var i=0;i<this.events[event_type].length;i++){
+            $(this.videoPlayer.on(event_type,this.events[event_type][i]));
+        }
+    }
   }
   updateSpeedSelector(){
     return new Promise((resolve, reject)=>{
@@ -427,10 +450,13 @@ export default class MFP{
           videoPlayer.on('volumechange',function(e){
               
               this.videoPlayer.getVolume().then((vol)=>{
-                this.sound = vol;
-                var volume = vol/100;
-                $(this.container).find('.sound-range')[0].value=volume;
-                this.soundUpdate();
+                if(vol != this.sound){
+                    this.sound = vol;
+                    var volume = vol*100;
+                    $(this.container).find('.sound-range').slider('option','value',volume);
+                    //$(this.container).find('.sound-range')[0].value=volume;
+                    this.soundUpdate();
+                }
               });
              
           }.bind(this));
@@ -804,8 +830,9 @@ export default class MFP{
         return new Promise((resolve, reject)=>{
             var videoObj = this.startElement;
             $(videoObj).addClass('mfp');
-            $(videoObj).wrap($("<div class='mfp-wrapper "+this.options.theme_class+"'><div class='video-container mfp'></div></div>"));
+            $(videoObj).wrap($("<div class='mfp-wrapper mfpaccessplayer "+this.options.theme_class+"'><div class='video-container mfp'></div></div>"));
             this.container = $(videoObj).parent().parent();
+            $(this.container).data('player',this);
             // adding buffering event for temp message on screen, usefule for vimeo :
             $(this.container).on('bufferingstart',(e)=>{
                 //this.showBuffering();
@@ -1840,5 +1867,70 @@ export default class MFP{
               this.fontSize();
           }
       }.bind(this));
+    }
+    pause(){
+        
+            return this.videoPlayer.pause();
+    }
+    play(){
+        return this.videoPlayer.play();
+    }
+    getBuffered(){
+        return this.videoPlayer.getBuffered();
+    }
+    getCurrentTime(){
+        return this.videoPlayer.getCurrentTime();
+    }
+    setCurrentTime(t){
+        return this.videoPlayer.setCurrentTime(t);
+    }
+    getDuration(){
+        return this.videoPlayer.getDuration();
+    }
+    getPaused(){
+        return this.videoPlayer.getPaused();
+    }
+    getPlaybackRate(){
+        return this.videoPlayer.getPlaybackRate();
+    }
+    setPlaybackRate(p){
+        return this.videoPlayer.setPlaybackRate(p);
+    }
+    getVolume(){
+        return this.videoPlayer.getVolume();
+    }
+    setVolume(v){
+        return this.videoPlayer.setVolume(v);
+    }
+    getlive(){
+        return new Promise((resolve,reject)=>{
+            resolve(this.liveOn);
+        });
+    }
+    setLive(b){
+        return new Promise((resolve,reject)=>{
+            if(this.subtitles.length>0){
+                var opt = $(this.container).find('.right-part .transcripts-block .ui-dialog .mfp_list a.mfp_live');
+                if((this.liveOn && !b) || (!this.liveOn && b)){
+                    this.selectTranscript(opt[0]);
+                    resolve(b);
+                }
+            }
+            else{
+                reject(new Error('There is no track'));
+            }
+        });
+    }
+    getLiveTrack(){
+        return new Promise((resolve,reject)=>{
+            resolve(this.options.live_track);
+        });
+    }
+    setLiveTrack(track){
+        return new Promise((resolve,reject)=>{
+            this.options.live_track=track;
+            this.updateLive();
+            resolve(track);
+        });
     }
 }
