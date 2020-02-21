@@ -1571,7 +1571,7 @@ export default class MFP{
               this.videoPlayer.getDuration().then((duration)=>{
                 var shouldUpdate = false;
                 var targetTime = 0;
-                if(e.which==37 || e.which==40){
+                if(e.which==37 || e.which==40 || e.which==34){
                     e.preventDefault();
                     //back 5 seconds;
                     if((time-5)>0){
@@ -1581,15 +1581,15 @@ export default class MFP{
                     }
                     else{
                         shouldUpdate=true;
-                        targetTime=0;
+                        targetTime=0.1;
                         //this.videoPlayer.setCurrentTime(0);
                     }
-                }else if(e.which==38 || e.which==39){
+                }else if(e.which==38 || e.which==39 || e.which==33){
                     e.preventDefault();
                     //forward 5 seconds ;
                       if((time+5)>duration){
                           shouldUpdate=true;
-                          targetTime=duration;
+                          targetTime=duration-.3;
                           //this.videoPlayer.setCurrentTime(duration);
                       }
                       else{
@@ -1598,6 +1598,17 @@ export default class MFP{
                           //this.videoPlayer.setCurrentTime(time+5);
                       }
                 }
+                else if(e.which==36){
+                    e.preventDefault();
+                    targetTime=0.1;
+                    shouldUpdate=true;
+                }
+                else if(e.which==35){
+                    e.preventDefault();
+                    targetTime=duration-.3;
+                    shouldUpdate=true;
+                }
+
                 if(shouldUpdate){
                   // taking care of changing currentTime :
                   //console.log('changing time to : '+targetTime);

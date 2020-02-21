@@ -8,7 +8,7 @@
 /* green */
 /*dark green*/
 /* white */
-/* light orange */
+/* Black */
 /*-- header-triangle--*/
 /* Main */
 /* mde -> mode d'emploi */
@@ -105,12 +105,12 @@ header {
   nav#navbar ul li a:focus {
     outline: 1px solid #fff; }
   nav#navbar ul li a:hover {
-    color: #f78656;
+    color: #000;
     text-decoration: underline; }
   nav#navbar ul li a:active {
     text-decoration: underline;
     background-color: #000;
-    color: #f78656; } }
+    color: #000; } }
 
 /*----------------------------------------------------
  * Media queries "larger" screens more than 641 px*/
@@ -164,12 +164,12 @@ header {
   nav#navbar ul li a:focus {
     outline: 1px solid #fff; }
   nav#navbar ul li a:hover {
-    color: #f78656;
+    color: #000;
     text-decoration: underline; }
   nav#navbar ul li a :active {
     text-decoration: underline;
     background-color: #000;
-    color: #f78656; } }
+    color: #000; } }
 
 /* ---------------------------------------------MAIN-----------------------------------------------*/
 main {

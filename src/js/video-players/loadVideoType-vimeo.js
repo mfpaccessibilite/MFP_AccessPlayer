@@ -84,7 +84,10 @@ class VimeoPlayer{
                           return setTimeout(checkWidth, 300);
                       }
                       $(vimeoIframe).attr('tabindex','-1');
+                      $(vimeoIframe).attr('title','Video source Vimeo');
+                      $(vimeoIframe).removeAttr('frameborder');
                       $(vimeoIframe).css('width','100%');
+                      $(vimeoIframe).css('border','0');
                       self.currentWidth = $(vimeoIframe).width();
 
                       self.intervalId = setInterval(()=>{
