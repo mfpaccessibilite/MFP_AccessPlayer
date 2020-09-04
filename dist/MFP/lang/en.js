@@ -9,6 +9,12 @@ var lang = {
     compress : "Quit fullscreen mode",
     searchBar : "Search Bar",
     on : 'on',
+    hour : 'hour',
+    hours : 'hours',
+    minute : 'minute',
+    minutes : 'minutes',
+    second : 'second',
+    seconds : 'seconds',
     playBackrate : 'Playback speed',
     close : 'Close',
     subtitles : 'Subtitles',
@@ -53,4 +59,6 @@ var lang = {
     activate:'Activate',
     desactivate:'Desactivate',
     nosupport:'Sorry, the video format %s is not supported',
+    selectTranscript:'Select the live transcript to display',
+    buffering:'Buffering...'
 };

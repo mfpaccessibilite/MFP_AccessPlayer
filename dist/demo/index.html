@@ -42,9 +42,10 @@
 		    <nav role="navigation" id="navbar">
 		        <ul>
 		            <li><a href="#video"> Vidéo </a></li>
-		            <li><a href="#mde"> Mode d'emploi </a></li>
-		            <li><a href="index-red.html" aria-hidden="true">Demo thème Red</a></li>
-            		<li><a href="index-green.html" aria-hidden="true">Demo thème Green</a></li>
+					<li><a href="#mde"> Mode d'emploi </a></li>
+					<li><a href="index.html" aria-current="page"><span  aria-hidden="true">►</span> Demo thème Bleu</a></li>
+		            <li><a href="index-red.html">Demo thème Rouge</a></li>
+            		<li><a href="index-green.html">Demo thème Vert</a></li>
 		        </ul>
 		    </nav>
 
@@ -52,15 +53,15 @@
 		    <main role="main" id="main">
 						 <!-- Video area -->
 						 <article id="video">
-						 		<h2>Démonstration avec source principale VIMEO</h2>
+								 <h2>Démonstration avec source principale VIMEO</h2>
 						 		<div class="cont">
 						 				<div class="container">
-						 						<video data-mfp data-options="{
+						 						<video autoplay muted data-mfp data-options="{
 						 								transcripts:{
 						 										html:'transcripts/JamyPlayer.htm',
 						 										txt:'transcripts/JamyPlayer.txt'
 						 								},
-						 								live: '#text-target1',
+														live: '#text-target1',
 						 								theme_class: 'blue_theme'
 						 						}">
 						 								<source src="344582363" type="video/vimeo" />
@@ -68,7 +69,7 @@
 						 								<source src="https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_AD_480.m4v" type="video/mp4" format="audiodesc" />
 						 								<source src="https://demovideo.ftvaccess.fr/MEDIAS/JAMY_VOLCANS_LDS_480.m4v" type="video/mp4" format="signed" />
 						 								<track src="tracks/JamyPlayer.stl" kind="subtitles" label="Français (coloration CSA)" srclang="fr" />
-						 								<track src="tracks/JamyPlayer.srt" kind="subtitles" label="Français (personnalisable)" srclang="fr" />
+						 								<track src="tracks/JamyPlayer.srt" kind="subtitles" label="Français (personnalisable)" srclang="fr" data-st="true" data-live="true" />
 						 								<track src="tracks/chapters.vtt" kind="chapters" label="Chapitres" srclang="fr" />
 						 						</video>
 						 				</div>
@@ -119,5 +120,11 @@ Le sélecteur de vitesse de lecture vidéo dépend du compte Vimeo auquel appart
 		        <p>Pour télécharger le code et contribuer, rendez-vous sur le <a href="https://github.com/mfpaccessibilite/MFP_AccessPlayer">compte Github du lecteur vidéo MFP AccessPlayer</a>&nbsp;!</p>
 		    </footer>
 	<script src="../MFP/mfp.js"></script>
+	<script>
+	window.setTimeout(function(){
+		window.vid = $('.mfpaccessplayer').data('player');
+		console.log(window.vid);
+	},1500);
+	</script>
 	</body>
 </html>

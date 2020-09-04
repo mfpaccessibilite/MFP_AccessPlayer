@@ -19,7 +19,7 @@ $header-gradient-color5: #3E8526;
 $nav-background-color: #3E8526; /* green */
 $nav-borders-color: #16380A; /*dark green*/
 $header-text-color: #fff; /* white */
-$nav-hover-color: #f78656; /* light orange */
+$nav-hover-color: #000; /* Black */
 /*-- header-triangle--*/
 $header-triangle-height:1.9rem;
 $padding-h1:1.08rem;
@@ -84,7 +84,13 @@ a.evitement:focus {
 header{
     background-image: linear-gradient(to right, $header-gradient-color1,$header-gradient-color2,$header-gradient-color3,$header-gradient-color4,$header-gradient-color5);
     color: $header-text-color;
-
+    a, img{
+        display: inline-block;
+        z-index:2;
+        &:focus{
+            outline: 1px solid #fff;
+        }
+    }
 }
 
 /* ---------------------------------------------------
@@ -136,7 +142,7 @@ header{
         display: inline-block;
         border-right: 2px solid $nav-borders-color;
         padding: 10px 0;
-        width: 49%;
+        width: 100%;
         text-align: center;
     }
 

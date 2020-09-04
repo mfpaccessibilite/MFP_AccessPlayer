@@ -9,6 +9,12 @@ var lang = {
     compress : "Quitter le plein écran",
     searchBar : "Barre de progression (durée)",
     on : 'de',
+    hour : 'heure',
+    hours : 'heures',
+    minute : 'minute',
+    minutes : 'minutes',
+    second : 'seconde',
+    seconds: 'secondes',
     playBackrate : 'Vitesse de lecture',
     close : 'Fermer',
     subtitles : 'Sous-titres',
@@ -53,4 +59,6 @@ var lang = {
     activate:'Activer',
     desactivate:'Désactiver',
     nosupport:'Désolé, le format %s n\'est pas supporté',
+    selectTranscript:'Selectionnez le transcript live à afficher',
+    buffering:'Chargement en cours...'
 };

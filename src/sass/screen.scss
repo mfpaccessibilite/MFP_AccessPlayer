@@ -150,6 +150,22 @@ ul.mfp_list{
 .mfp-wrapper{
     background-color: #000;
     position: relative;
+    .mfp_buffering{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background-color: rgba(0,0,0,.5);
+      .mfp_buff_text{
+        text-align: center;
+        color: #FFF;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
     .ui-dialog .ui-dialog-title{
       white-space: pre-wrap;
       text-overflow: initial;
@@ -163,6 +179,10 @@ ul.mfp_list{
         max-height:100%;
         z-index: 1;
         position: relative;
+    }
+    .video-container.mfp{
+      position: relative;
+      
     }
     &.fullscreen{
         width: 100%;
@@ -368,13 +388,13 @@ ul.mfp_list{
               cursor: pointer;
               display: block;
 
-              height: 20px;
+              height: 30px;
               letter-spacing: normal;
               line-height: 21px;
               margin-bottom: 0px;
               margin-left: 0px;
               margin-right: 0px;
-              margin-top: -10px;
+              margin-top: -15px;
               //overflow-x: visible;
               //overflow-y: visible;
               overflow: hidden;
@@ -390,7 +410,7 @@ ul.mfp_list{
               top: 50%;
               vertical-align: middle;
               white-space: nowrap;
-              width: 20px;
+              width: 30px;
             }
             button:focus{
                 outline-color: yellow;
@@ -436,6 +456,26 @@ ul.mfp_list{
               content:' : ';
             }
           }
+        }
+        &>a{
+            color: #FFF !important;
+            display: block;
+            color: inherit;
+            text-decoration: inherit;
+            line-height: 1.5;
+            margin-left: 0;
+            font-size: 24px;
+            padding: 0 5px;
+            [class^="icon-"]{
+                font-size: 24px;
+                color: inherit;
+            }
+            &.selected{
+              background: #999;
+            }
+            div.ui-state-active{
+              background: #CCC;
+            }
         }
         li{
             line-height: 1.5;

@@ -36,6 +36,7 @@ class VimeoPlayer{
       this.container = element;
       this.domId   = 'vimeo-player-'+md5(JSON.stringify(video) + Date.now() + Math.random());
       this.currentWidth = 0;
+      this.seeking = false;
       this.buffered = null;
   }
 
@@ -83,7 +84,10 @@ class VimeoPlayer{
                           return setTimeout(checkWidth, 300);
                       }
                       $(vimeoIframe).attr('tabindex','-1');
+                      $(vimeoIframe).attr('title','Video source Vimeo');
+                      $(vimeoIframe).removeAttr('frameborder');
                       $(vimeoIframe).css('width','100%');
+                      $(vimeoIframe).css('border','0');
                       self.currentWidth = $(vimeoIframe).width();
 
                       self.intervalId = setInterval(()=>{
@@ -217,8 +221,14 @@ class VimeoPlayer{
   }
 
   setCurrentTime(time){
+      //this.seeking=true;
+      //var event = new CustomEvent('bufferingstart');
+      //this.container[0].dispatchEvent(event);
       return new Promise((resolve, reject)=>{
         this.videoPlayer.setCurrentTime(time).then((time)=>{
+            //this.seeking=false;
+            //var event = new CustomEvent('bufferingend');
+            //this.container[0].dispatchEvent(event);
           resolve(time);
         }).catch(function(error){
           console.log(error);
@@ -272,8 +282,12 @@ class VimeoPlayer{
   }
 
   setVolume(volume){
-      this.videoPlayer.setVolume(volume);
+      return this.videoPlayer.setVolume(volume);
   }
+
+  setMuted(bol){
+    this.videoPlayer.setMuted(bol);
+}
 
 }
 
