@@ -19,7 +19,7 @@ MFP.prototype.loadTrackTypeSRT=function(player, filepath, track){
             var parser = this;
             var xhr = new XMLHttpRequest();
             xhr.open('GET', filepath, true);
-            xhr.responseType = 'string';
+            xhr.responseType = '';
             xhr.onload = function(e) {
                 if (xhr.status != 200) {
                     // error loading:
