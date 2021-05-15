@@ -155,8 +155,9 @@ If you want you can also declare your videos as sources inside the video tag. Ke
 - `live_show`   : can be set to true or falsa, default is false. If set to true then transcript live will be displayed at loading. Default live transcript is first one otherwise the last track with data-live set to true.
 - `st_show`     : can be set to true or false, default is false. If set to true then subtitle are displayed on top of the video. Default subtiltle is first one otherwise the last track with data-st set to true.
 - `start_ts`    : define the start time of the video in seconds. Default is 0.
-- `autoplay`    : can be set to true or false, default is false. If set to true then the video will start player on loading. Please note that some Browser can block this behavior.
+- `autoplay`    : can be set to true or false, default is false. If set to true then the video will start player on loading. Please note that some Browser can block this behavior. If autoplay is set to true, the video will be automaticaly muted so taht browser don't block the video.
 - `muted`       : can be set to true or false, default is false. If set to true, then the video will be muted at loading. This can help to unblock autoplay on some browser. 
+- `sound`       : Can be set between 0 and 100 to set sound level at loading. I video is also muted, it will be the default level the video will go back when clicking the unmute button.
 - `theme_class` : you can add a custom class to the player to customize the layout. See our examples on the DemoPage. You will have to manually load the custom css in your html page.
 
 ## Methods

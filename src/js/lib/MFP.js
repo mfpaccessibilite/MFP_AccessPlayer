@@ -30,6 +30,7 @@ export default class MFP{
             start_ts: 0,
             live_track: 0,
             st_track: 0,
+            sound: 100,
             muted: false
       };
       var element = arguments[0];
@@ -81,42 +82,63 @@ export default class MFP{
       this.notSupportedStandarFullScreen = false;
       this.events = {};
   }
+  finish_init(){
+    this.initChapters().then(()=>{
+        this.loadVideo(this.options.videos.highdef).then(()=>{
+            this.videoPlayer.setControls(false);
+            this.videoPlayer.setTabIndex(-1);
+            this.initEvents();
+            this.videoPlayer.setCurrentTime(this.options.start_ts);
+            // setting sound level :
+            $(this.container).find('.sound-range').slider('option','value',this.options.sound);
+            $(this.container).find('.sound').attr('old_snd', this.options.sound/100);
+            this.soundUpdate();
+            if(this.options.muted || this.options.autoplay){
+                var old_sound = this.options.sound/100;
+                $(this.container).find('.sound-range').slider('option','value',0);
+                
+                this.videoPlayer.setMuted(true);
+                this.soundUpdate();
+                window.setTimeout(()=>{
+                    $(this.container).find('.sound').attr('old_snd', old_sound);
+                },200);
+            }
+            if(this.options.st_show && this.subtitles.length>0){
+
+                var opt = $(this.container).find('.right-part .subtitles-block .ui-dialog .mfp_list li[data-id="'+this.options.st_track+'"]');
+                if(window.MFPDebug){
+                    console.log('st_show on for : '+this.options.st_track);
+                    console.log(opt);
+                    console.log($(this.container).find('.right-part .subtitles-block .ui-dialog .mfp_list'));
+                }
+                if(opt.length>0){
+                    this.selectSubTitle(opt[0]);
+                }
+            }
+            if(this.options.live_show && this.subtitles.length>0){
+                var opt = $(this.container).find('.right-part .transcripts-block .ui-dialog .mfp_list a.mfp_live');
+                this.selectTranscript(opt[0]);
+            }
+            if(this.options.autoplay){
+                this.videoPlayer.play();
+            }
+            
+        }, ()=>{
+            console.log("Error loading video.");
+        });
+    }, () =>{
+        console.log('Error loading chapters.');
+    });
+  }
 
   init(){
       // Load Video Player
-      this.loadLang().then(()=>{
-          this.loadTracks().then(()=>{
+        this.loadLang().then(()=>{
             this.loadInterface().then(()=>{
-                this.initSubtitlesMenu();
-                this.initChapters();
-                this.loadVideo(this.options.videos.highdef).then(()=>{
-                    this.videoPlayer.setControls(false);
-                    this.videoPlayer.setTabIndex(-1);
-                    this.initEvents();
-                    this.videoPlayer.setCurrentTime(this.options.start_ts);
-                    if(this.options.muted){
-                        $(this.container).find('.sound-range').slider('option','value',0);
-                        $(this.container).find('.sound').attr('old_snd', 1);
-                        this.videoPlayer.setMuted(true);
-                        this.soundUpdate();
-                    }
-                    if(this.options.st_show && this.subtitles.length>0){
-                        var opt = $(this.container).find('.right-part .subtitles-block .ui-dialog .mfp_list li[data-id="'+this.options.st_track+'"]');
-                        this.selectSubTitle(opt[0]);
-                    }
-                    if(this.options.live_show && this.subtitles.length>0){
-                        var opt = $(this.container).find('.right-part .transcripts-block .ui-dialog .mfp_list a.mfp_live');
-                        this.selectTranscript(opt[0]);
-                    }
-                    if(this.options.autoplay){
-                        this.videoPlayer.play();
-                    }
-                    
-                }, ()=>{
-                    console.log("Error loading video.");
+                this.loadTracks().then(()=>{
+            
                 });
             });
-          });
       }, ()=>{
           console.log('Error, default lang script can not be loaded.');
       });
@@ -556,6 +578,7 @@ export default class MFP{
                   this.loadedTrack(track);
               });
               track.on('error', (track) =>{
+                  
                   this.loadedTrackError(track);
                   cont--;
                   if(cont==0){
@@ -564,6 +587,9 @@ export default class MFP{
               });
               track.load();
               this.tracks.push(track);
+          }
+          if(this.subtitles.length==0){
+              this.finish_init();
           }
       });
   }
@@ -1099,59 +1125,70 @@ export default class MFP{
     }
 
     initSubtitlesMenu(){
-        var toload=true;
-        for(var i=0;i<this.subtitles.length;i++){
-            if(this.subtitles[i].track.cues.length==0){
-                toload=false;
+        return new Promise((resolve, reject)=>{
+            if(window.MFPDebug){
+                console.log('loading SubtitlesMenu');
             }
-        }
-        if(toload && this.subtitles.length>0){
-            $(this.container).find('.right-part .subtitles-block').append($('<button class="mfp-icon-cc subtitles off" title="'+this.lang.subtitles+'"><span class="mfp-hidden">'+this.lang.subtitles+'</span></button><ul class="menu" title="'+this.lang.subtitles+'" /></ul>'));
-
-            var btn = $(this.container).find('.right-part .subtitles-block .subtitles');
-            btn.click(function(){
-                $(this.container).find('.right-part .subtitles-block .menu').dialog( "open" );
-                $(this.container).find('.right-part .subtitles-block .ui-dialog').attr('aria-modal',true);
-                $(this.container).find('.right-part .subtitles-block .ui-dialog').focus();
-                
-            }.bind(this));
-
-            var menu = $(this.container).find('.right-part .subtitles-block .menu');
-
-            var men = $('<li class="no-subtitles selected">'+this.lang.nosubtitles+'</li>');
-            $(menu[0]).append(men);
-            //console.log('this.subtiltes.length : ');
-            //console.log(this.subtitles.length);
-            var men = $('<li class="preferences" style="display: none;" aria-haspopup="true">'+this.lang.preferences+' <span class="mfp-icon-pref"></span></li>');
-            men.uniqueId();
-            var pref_id = men.attr('id');
-            for(var i = 0;i<this.subtitles.length;i++){
-                var track = this.subtitles[i].track;
-                var t = $('<li data-id="'+i+'">'+track.label+'</li>');
-                if(track.ext=='srt'){
-                  //t.attr('aria-owns',pref_id);
-                  t.attr('aria-haspopup',true);
+            var toload=true;
+            for(var i=0;i<this.subtitles.length;i++){
+                if(this.subtitles[i].track.cues.length==0){
+                    toload=false;
                 }
-                $(menu[0]).append(t);
             }
+            if(toload && this.subtitles.length>0){
+                $(this.container).find('.right-part .subtitles-block').append($('<button class="mfp-icon-cc subtitles off" title="'+this.lang.subtitles+'"><span class="mfp-hidden">'+this.lang.subtitles+'</span></button><ul class="menu" title="'+this.lang.subtitles+'" /></ul>'));
 
-            $(menu[0]).append(men);
-            var m = new MFP_Menu($(menu[0]),{
-                select:function(elmt){
-                    this.selectSubTitle(elmt);
-                }.bind(this)
-            });
-            m.init();
-            
+                var btn = $(this.container).find('.right-part .subtitles-block .subtitles');
+                btn.click(function(){
+                    $(this.container).find('.right-part .subtitles-block .menu').dialog( "open" );
+                    $(this.container).find('.right-part .subtitles-block .ui-dialog').attr('aria-modal',true);
+                    $(this.container).find('.right-part .subtitles-block .ui-dialog').focus();
+                    
+                }.bind(this));
 
-            $(menu[0]).dialog({ autoOpen: false, resizable: false,closeText: this.lang.close, position: { my: "right+30 bottom", at: "left top", of: btn } });
-            $(menu[0]).dialog({
-              appendTo: $(this.container).find('.right-part .subtitles-block')
-            });
-            this.initPrefMenu();
-        }
+                var menu = $(this.container).find('.right-part .subtitles-block .menu');
+
+                var men = $('<li class="no-subtitles selected">'+this.lang.nosubtitles+'</li>');
+                $(menu[0]).append(men);
+                //console.log('this.subtiltes.length : ');
+                //console.log(this.subtitles.length);
+                var men = $('<li class="preferences" style="display: none;" aria-haspopup="true">'+this.lang.preferences+' <span class="mfp-icon-pref"></span></li>');
+                men.uniqueId();
+                var pref_id = men.attr('id');
+                for(var i = 0;i<this.subtitles.length;i++){
+                    var track = this.subtitles[i].track;
+                    var t = $('<li data-id="'+i+'">'+track.label+'</li>');
+                    if(track.ext=='srt'){
+                    //t.attr('aria-owns',pref_id);
+                    t.attr('aria-haspopup',true);
+                    }
+                    $(menu[0]).append(t);
+                }
+
+                $(menu[0]).append(men);
+                var m = new MFP_Menu($(menu[0]),{
+                    select:function(elmt){
+                        this.selectSubTitle(elmt);
+                    }.bind(this)
+                });
+                m.init();
+                if(window.MFPDebug){
+                    console.log('m init for subtitles');
+                }
+
+                $(menu[0]).dialog({ autoOpen: false, resizable: false,closeText: this.lang.close, position: { my: "right+30 bottom", at: "left top", of: btn } });
+                $(menu[0]).dialog({
+                appendTo: $(this.container).find('.right-part .subtitles-block')
+                });
+                this.initPrefMenu();
+                this.finish_init();
+            }
+            resolve();
+        });
     }
     selectSubTitle(elmt){
+        //console.log('selected subtitle to display : ');
+        //console.log(elmt);
         if($(elmt).hasClass('preferences')){
             $(this.container).find('.right-part .pref-block .menu').dialog( "open" );
             $(this.container).find('.right-part .pref-block .ui-dialog').attr('aria-modal',true);
@@ -1195,63 +1232,66 @@ export default class MFP{
          }
     }
     initChapters(){
-      if(MFPDebug){
-          console.log('Loading chapters');
-          console.log($(this.container).find('.right-part .chapters-block .chapters').length);
-        }
-        if(this.chapters.length>0 && this.chapters[0].track.cues.length>0 && $(this.container).find('.right-part .chapters-block .chapters').length==0){
-            var rightPart = $(this.container).find('.right-part .chapters-block');
-            $(rightPart).append('<button class="mfp-icon-chapters chapters" title="'+this.lang.chapters+'"><span class="mfp-hidden">'+this.lang.chapters+'</span></button><ul class="menu" title="'+this.lang.chapters+'"></ul>');
-            var btn = $(this.container).find('.right-part .chapters-block .chapters');
-            btn.click(function(){
-                $(this.container).find('.right-part .chapters-block .menu').dialog( "open" );
-                $(this.container).find('.right-part .chapters-block .ui-dialog').attr('aria-modal',true);
-                $(this.container).find('.right-part .chapters-block .ui-dialog').focus();
-            }.bind(this));
-            var menu = $(this.container).find('.right-part .chapters-block .menu');
-            var cues = this.chapters[0].track.cues;
-            var currentTime = 0;
-            for(var i = 0; i<cues.length ; i++){
-                var cue = cues[i];
-                var men = $('<li class="cue chapter-'+i+'" data-start="'+cue.startTime+'">'+cue.text+'</li>');
-                if(currentTime>=cue.startTime && currentTime<cue.endTime){
-                    $(men).addClass('selected');
-                }
-                $(menu[0]).append(men);
-                cue.on('enter', function(){
-                    $(this).attr('aria-selected','true');
-                    $(this).addClass('selected');
-                }.bind(men));
-                cue.on('exit', function(){
-                    $(this).removeAttr('aria-selected');
-                    $(this).removeClass('selected');
-                }.bind(men));
+        return new Promise((resolve, reject)=>{
+            if(MFPDebug){
+                console.log('Loading chapters');
+                console.log($(this.container).find('.right-part .chapters-block .chapters').length);
             }
-            //$(menu[0]).menu({role:'listbox',items:'li'});
-            var m = new MFP_Menu($(menu[0]),{
-                select:function(elmt){
-                    //console.log('chapter selected');
-                    this.videoPlayer.setCurrentTime($(elmt).data('start'));
-                    $(this.container).find('.right-part .chapters-block .menu').dialog('close');
-                }.bind(this)
-            });
-            m.init();
+            if(this.chapters.length>0 && this.chapters[0].track.cues.length>0 && $(this.container).find('.right-part .chapters-block .chapters').length==0){
+                var rightPart = $(this.container).find('.right-part .chapters-block');
+                $(rightPart).append('<button class="mfp-icon-chapters chapters" title="'+this.lang.chapters+'"><span class="mfp-hidden">'+this.lang.chapters+'</span></button><ul class="menu" title="'+this.lang.chapters+'"></ul>');
+                var btn = $(this.container).find('.right-part .chapters-block .chapters');
+                btn.click(function(){
+                    $(this.container).find('.right-part .chapters-block .menu').dialog( "open" );
+                    $(this.container).find('.right-part .chapters-block .ui-dialog').attr('aria-modal',true);
+                    $(this.container).find('.right-part .chapters-block .ui-dialog').focus();
+                }.bind(this));
+                var menu = $(this.container).find('.right-part .chapters-block .menu');
+                var cues = this.chapters[0].track.cues;
+                var currentTime = 0;
+                for(var i = 0; i<cues.length ; i++){
+                    var cue = cues[i];
+                    var men = $('<li class="cue chapter-'+i+'" data-start="'+cue.startTime+'">'+cue.text+'</li>');
+                    if(currentTime>=cue.startTime && currentTime<cue.endTime){
+                        $(men).addClass('selected');
+                    }
+                    $(menu[0]).append(men);
+                    cue.on('enter', function(){
+                        $(this).attr('aria-selected','true');
+                        $(this).addClass('selected');
+                    }.bind(men));
+                    cue.on('exit', function(){
+                        $(this).removeAttr('aria-selected');
+                        $(this).removeClass('selected');
+                    }.bind(men));
+                }
+                //$(menu[0]).menu({role:'listbox',items:'li'});
+                var m = new MFP_Menu($(menu[0]),{
+                    select:function(elmt){
+                        //console.log('chapter selected');
+                        this.videoPlayer.setCurrentTime($(elmt).data('start'));
+                        $(this.container).find('.right-part .chapters-block .menu').dialog('close');
+                    }.bind(this)
+                });
+                m.init();
 
-            $(menu[0]).dialog({ autoOpen: false, resizable: false,closeText: this.lang.close, position: { my: "left bottom", at: "left top", of: btn },maxHeight: 400 });
-            $(menu[0]).dialog({
-              appendTo: $(this.container).find('.right-part .chapters-block')
-            });
+                $(menu[0]).dialog({ autoOpen: false, resizable: false,closeText: this.lang.close, position: { my: "left bottom", at: "left top", of: btn },maxHeight: 400 });
+                $(menu[0]).dialog({
+                appendTo: $(this.container).find('.right-part .chapters-block')
+                });
 
-            //this.reloadChapters();
-            /*
-            $(menu[0]).menu({select: function( event, ui ) {
-                this.videoPlayer.currentTime=ui.item.data('start');
-                $(this.container).find('.right-part .chapters-block .menu').dialog( "close" );
-                //ui.item.css('background','green');
-                //console.log();
-            }.bind(this)});
-            */
-        }
+                //this.reloadChapters();
+                /*
+                $(menu[0]).menu({select: function( event, ui ) {
+                    this.videoPlayer.currentTime=ui.item.data('start');
+                    $(this.container).find('.right-part .chapters-block .menu').dialog( "close" );
+                    //ui.item.css('background','green');
+                    //console.log();
+                }.bind(this)});
+                */
+            }
+            resolve();
+        });
     }
 
     initVideosAlt(){
